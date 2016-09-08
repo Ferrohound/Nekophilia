@@ -1,0 +1,16 @@
+<Game name>
+<Team name>
+
+Theme/Setting/Genre
+
+Core Mechanics
+
+Story/Gameplay
+
+Assets Needed -> check to-do list
+
+Schedule
+	Have the machanics + overview of premise done by Friday
+	Jobs assigned end of meeting on Friday
+
+	Gameplay prototype by Monday-Wednesday? 

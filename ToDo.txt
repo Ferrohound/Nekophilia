@@ -1,0 +1,25 @@
+Decide theme + gameplay side
+	Sidescroller?
+
+Get a list of assets needed
+
+Art
+	-
+	-
+	-
+
+Audio
+	-
+	-
+	-
+
+Writing
+	-
+	-
+	-
+
+Coding
+	-Player
+	-AI?
+
+Create simple but amusing puzzles and/or mechanics
