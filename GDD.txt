@@ -1,15 +1,43 @@
-<Game name>
-<Team name>
+Lamplight
+
+Team 5
 
 Theme/Setting/Genre
+--------------------
+Spooky, mansion, creature in the dark
+darkness means death
+Inspect elements, environmental storytelling
+Theft
 
 Core Mechanics
+--------------
+TWO PLAYER - forced cooperation, if one player dies both fail
+PLATFORMER
+
+run
+jump
+pick up things
+push things
+one player has the flashlight or lantern - also able to move platforms?
+one has a lockpick: sequence of keys to press
+
+skills manifested in reality
 
 Story/Gameplay
+-----------------
+Haunted mansion; thieves getting through the mansion
+lots of environmental storytelling
+
+Come into mansion, fall down into cellar or basement, open door and unleash some kind of
+evil entity that's chasing the duo through the darkness
+
+-pulley system one-shot thing
+-warding off darkness
 
 Assets Needed -> check to-do list
 
 Schedule
+----------------
 	Have the machanics + overview of premise done by Friday
 	Jobs assigned end of meeting on Friday
 
