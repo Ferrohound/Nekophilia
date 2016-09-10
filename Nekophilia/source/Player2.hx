@@ -38,7 +38,6 @@
 		 setFacingFlip(FlxObject.RIGHT, false, false);
 		 
 		 drag.x = drag.y = 1100;
-		 acceleration.y = 200;
      }
 	 
 	 override public function update(elapsed:Float): Void

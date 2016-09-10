@@ -511,7 +511,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "14",
+			build: "17",
 			company: "HaxeFlixel",
 			file: "Nekophilia",
 			fps: 60,
