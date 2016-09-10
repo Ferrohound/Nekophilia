@@ -38,6 +38,7 @@
 		 setFacingFlip(FlxObject.RIGHT, false, false);
 		 
 		 drag.x = drag.y = 1100;
+		 acceleration.y = 200;
      }
 	 
 	 override public function update(elapsed:Float): Void
@@ -79,19 +80,23 @@
 				if (_up) _rot -= 45;
 				else if (_down) _rot += 45;
 			}
-			else if (_down) _rot = 90;
-			else if (_up) _rot = 270;
+			else if (_down){
+				//_rot = 90;
+			}
+			else if (_up&& isTouching(FlxObject.FLOOR)){
+				_rot = 270;
+				velocity.y = -speed / 2;
+			}
 			
 			
 			velocity.set(speed);
 			velocity.rotate(new FlxPoint(0, 0), _rot);
 			
-			if (velocity.x != 0||velocity.y!=0){
+			if (velocity.x != 0){
 				animation.play("walk");
 			}
 			else{
-				animation.stop();
-				//set the animation frame
+				animation.reset();
 			}
 		}
 	 }
