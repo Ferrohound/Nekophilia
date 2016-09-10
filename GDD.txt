@@ -4,41 +4,83 @@ Team 5
 
 Theme/Setting/Genre
 --------------------
-Spooky, mansion, creature in the dark
-darkness means death
-Inspect elements, environmental storytelling
-Theft
+Theme:
+	Cooperation in the face of severely unfavorable odds
+
+Setting: 
+	Abandoned Mansion deep in the wilderness, formerly owned by a wealthy and extremely successful artist who vanished 
+	under mysterious circumstances. A dark aura surrounds and engulfs the house, threatening any that would dare to
+	disturb its slumber. 
+
+Genre: 
+	Game: Cooperative Platformer
+	Story: Horror/Survival
 
 Core Mechanics
 --------------
-TWO PLAYER - forced cooperation, if one player dies both fail
-PLATFORMER
 
-run
-jump
-pick up things
-push things
-one player has the flashlight or lantern - also able to move platforms?
-one has a lockpick: sequence of keys to press
-
-skills manifested in reality
-
+	The game takes place almost entirely in pitch darkness, leading to heavy reliance on Owen, who holds a lantern. Also, being the stronger of the two, he will be majorily in charge of pushing/moving heavy platforms or handling pulleys (both of which will involve tapping a single key quickly)
+	
+	Aimee, as a lockpick and career thief, will be in charge of getting through doors (via a combination of key presses). Being smaller and more agile,
+	she can also climb through vents and ride atop platforms that Owen pushes. 
+	
+	While platforming, Aimee will have to be sure to stay within the light of the lantern, or face being taken by what
+	lies beyond its dim glow. 
+	
+	Both player characters will need to cooperate through platforming and multiple puzzle areas.
+	Jumping, running, picking up objects , and other traditional platforming elements will play key roles.
+	
+	Player specific skills will be manifested in reality. 
+	
+	
 Story/Gameplay
 -----------------
-Haunted mansion; thieves getting through the mansion
-lots of environmental storytelling
 
-Come into mansion, fall down into cellar or basement, open door and unleash some kind of
-evil entity that's chasing the duo through the darkness
+	Story:
 
--pulley system one-shot thing
--warding off darkness
-
-Assets Needed -> check to-do list
+	Owen Erickson, a lifelong art enthusiast and expert teams up with Aimee Wu, a successful career thief to steal
+	'The Good Night' an extremely valuable painting rumored to be housed at the abandoned mansion that was once home 
+	to Vincente Oscuro. Known the world over, Oscuro sold thousands of works and lived an extremely successful life 
+	before suddenly dissapearing, leaving his home behind, abandoned. 
+	
+	Unbeknownst to Owen or Aimee, the house has not been idle at all during the decades since it was left behind, 
+	instead being plagued by a mysterious,dangerous and dark force that does not take kindly to visitors. 
+	
+	A quest for fortune turns into a battle for survival very quickly, as both protagonists find a multitude of 
+	harrrowing signs including dead bodies, strange writings, and piles of destroyed furniture, all of which seem to
+	be giving off one clear, unified message:
+	
+	'Do not let the light go out.'
+	
+	Gameplay:
+	
+	The game will be composed of multiple levels (or rooms) that will be made up of a large chunk of 'survival platforming' 
+	bookended by doors, vents, locks, or other types of puzzles. 
+	
+	Not only will the platforms themselves be difficult to get through (being possessed by the dark being), but the players
+	will also have to be sure to stay close together while maneuvering them. Failure to do so will result in being taken and consumed by what lies in the abyss, leading to a game over. 
+	
+	
 
 Schedule
 ----------------
-	Have the machanics + overview of premise done by Friday
-	Jobs assigned end of meeting on Friday
-
-	Gameplay prototype by Monday-Wednesday? 
+	For Monday:
+	
+	Brittany- 
+		
+		Concept Art
+	
+	Brandon:
+	
+		GDD + Background story fleshing out
+	
+	Ben:
+	
+		Putting together preliminary ideas for music
+	
+	Neil: 
+		Working on rough skeleton platformer prototype
+	
+	Sol:
+		Working on rough skeleton platformer prototype
+	
