@@ -1,4 +1,4 @@
-Lamplight
+Dying of the Light (Temp)
 
 Team 5
 
@@ -19,7 +19,7 @@ Genre:
 Core Mechanics
 --------------
 
-	The game takes place almost entirely in pitch darkness, leading to heavy reliance on Owen, who holds a lantern. Also, being the stronger of the two, he will be majorily in charge of pushing/moving heavy platforms or handling pulleys (both of which will involve tapping a single key quickly)
+	The game takes place almost entirely in pitch darkness, leading to heavy reliance on Owen, who holds a lantern. Also, being the stronger of the two, he will be majorily in charge of pushing/moving heavy platforms or handling pulleys (both of which will involve tapping a single key quickly). Owen will also be in charge both of ensuring the lantern stays on (via refueling) and creating temporary alternate sources of light for Aimee. 
 	
 	Aimee, as a lockpick and career thief, will be in charge of getting through doors (via a combination of key presses). Being smaller and more agile,
 	she can also climb through vents and ride atop platforms that Owen pushes. 
