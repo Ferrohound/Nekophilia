@@ -23,7 +23,7 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		//make the mouse invisible
-		FlxG.mouse.visible = false;
+		//FlxG.mouse.visible = false;
 		
 		//get the level, commented out is another method to be investigated
 		//the value 8 in the csv file seems to slow down the PCs

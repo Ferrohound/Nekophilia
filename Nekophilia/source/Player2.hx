@@ -25,9 +25,6 @@
      public function new(?X:Float=0, ?Y:Float=0)
      {
          super(X, Y);
-		 //loadGraphic file, animated?, frame width, frame height
-		 //animation.add("name", array of frames, fps, loop)
-		 //animation.play
 		 //makeGraphic(32, 32, FlxColor.RED);
 		 loadGraphic("assets/images/duck.png", true, 100, 114);
 		 animation.add("walk", [0, 1, 0, 2], 5, true);
@@ -47,19 +44,14 @@
 	 }
 	 function movement(): Void
 	 {
+		 acceleration.x = 0;
 		 //Use vectors instead?
-		 _up = FlxG.keys.anyPressed([W]);
+		 _up = FlxG.keys.anyJustPressed([W]);
 		 _down = FlxG.keys.anyPressed([S]);
 		 _left = FlxG.keys.anyPressed([A]);
 		 _right = FlxG.keys.anyPressed([D]);
 		 
 		 //cancel out opposing directions
-		 if (_up && _down){
-			 _up = false;
-			 _down = false;
-			 //_up = _down = false;
-		 }
-		 
 		 if (_left && _right)
 			_left = _right = false;
 			
@@ -69,34 +61,33 @@
 				_rot = 180;
 				//set sprite facing direction
 				facing = FlxObject.LEFT;
-				if (_up) _rot += 45;
-				else if (_down) _rot -= 45;
+				acceleration.x = -speed * 4;
+				//if (_up) _rot += 45;
+				//else if (_down) _rot -= 45;
 			}
 			else if (_right){
 				_rot = 0;
 				//get the sprite to face the right way
 				facing = FlxObject.RIGHT;
-				if (_up) _rot -= 45;
-				else if (_down) _rot += 45;
+				acceleration.x = speed * 4;
+				//if (_up) _rot -= 45;
+				//else if (_down) _rot += 45;
 			}
-			else if (_down){
+			if (_down){
 				//_rot = 90;
 			}
-			else if (_up&& isTouching(FlxObject.FLOOR)){
-				_rot = 270;
+			if (_up&& isTouching(FlxObject.FLOOR)){
+				//_rot = 270;
 				velocity.y = -speed / 2;
 			}
-			
-			
-			velocity.set(speed);
-			velocity.rotate(new FlxPoint(0, 0), _rot);
-			
-			if (velocity.x != 0){
-				animation.play("walk");
-			}
-			else{
-				animation.reset();
-			}
+			//velocity.set(speed);
+			//velocity.rotate(new FlxPoint(0, 0), _rot);
+		}
+		if (acceleration.x != 0){
+			animation.play("walk");
+		}
+		else{
+			animation.reset();
 		}
 	 }
 	 
