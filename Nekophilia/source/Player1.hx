@@ -62,19 +62,25 @@
 				//set sprite facing direction
 				facing = FlxObject.LEFT;
 				acceleration.x = -speed * 4;
+				if (velocity.x < -speed){
+					velocity.x = -speed;
+				}
 			}
 			else if (_right){
 				_rot = 0;
 				//get the sprite to face the right way
 				facing = FlxObject.RIGHT;
 				acceleration.x = speed * 4;
+				if (velocity.x > speed){
+					velocity.x = speed;
+				}
 			}
 			if (_down){
 				//_rot = 90;
 			}
 			if (_up&& isTouching(FlxObject.FLOOR)){
 				//_rot = 270;
-				velocity.y = -speed / 2;
+				velocity.y = -speed;
 			}
 			//velocity.set(speed);
 			//velocity.rotate(new FlxPoint(0, 0), _rot);
