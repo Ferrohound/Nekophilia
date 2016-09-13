@@ -45,7 +45,7 @@ class PlayState extends FlxState
 		add(_player2);
 		
 		//setting gravity
-		_player1.acceleration.y = _player2.acceleration.y = 400;
+		_player1.acceleration.y = _player2.acceleration.y = 600;
 		super.create();
 	}
 

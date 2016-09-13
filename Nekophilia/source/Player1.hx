@@ -44,15 +44,17 @@
 	 }
 	 function movement(): Void
 	 {
-		 acceleration.x = 0;
-		 //Use vectors instead?
-		 _up = FlxG.keys.anyJustPressed([UP]);
-		 _down = FlxG.keys.anyPressed([DOWN]);
-		 _left = FlxG.keys.anyPressed([LEFT]);
-		 _right = FlxG.keys.anyPressed([RIGHT]);
-		 
-		 //cancel out opposing directions
-		 if (_left && _right)
+		acceleration.x = 0;
+		//Use vectors instead?
+		_up = FlxG.keys.anyJustPressed([UP]);
+		_down = FlxG.keys.anyPressed([DOWN]);
+		_left = FlxG.keys.anyPressed([LEFT]);
+		_right = FlxG.keys.anyPressed([RIGHT]);
+		
+		var factor = if (isTouching(FlxObject.FLOOR)) 4; else 1;
+		
+		//cancel out opposing directions
+		if (_left && _right)
 			_left = _right = false;
 			
 		if (_up || _down || _left || _right) {
@@ -61,20 +63,20 @@
 				_rot = 180;
 				//set sprite facing direction
 				facing = FlxObject.LEFT;
-				acceleration.x = -speed * 4;
+				acceleration.x = -speed * factor;
 			}
 			else if (_right){
 				_rot = 0;
 				//get the sprite to face the right way
 				facing = FlxObject.RIGHT;
-				acceleration.x = speed * 4;
+				acceleration.x = speed * factor;
 			}
 			if (_down){
 				//_rot = 90;
 			}
 			if (_up&& isTouching(FlxObject.FLOOR)){
 				//_rot = 270;
-				velocity.y = -speed / 2;
+				velocity.y = -400;
 			}
 			//velocity.set(speed);
 			//velocity.rotate(new FlxPoint(0, 0), _rot);
