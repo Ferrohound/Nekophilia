@@ -44,7 +44,13 @@
 	 {
 		 movement();
 		 super.update(elapsed);
-		 shadows.addLightPoint(getMidpoint());
+		 //because of the camera tracking, need to get player 1's
+		 //position relative to the camera and not the game world
+		 //especially in terms of the x position
+		 var tmp = getMidpoint();
+		 tmp.x += (x - FlxG.camera.scroll.x);
+		 tmp.y += (y + FlxG.camera.scroll.y);
+		 shadows.addLightPoint(tmp);
 	 }
 	 function movement(): Void
 	 {
