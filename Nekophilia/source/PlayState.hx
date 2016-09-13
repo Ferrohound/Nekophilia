@@ -84,16 +84,8 @@ class PlayState extends FlxState
 	}
 
 	override public function update(elapsed:Float):Void
-	{
-		/*
-			for handling groups and win conditions and collision
-			FlxG.overlap(_coins, _player, getCoin);
-			FlxG.collide(_level, _player);
-			FlxG.overlap(_exit, _player, win);
-		*/
-			
+	{		
 		//update the position of the midPoint object for the camera
-		//.x, .y
 		_midPoint.x = ((_player1.x + _player2.x) / 2);
 		_midPoint.y = ((_player1.y + _player2.y) / 2);
 		
@@ -110,6 +102,22 @@ class PlayState extends FlxState
 		super.update(elapsed);
 		FlxG.collide(_level, _player1);
 		FlxG.collide(_level, _player2);
+		
+		//use p1 as a platform?
+		var _down = FlxG.keys.anyPressed([DOWN]);
+		if (_down)
+			FlxG.collide(_player1, _player2);
+		
+		/*
+		//for handling groups, collision and win condition
+		FlxG.collide(_doors, _player2);
+		//or do lockpicking from p2's code, isTouching()
+		FlxG.overlap(_doors, _player2, lockpick);
+		FlxG.overlap(_clues, _player1, displayClue);
+		
+		FlxG.overlap(_exit, _player1, win);
+		FlxG.overlap(_exit, _player2, win);
+		 */
 		
 	}
 	

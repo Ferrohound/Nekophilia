@@ -47,10 +47,15 @@
 		 //because of the camera tracking, need to get player 1's
 		 //position relative to the camera and not the game world
 		 //especially in terms of the x position
-		 var tmp = getMidpoint();
-		 tmp.x += (x - FlxG.camera.scroll.x);
+		 //var tmp = getMidpoint();
+		 
+		 //or just use getScreenPosition, oops.
+		 var tmp = getScreenPosition();
+		 tmp.x += width / 2;
+		 tmp.y += height / 2;
+		 //tmp.x += (x - FlxG.camera.scroll.x);
 		 //-200 to center it with player1
-		 tmp.y += (y - FlxG.camera.scroll.y-200);
+		 //tmp.y += (y - FlxG.camera.scroll.y-200);
 		 shadows.addLightPoint(tmp);
 	 }
 	 function movement(): Void
