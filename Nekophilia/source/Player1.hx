@@ -49,7 +49,7 @@
 		 //especially in terms of the x position
 		 var tmp = getMidpoint();
 		 tmp.x += (x - FlxG.camera.scroll.x);
-		 tmp.y += (y + FlxG.camera.scroll.y);
+		 tmp.y += (y - FlxG.camera.scroll.y);
 		 shadows.addLightPoint(tmp);
 	 }
 	 function movement(): Void
