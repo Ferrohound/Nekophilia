@@ -2,6 +2,8 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.util.FlxColor;
+import flixel.util.FlxSpriteUtil;
 import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
@@ -17,11 +19,15 @@ class PlayState extends FlxState
 	//look into Haxe inheritance 
 	var _player1:Player1;
 	var _player2:Player2;
+	var _shadows:ShadowSystem;
 	
 	private var _level:FlxTilemap;
 	
 	override public function create():Void
 	{
+		
+		bgColor = FlxColor.RED;
+		
 		//make the mouse invisible
 		//FlxG.mouse.visible = false;
 		
@@ -35,17 +41,22 @@ class PlayState extends FlxState
         add(tileMap);
 		 */
 		_level = new FlxTilemap();
-		_level.loadMapFromCSV("assets/images/test.csv", FlxGraphic.fromClass(GraphicAuto), 0, 0, AUTO);
+		_level.loadMapFromCSV("assets/images/test.csv", FlxGraphic.fromClass(GraphicAuto), 0, 0);
 		add(_level);
 		
+		_shadows = new ShadowSystem([]);
+		
 		//add the two players to the game
-		_player1 = new Player1(10,10);
+		_player1 = new Player1(10, 10, _shadows);
 		add(_player1);
 		_player2 = new Player2(20, 10);
 		add(_player2);
 		
 		//setting gravity
 		_player1.acceleration.y = _player2.acceleration.y = 600;
+		
+		add(_shadows);
+		
 		super.create();
 	}
 
@@ -57,8 +68,18 @@ class PlayState extends FlxState
 			FlxG.collide(_level, _player);
 			FlxG.overlap(_exit, _player, win);
 		*/
+		_shadows.beginLights();
+		_shadows.addLight(700, 1600, 1000);
+		_shadows.addLight(1200, 200, 130);
+		
+		super.update(elapsed);
 		FlxG.collide(_level, _player1);
 		FlxG.collide(_level, _player2);
-		super.update(elapsed);
+		
+	}
+	
+	override public function draw():Void
+	{
+		super.draw();
 	}
 }

@@ -10,6 +10,8 @@
 
  class Player1 extends FlxSprite
  {
+	 private var shadows : ShadowSystem;
+	 
 	 var speed:Float = 200;
 	 
 	 //orientation/angle
@@ -22,9 +24,10 @@
 	 var _left:Bool = false;
 	 var _right:Bool = false;
 	 
-     public function new(?X:Float=0, ?Y:Float=0)
+     public function new(?X:Float=0, ?Y:Float=0, shadows:ShadowSystem)
      {
          super(X, Y);
+		 this.shadows = shadows;
 		 //makeGraphic(32, 32, FlxColor.RED);
 		 loadGraphic("assets/images/duck.png", true, 100, 114);
 		 animation.add("walk", [0, 1, 0, 2], 5, true);
@@ -41,6 +44,7 @@
 	 {
 		 movement();
 		 super.update(elapsed);
+		 shadows.addLightPoint(getMidpoint());
 	 }
 	 function movement(): Void
 	 {
