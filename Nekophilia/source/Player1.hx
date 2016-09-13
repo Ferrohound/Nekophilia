@@ -49,7 +49,8 @@
 		 //especially in terms of the x position
 		 var tmp = getMidpoint();
 		 tmp.x += (x - FlxG.camera.scroll.x);
-		 tmp.y += (y - FlxG.camera.scroll.y);
+		 //-200 to center it with player1
+		 tmp.y += (y - FlxG.camera.scroll.y-200);
 		 shadows.addLightPoint(tmp);
 	 }
 	 function movement(): Void
