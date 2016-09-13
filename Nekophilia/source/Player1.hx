@@ -67,20 +67,38 @@
 				_rot = 180;
 				//set sprite facing direction
 				facing = FlxObject.LEFT;
+<<<<<<< HEAD
 				acceleration.x = -speed * factor;
+=======
+				acceleration.x = -speed * 4;
+				if (velocity.x < -speed){
+					velocity.x = -speed;
+				}
+>>>>>>> origin/master
 			}
 			else if (_right){
 				_rot = 0;
 				//get the sprite to face the right way
 				facing = FlxObject.RIGHT;
+<<<<<<< HEAD
 				acceleration.x = speed * factor;
+=======
+				acceleration.x = speed * 4;
+				if (velocity.x > speed){
+					velocity.x = speed;
+				}
+>>>>>>> origin/master
 			}
 			if (_down){
 				//_rot = 90;
 			}
 			if (_up&& isTouching(FlxObject.FLOOR)){
 				//_rot = 270;
+<<<<<<< HEAD
 				velocity.y = -400;
+=======
+				velocity.y = -speed;
+>>>>>>> origin/master
 			}
 			//velocity.set(speed);
 			//velocity.rotate(new FlxPoint(0, 0), _rot);
