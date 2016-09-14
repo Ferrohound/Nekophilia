@@ -41,6 +41,6 @@ class ShadowSystem extends FlxSprite
 	public function addLight(px:Float, py:Float, radius=200.0, color=FlxColor.WHITE) : Void
 	{
 		//draws those coordonates relative to itself and not the game world
-		FlxSpriteUtil.drawCircle(this, px, py, radius, color);
+		FlxSpriteUtil.drawCircle(this, px - this.x, py - this.y, radius, color);
 	}
 }
