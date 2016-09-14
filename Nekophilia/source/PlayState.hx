@@ -64,7 +64,7 @@ class PlayState extends FlxState
 		add(_level);
 		
 		//shadow system
-		_shadows = new ShadowSystem([]);
+		_shadows = new ShadowSystem();
 		
 		//add the two players to the game
 		_player1 = new Player1(10, 10, _shadows);

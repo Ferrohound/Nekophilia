@@ -11,9 +11,8 @@ class ShadowSystem extends FlxSprite
 {
 	
 	public var shadowColor : FlxColor;
-	private var lights : Array<FlxPoint>;
 
-	public function new(geometry:Array<FlxPoint>, shadowColor:FlxColor=0xFF101020) 
+	public function new(shadowColor:FlxColor=0xFF101020) 
 	{
 		super(0, 0);
 		this.shadowColor = shadowColor;
