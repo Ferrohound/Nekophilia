@@ -116,6 +116,54 @@ class DialogueBox extends FlxSpriteGroup
 		}
 	}
 	
+	/**
+	 * Begin reading a dialogue script. Will cancel any other running scripts.
+	 * 
+	 * @param	script
+	 * The script itself. By default, a script that closes itself
+	 * immediately.
+	 * 
+	 * SYNTAX:
+	 * 
+	 * Most text prints normally. Any line breaks must be present
+	 * in the script, as they will not be added automatically,
+	 * and lines without them will likely be cut off. With default
+	 * settings, the text box is about 35 characters wide and 5
+	 * lines high.
+	 * 
+	 * SPECIAL CASES:
+	 * - Empty line :
+	 * -	The player must press space to progress, at which point the text
+	 * -	box will be cleared.
+	 * - `@@` :
+	 * -	Becomes a single, non-special @ symbol.
+	 * - `@:` :
+	 * -	The rest of the current line is inserted into the name box, and
+	 * -	reading continues as normal at the beginning of the next line.
+	 * -	If there is nothing else on this line, this has the effect of
+	 * -	clearing the name box.
+	 * - `@\` :
+	 * -	Inserts a line break. Can be used to have an empty line without
+	 * -	activating the special case.
+	 * - `@0` - `@9` :
+	 * -	Executes the corresponding callback. See `callbacks`. If no such
+	 * -	callback exists, the characters are ignored completely.
+	 * - `@` at the exact end of the file :
+	 * -	The script ends immediately, without waiting for the player to
+	 * -	press space.
+	 * - `@` in any other context :
+	 * -	The @ is ignored, and the following character is displayed as
+	 * -	normal text.
+	 * -
+	 * @param	onExit -
+	 * A callback which will be executed when the script exits. It will not
+	 * be called if the script is cancelled by beginning another script.
+	 * @param	callbacks -
+	 * A list of functions which can be executed by the script at arbitrary
+	 * points using the format `@0` - `@9`. More than ten functions can
+	 * be provided, but there is currently no way for the script to access
+	 * them.
+	 */
 	public function showScript(script="@", ?onExit:Void->Void, ?callbacks:Array<Void->Void>)
 	{
 		_script = script.split('\r\n').join('\n');
