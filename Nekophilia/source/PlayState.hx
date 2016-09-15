@@ -25,7 +25,8 @@ class PlayState extends FlxState
 	//midpoint game object for camera
 	var _midPoint:FlxObject;
 	
-	var _shadows:ShadowSystem;
+	var _shadows :ShadowSystem;
+	var _dialogue:DialogueBox;
 	
 	private var _level:FlxTilemap;
 	
@@ -80,6 +81,9 @@ class PlayState extends FlxState
 		
 		add(_shadows);
 		
+		_dialogue = new DialogueBox();
+		add(_dialogue);
+		
 		super.create();
 	}
 
@@ -119,11 +123,10 @@ class PlayState extends FlxState
 		FlxG.overlap(_exit, _player2, win);
 		 */
 		
-	}
-	
-	override public function draw():Void
-	{
-		super.draw();
+		if (FlxG.keys.anyJustPressed([ENTER])) {
+			_dialogue.showScript(Assets.getText("assets/text/1-arrive.txt"),[shake]);
+		}
+		
 	}
 	
 	//method to call for simple camera shake
