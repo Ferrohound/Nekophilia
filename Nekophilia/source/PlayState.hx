@@ -124,7 +124,10 @@ class PlayState extends FlxState
 		 */
 		
 		if (FlxG.keys.anyJustPressed([ENTER])) {
-			_dialogue.showScript(Assets.getText("assets/text/1-arrive.txt"),[shake]);
+			_dialogue.showScript(Assets.getText("assets/text/1-arrive.txt"), null, [shake]);
+		}
+		if (FlxG.keys.anyJustPressed([ESCAPE])) {
+			_dialogue.showScript();
 		}
 		
 	}

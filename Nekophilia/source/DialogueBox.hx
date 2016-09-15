@@ -48,7 +48,7 @@ class DialogueBox extends FlxSpriteGroup
 		_nameBox.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 3);
 		add(_nameBox);
 		
-		_textBox = new FlxText(5, 5, width - 10, "", 20);
+		_textBox = new FlxText(10, 10, width - 20, "", 20);
 		_textBox.wordWrap = false;
 		_textBox.color = FlxColor.BLACK;
 		add(_textBox);
@@ -74,7 +74,7 @@ class DialogueBox extends FlxSpriteGroup
 				switch(next) {
 				case '\\':
 					_textBox.text += '\n';
-				case 't':
+				case ':':
 					var eol = nextIndexOf(_script, '\n', _currChar);
 					_nameBox.text = _script.substring(_currChar, eol);
 					_currChar = eol + 1;
@@ -87,9 +87,11 @@ class DialogueBox extends FlxSpriteGroup
 					var i = Std.parseInt(next);
 					if (i == null) {
 						_textBox.text += next;
-					} else if (callbacks != null && i < callbacks.length) {
-						callbacks[i]();
+					} else {
 						_delay = 0;
+						if (callbacks != null && i < callbacks.length) {
+							callbacks[i]();
+						}
 					}
 				}
 			} else if (char == '\n' && (_currChar >= _script.length || _script.charAt(_currChar) == '\n')) {
@@ -114,7 +116,7 @@ class DialogueBox extends FlxSpriteGroup
 		}
 	}
 	
-	public function showScript(script:String, ?callbacks:Array<Void->Void>, ?onExit:Void->Void)
+	public function showScript(script="@", ?onExit:Void->Void, ?callbacks:Array<Void->Void>)
 	{
 		_script = script.split('\r\n').join('\n');
 		_textBox.text = _nameBox.text = "";

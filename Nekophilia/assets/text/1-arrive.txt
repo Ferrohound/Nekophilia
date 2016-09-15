@@ -1,19 +1,19 @@
-@tOwen
+@:Owen
 This is it. I'm sure of it.
 
-@tAimee
+@:Aimee
 Really? I thought it was the OTHER
 creepy abandoned house in the
 middle of the woods.
 
-@tOwen
+@:Owen
 This is exactly how I pictured it.
 Oscuro always loved Victorians.
 Though I had him pinned for a Dark
 Blue or Maroon exterior finish
 type of guy.
 
-@tAimee
+@:Aimee
 -Sigh-
 
 Can we just get inside please?
@@ -22,7 +22,7 @@ I get my money, and I can go
 about my life not having to hear
 you swoon over this painter dude.
 
-@tOwen
+@:Owen
 Painter dude? Javier Oscuro is a
 legend. Or was. No one really knows
 where he is now. And this "dumb
@@ -31,11 +31,11 @@ is the last one he worked on.
 
 It'd be worth @0millions.
 
-@tAimee
+@:Aimee
 You're finally holding my interest.
 Let's get inside.
 
-@t
+@:
 WASD To Move
 SPACE to Jump
 E to Investigate
