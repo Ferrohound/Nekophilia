@@ -16,6 +16,7 @@ class ShadowSystem extends FlxSprite
 	{
 		super(0, 0);
 		this.shadowColor = shadowColor;
+		this.scrollFactor.set(0, 0);
 		
 		blend = BlendMode.MULTIPLY;
 		makeGraphic(FlxG.width + 100, FlxG.height + 100, shadowColor);
@@ -28,8 +29,8 @@ class ShadowSystem extends FlxSprite
 	
 	public function beginLights(p:FlxPoint) : Void
 	{
-		x = FlxG.camera.scroll.x;
-		y = FlxG.camera.scroll.y;
+		//x = FlxG.camera.scroll.x;
+		//y = FlxG.camera.scroll.y;
 		FlxSpriteUtil.fill(this, shadowColor);
 	}
 	
@@ -41,6 +42,6 @@ class ShadowSystem extends FlxSprite
 	public function addLight(px:Float, py:Float, radius=200.0, color=FlxColor.WHITE) : Void
 	{
 		//draws those coordonates relative to itself and not the game world
-		FlxSpriteUtil.drawCircle(this, px - this.x, py - this.y, radius, color);
+		FlxSpriteUtil.drawCircle(this, px - FlxG.camera.scroll.x, py - FlxG.camera.scroll.y, radius, color);
 	}
 }
