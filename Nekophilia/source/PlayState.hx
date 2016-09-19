@@ -322,6 +322,25 @@ class PlayState extends FlxState
 	//self explanatory
 	function loadAudio():Void
 	{
+		#if flash
+		_stemA = FlxG.sound.load(AssetPaths.A_Base_Stem__mp3);
+		_stemA = FlxG.sound.load(AssetPaths.B_Melody_Stem__mp3);
+		_stemA = FlxG.sound.load(AssetPaths.C_MonsterApproach_Stem__mp3);
+		_stemA = FlxG.sound.load(AssetPaths.D_Piano_Stem__mp3);
+		_stemA = FlxG.sound.load(AssetPaths.E_Abrasive_Stem__mp3);
+		_stemA = FlxG.sound.load(AssetPaths.F_Monster_Creeping_Stem__mp3);
+		_stemA = FlxG.sound.load(AssetPaths.G_Soundscape_Stem__mp3);
+		
+		_aVoice = FlxG.sound.load(AssetPaths.Aimee_Voice_Sample__mp3);
+		_oVoice =FlxG.sound.load(AssetPaths.Owen_Voice_Sample__mp3);
+		
+		_boxDrag =FlxG.sound.load(AssetPaths.Spooky_Box_Drag__mp3);
+		
+		_AleftFoot =FlxG.sound.load(AssetPaths.Spooky_Aimee_Footstep_1__mp3);
+		_ArightFoot =FlxG.sound.load(AssetPaths.Spooky_Aimee_Footstep_2__mp3);
+		_OleftFoot = FlxG.sound.load(AssetPaths.Spooky_Owen_Footstep_1__mp3);
+		_OrightFoot = FlxG.sound.load(AssetPaths.Spooky_Owen_Footstep_2__mp3);
+		#else
 		_stemA = FlxG.sound.load(AssetPaths.A_Base_Stem__ogg);
 		_stemA = FlxG.sound.load(AssetPaths.B_Melody_Stem__ogg);
 		_stemA = FlxG.sound.load(AssetPaths.C_MonsterApproach_Stem__ogg);
@@ -339,5 +358,6 @@ class PlayState extends FlxState
 		_ArightFoot =FlxG.sound.load(AssetPaths.Spooky_Aimee_Footstep_2__ogg);
 		_OleftFoot = FlxG.sound.load(AssetPaths.Spooky_Owen_Footstep_1__ogg);
 		_OrightFoot = FlxG.sound.load(AssetPaths.Spooky_Owen_Footstep_2__ogg);
+		#end
 	}
 }
