@@ -85,6 +85,8 @@ class DialogueBox extends FlxSpriteGroup
 					setName(_script.substring(_currChar, eol));
 					_currChar = eol + 1;
 					_delay = 0;
+				case 'x':
+					_textBox.text = "";
 				case '':
 					this.kill();
 					typing = false;
@@ -174,6 +176,9 @@ class DialogueBox extends FlxSpriteGroup
 	 * - `@\` :
 	 * -	Inserts a line break. Can be used to have an empty line without
 	 * -	activating the special case.
+	 * - `@x` :
+	 * -	Clears the screen. Useful for having one line go straight into
+	 * -	another.
 	 * - `@0` - `@9` :
 	 * -	Executes the corresponding callback. See `callbacks`. If no such
 	 * -	callback exists, the characters are ignored completely.
