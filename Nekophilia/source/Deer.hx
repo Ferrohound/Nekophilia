@@ -27,6 +27,7 @@ package;
 	 
 	 public function new(?X:Float=0, ?Y:Float=0,state:PlayState){
 		 super(X, Y);
+		 acceleration.y = 600;
 		 _spookStem = state._stemC;
 		 _spookStem.proximity(x, y, FlxG.camera.target, FlxG.width * 0.5);
 		 _defaultStem = state._stemB;
@@ -35,6 +36,13 @@ package;
 		 _player2 = state._player2;
 		 
 		 drag.x = drag.y = 1100;
+		 
+		 loadGraphic("assets/images/lynx.png", true, 64, 64);
+		 animation.add("move", [1, 2, 3, 4], 6, false);
+		 
+		 //for flipping the sprite when the player is facing other directions
+		 setFacingFlip(FlxObject.LEFT, true, false);
+		 setFacingFlip(FlxObject.RIGHT, false, false);
 	 }
 	 
 	 //move the sprite closer to the closest player in
@@ -46,14 +54,18 @@ package;
 		//move towards player1
 		if (getMidpoint().distanceTo(_player1.getMidpoint()) < _radius || getMidpoint().distanceTo(_player2.getMidpoint()) < _radius)
 		{
-			if ((_player1.getMidpoint().distanceTo(getMidpoint())) < (_player2.getMidpoint().distanceTo(getMidpoint()))){
+			if ((_player1.getMidpoint().distanceTo(getMidpoint())) < (_player2.getMidpoint().distanceTo(getMidpoint())))
+			{
+				_spookStem.proximity(x, y, _player1, FlxG.width * 0.5);
 				if (_player1.x < x){
+					facing = FlxObject.LEFT;
 					acceleration.x = -speed * factor;
 					if (velocity.x < -speed){
 						velocity.x = -speed;
 					}
 				}
 				else{
+					facing = FlxObject.RIGHT;
 					acceleration.x = speed * factor;
 					if (velocity.x > speed){
 						velocity.x = speed;
@@ -62,19 +74,27 @@ package;
 			}
 		//move towards player2
 			else{
+				_spookStem.proximity(x, y, _player2, FlxG.width * 0.5);
 				if (_player1.x < x){
+					facing = FlxObject.LEFT;
 					acceleration.x = -speed * factor;
 					if (velocity.x < -speed){
 						velocity.x = -speed;
 					}
 				}
 				else{
+					facing = FlxObject.RIGHT;
 					acceleration.x = speed * factor;
 					if (velocity.x > speed){
 						velocity.x = speed;
 					}
 				}
 			}
+			animation.play("move");
+		}
+		else{
+			_spookStem.proximity(x, y, FlxG.camera.target, FlxG.width * 0.5);
+			animation.reset();
 		}
 		//reduce Bstem audio
 		_defaultStem.volume = 1 - _spookStem.volume;

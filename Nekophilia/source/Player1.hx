@@ -89,7 +89,7 @@
 			}
 			if (_up&& isTouching(FlxObject.FLOOR)){
 				//_rot = 270;
-				velocity.y = -400;
+				velocity.y = -500;
 			}
 			//velocity.set(speed);
 			//velocity.rotate(new FlxPoint(0, 0), _rot);

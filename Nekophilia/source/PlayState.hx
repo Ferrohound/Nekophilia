@@ -23,6 +23,7 @@ class PlayState extends FlxState
 	//look into Haxe inheritance 
 	public var _player1:Player1;
 	public var _player2:Player2;
+	public var TMP:Deer;
 	//midpoint game object for camera
 	var _midPoint:FlxObject;
 	
@@ -45,6 +46,7 @@ class PlayState extends FlxState
 	public var _Bboxes:FlxGroup;
 	public var _LBoxes:FlxGroup;
 	public var _deer:FlxGroup;
+	public var _locks:FlxGroup;
 	//the exit door
 	public var _exit:FlxSprite;
 	
@@ -79,6 +81,7 @@ class PlayState extends FlxState
 		_LBoxes = new FlxGroup();
 		_dead = new FlxGroup();
 		_deer = new FlxGroup();
+		_locks = new FlxGroup();
 		
 		bgColor = FlxColor.RED;
 		
@@ -87,9 +90,10 @@ class PlayState extends FlxState
 		var ext = 100;
         FlxG.camera.setSize(FlxG.width + ext, FlxG.height + ext);
 		//make the mouse invisible
-		//FlxG.mouse.visible = false;
+		FlxG.mouse.visible = false;
 		
 		loadAudio();
+		_stemA.play();
 		
 		BtileMap = new FlxTilemap();
         var mapData:String = Assets.getText("assets/data/Level_Background.csv");
@@ -144,6 +148,8 @@ class PlayState extends FlxState
 		_dialogue = new DialogueBox(this);
 		add(_dialogue);
 		
+		//TMP = new Deer(500, 320, this);
+		
 		super.create();
 	}
 
@@ -181,6 +187,11 @@ class PlayState extends FlxState
 		FlxG.overlap(_dead, _player1, dead);
 		FlxG.overlap(_dead, _player2, dead);
 		
+		//start unlock sequence
+		if(FlxG.keys.anyJustPressed([E])){
+			FlxG.overlap(_locks, _player2, unlock);
+		}
+		
 		if (FlxG.keys.anyJustPressed([ENTER])) {
 			_dialogue.showScript(Assets.getText("assets/text/1-arrive.txt"), null, [shake]);
 		}
@@ -190,6 +201,7 @@ class PlayState extends FlxState
 		
 		FlxG.collide(FtileMap, _player1);
 		FlxG.collide(FtileMap, _player2);
+		FlxG.collide(FtileMap, TMP);
 		//Script for colliding the level with the player
 		// Collide with foreground tile layer
 		//_level.collideWithLevel(_player1);
@@ -219,25 +231,29 @@ class PlayState extends FlxState
 		_player2.kill();
 	}
 	
+	public function unlock(LOCK:FlxObject,Player:FlxObject):Void{
+		//do the unlocking minigame
+	}
+	
 	//self explanatory
 	function loadAudio():Void
 	{
-		_stemA = FlxG.sound.load("assets/music/A_Baste_Stem.ogg");
-		_stemA = FlxG.sound.load("assets/music/B_Melody_Stem.ogg");
-		_stemA = FlxG.sound.load("assets/music/C_MonsterApproach_Stem.ogg");
-		_stemA = FlxG.sound.load("assets/music/D_Piano_Stem.ogg");
-		_stemA = FlxG.sound.load("assets/music/E_Abrasive_Stem.ogg");
-		_stemA = FlxG.sound.load("assets/music/F_Monster_Creeping_Stem.ogg");
-		_stemA = FlxG.sound.load("assets/music/G_Soundscape_Stem.ogg");
+		_stemA = FlxG.sound.load(AssetPaths.A_Base_Stem__ogg);
+		_stemA = FlxG.sound.load(AssetPaths.B_Melody_Stem__ogg);
+		_stemA = FlxG.sound.load(AssetPaths.C_MonsterApproach_Stem__ogg);
+		_stemA = FlxG.sound.load(AssetPaths.D_Piano_Stem__ogg);
+		_stemA = FlxG.sound.load(AssetPaths.E_Abrasive_Stem__ogg);
+		_stemA = FlxG.sound.load(AssetPaths.F_Monster_Creeping_Stem__ogg);
+		_stemA = FlxG.sound.load(AssetPaths.G_Soundscape_Stem__ogg);
 		
-		_aVoice = FlxG.sound.load("assets/sounds/Aimee_Voice_Sample.ogg");
-		_oVoice =FlxG.sound.load("assets/sounds/Owen_Voice_Sample.ogg");
+		_aVoice = FlxG.sound.load(AssetPaths.Aimee_Voice_Sample__ogg);
+		_oVoice =FlxG.sound.load(AssetPaths.Owen_Voice_Sample__ogg);
 		
-		_boxDrag =FlxG.sound.load("assets/sounds/Spooky_Box_Drag.ogg");
+		_boxDrag =FlxG.sound.load(AssetPaths.Spooky_Box_Drag__ogg);
 		
-		_AleftFoot =FlxG.sound.load("assets/sounds/Spooky_Aimee_Footstep1.ogg");
-		_ArightFoot =FlxG.sound.load("assets/sounds/Spooky_Aimee_Footstep2.ogg");
-		_OleftFoot = FlxG.sound.load("assets/sounds/Spooky_Owen_Footstep1.ogg");
-		_OrightFoot = FlxG.sound.load("assets/sounds/Spooky_Owen_Footstep2.ogg");
+		_AleftFoot =FlxG.sound.load(AssetPaths.Spooky_Aimee_Footstep_1__ogg);
+		_ArightFoot =FlxG.sound.load(AssetPaths.Spooky_Aimee_Footstep_2__ogg);
+		_OleftFoot = FlxG.sound.load(AssetPaths.Spooky_Owen_Footstep_1__ogg);
+		_OrightFoot = FlxG.sound.load(AssetPaths.Spooky_Owen_Footstep_2__ogg);
 	}
 }

@@ -7,9 +7,10 @@ import flixel.tweens.FlxTween;
 //door game object
 class Door extends FlxSprite
 {
-	public function new(X:Float=0, Y:Float=0) 
+	public var _open:Bool;
+	public function new(X:Float=0, Y:Float=0, open:Bool = false) 
 	{
 		super(X, Y);
-		//loadGraphic("assets/images/duck.png");
+		_open = open;
 	}
 }
