@@ -11,6 +11,7 @@ import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxGroup;
+import flixel.system.FlxSound;
 
 import flixel.graphics.FlxGraphic;
 import flixel.tile.FlxTilemap;
@@ -20,8 +21,8 @@ class PlayState extends FlxState
 {
 	//two player objects, one controlled by WASD one by the arrow keys
 	//look into Haxe inheritance 
-	var _player1:Player1;
-	var _player2:Player2;
+	public var _player1:Player1;
+	public var _player2:Player2;
 	//midpoint game object for camera
 	var _midPoint:FlxObject;
 	
@@ -43,8 +44,29 @@ class PlayState extends FlxState
 	//group for the big doors
 	public var _Bboxes:FlxGroup;
 	public var _LBoxes:FlxGroup;
+	public var _deer:FlxGroup;
 	//the exit door
 	public var _exit:FlxSprite;
+	
+	//audio stems
+	public var _stemA:FlxSound;
+	public var _stemB:FlxSound;
+	public var _stemC:FlxSound;
+	public var _stemD:FlxSound;
+	public var _stemE:FlxSound;
+	public var _stemF:FlxSound;
+	public var _stemG:FlxSound;
+	
+	var _aVoice:FlxSound;
+	var _oVoice:FlxSound;
+	
+	var _boxDrag:FlxSound;
+	
+	var _AleftFoot:FlxSound;
+	var _ArightFoot:FlxSound;
+	var _OleftFoot:FlxSound;
+	var _OrightFoot:FlxSound;
+	
 	
 	//private var _shakeTriggers:FlxTypedGroup<shakeTrigger>;
 	
@@ -52,9 +74,12 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		bgColor = 0xffaaaaaa;
+		
 		_Bboxes = new FlxGroup();
 		_LBoxes = new FlxGroup();
 		_dead = new FlxGroup();
+		_deer = new FlxGroup();
+		
 		bgColor = FlxColor.RED;
 		
 		//extend camera size so when the screen shakes
@@ -64,6 +89,7 @@ class PlayState extends FlxState
 		//make the mouse invisible
 		//FlxG.mouse.visible = false;
 		
+		loadAudio();
 		
 		BtileMap = new FlxTilemap();
         var mapData:String = Assets.getText("assets/data/Level_Background.csv");
@@ -88,6 +114,8 @@ class PlayState extends FlxState
 		add(_Bboxes);
 		add(_LBoxes);
 		add(_dead);
+		//iterate over all the deer and create Deer objects
+		add(_deer);
 		
 		
 		//_level = new FlxTilemap();
@@ -186,5 +214,27 @@ class PlayState extends FlxState
 		//do final cutscene stuff
 		_player1.kill();
 		_player2.kill();
+	}
+	
+	//self explanatory
+	function loadAudio():Void
+	{
+		_stemA = FlxG.sound.load("assets/music/A_Baste_Stem.ogg");
+		_stemA = FlxG.sound.load("assets/music/B_Melody_Stem.ogg");
+		_stemA = FlxG.sound.load("assets/music/C_MonsterApproach_Stem.ogg");
+		_stemA = FlxG.sound.load("assets/music/D_Piano_Stem.ogg");
+		_stemA = FlxG.sound.load("assets/music/E_Abrasive_Stem.ogg");
+		_stemA = FlxG.sound.load("assets/music/F_Monster_Creeping_Stem.ogg");
+		_stemA = FlxG.sound.load("assets/music/G_Soundscape_Stem.ogg");
+		
+		_aVoice = FlxG.sound.load("assets/sounds/Aimee_Voice_Sample.ogg");
+		_oVoice =FlxG.sound.load("assets/sounds/Owen_Voice_Sample.ogg");
+		
+		_boxDrag =FlxG.sound.load("assets/sounds/Spooky_Box_Drag.ogg");
+		
+		_AleftFoot =FlxG.sound.load("assets/sounds/Spooky_Aimee_Footstep1.ogg");
+		_ArightFoot =FlxG.sound.load("assets/sounds/Spooky_Aimee_Footstep2.ogg");
+		_OleftFoot = FlxG.sound.load("assets/sounds/Spooky_Owen_Footstep1.ogg");
+		_OrightFoot = FlxG.sound.load("assets/sounds/Spooky_Owen_Footstep2.ogg");
 	}
 }

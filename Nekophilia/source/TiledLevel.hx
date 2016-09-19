@@ -187,6 +187,10 @@ class TiledLevel extends TiledMap
 				//exit.exists = false;
 				state._exit = exit;
 				//group.add(exit);
+			case "deer":
+				var tileset = g.map.getGidOwner(o.gid);
+				var deer = new FlxSprite(x, y, "assets/images/" + tileset.imageSource);
+				state._deer.add(deer);
 		}
 	}
 
