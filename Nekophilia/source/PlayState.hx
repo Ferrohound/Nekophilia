@@ -55,6 +55,11 @@ class PlayState extends FlxState
 	//the exit door
 	public var _exit:FlxSprite;
 	
+	//triggers
+	public var _startTrigger:FlxGroup;
+	public var _monsterChase:FlxObject;
+	public var _monsterEscape:FlxObject;
+	
 	//audio stems
 	public var _stemA:FlxSound;
 	public var _stemB:FlxSound;
@@ -99,7 +104,7 @@ class PlayState extends FlxState
 		FlxG.mouse.visible = false;
 		
 		loadAudio();
-		_stemB.play();
+		//_stemB.play();
 		
 		BtileMap = new FlxTilemap();
         var mapData:String = Assets.getText("assets/data/Level_Background.csv");
@@ -168,6 +173,7 @@ class PlayState extends FlxState
 		
 		add(Foreground);
 		add(_shadows);
+		add(_startTrigger);
 		
 		_dialogue = new DialogueBox(["Owen"=>_oVoice, "Aimee"=>_aVoice]);
 		add(_dialogue);
@@ -220,7 +226,14 @@ class PlayState extends FlxState
 		//add the candles
 		var candleCoords:Array<FlxPoint> = Objects.getTileCoords(8, false);
 		for (point in candleCoords){
-			var tmp = new Candle(_shadows, point.x, point.y);
+			_candles.add(new Candle(_shadows, point.x, point.y));
+		}
+		
+		//load in start trigger
+		var triggerCoords:Array<FlxPoint> = Objects.getTileCoords(11, false);
+		for (point in triggerCoords){
+			var tmp = new FlxObject(point.x, point.y, 64, 64);
+			_startTrigger.add(tmp);
 		}
 	}
 	
@@ -253,6 +266,8 @@ class PlayState extends FlxState
 		//FlxG.overlap(_exit, _player2, ending);
 		FlxG.overlap(_dead, _player1, dead);
 		FlxG.overlap(_dead, _player2, dead);
+		FlxG.overlap(_startTrigger, _player1, StrtTrig);
+		FlxG.overlap(_startTrigger, _player2, StrtTrig);
 		
 		//start unlock sequence
 		if(FlxG.keys.anyJustPressed([E])){
@@ -290,6 +305,11 @@ class PlayState extends FlxState
 		_player2.beforeCollidePlayer();
 		
 		FlxG.collide(_player1, _player2);
+	}
+	
+	function StrtTrig(Thing:FlxObject, Player:FlxObject):Void
+	{
+		_stemB.fadeIn();
 	}
 	
 	//method to call for simple camera shake
