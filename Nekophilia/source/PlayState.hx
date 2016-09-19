@@ -51,6 +51,7 @@ class PlayState extends FlxState
 	public var _deer:FlxGroup;
 	public var _locks:FlxGroup;
 	public var _dead:FlxGroup;
+	public var _candles:FlxGroup;
 	//the exit door
 	public var _exit:FlxSprite;
 	
@@ -86,6 +87,7 @@ class PlayState extends FlxState
 		_dead = new FlxGroup();
 		_deer = new FlxGroup();
 		_locks = new FlxGroup();
+		_candles = new FlxGroup();
 		
 		bgColor = FlxColor.RED;
 		
@@ -116,13 +118,7 @@ class PlayState extends FlxState
         mapData = Assets.getText("assets/data/Level_Object.csv");
         mapTilePath = "assets/data/Misc.png";
         Objects.loadMapFromCSV(mapData, mapTilePath, 64, 64);
-		var deathCoords:Array<FlxPoint> = Objects.getTileCoords(24, false);
-		
-		//add the death spots to the game
-		for (point in deathCoords){
-			var tmp = new FlxObject(point.x, point.y, 64, 64);
-			_dead.add(tmp);
-		}
+		loadObjects();
         add(Objects);
 		
 		//do nothing with the foreground :')
@@ -177,7 +173,56 @@ class PlayState extends FlxState
 		
 		super.create();
 	}
-
+	
+	function loadObjects():Void
+	{
+		var deathCoords:Array<FlxPoint> = Objects.getTileCoords(24, false);
+		
+		//add the death spots to the game
+		for (point in deathCoords){
+			var tmp = new FlxObject(point.x, point.y, 64, 64);
+			_dead.add(tmp);
+		}
+		
+		//add the locks
+		var lockCoords:Array<FlxPoint> = Objects.getTileCoords(2, false);
+		for (point in lockCoords){
+			var tmp = new Lock(this, point.x, point.y);
+			_locks.add(tmp);
+		}
+		//remove the lock sprites
+		var lockSprites:Array<Int> = Objects.getTileInstances(2);
+		for (i in 0...8){
+			//var lockSprite:Int = lockSprites[i];
+			//Objects.setTileByIndex(lockSprite, -1, true);	
+		}
+		
+		//add the doors
+		
+		//add small boxes
+		var sBoxCoords:Array<FlxPoint> = Objects.getTileCoords(17, false);
+		for (point in sBoxCoords){
+			var tmp = new Box(point.x, point.y,17);
+			_LBoxes.add(tmp);
+		}
+		//remove the box sprites
+		
+		//add big boxes
+		var bBoxCoords:Array<FlxPoint> = Objects.getTileCoords(12, false);
+		for (point in bBoxCoords){
+			var tmp = new Box(point.x, point.y,12);
+			_Bboxes.add(tmp);
+		}
+		//remove the box sprites
+		
+		
+		//add the candles
+		var candleCoords:Array<FlxPoint> = Objects.getTileCoords(8, false);
+		for (point in candleCoords){
+			var tmp = new Candle(_shadows, point.x, point.y);
+		}
+	}
+	
 	override public function update(elapsed:Float):Void
 	{		
 		//update the position of the midPoint object for the camera
@@ -216,6 +261,9 @@ class PlayState extends FlxState
 		if(FlxG.keys.anyJustPressed([E])){
 			FlxG.overlap(_locks, _player2, unlock);
 		}
+		if (FlxG.keys.anyJustPressed([CONTROL])){
+			FlxG.overlap(_candles, _player1, lightCandle);
+		}
 		
 		if (FlxG.keys.anyJustPressed([ENTER])) {
 			_dialogue.showScript(Assets.getText("assets/text/1-arrive.txt"), null, [shake]);
@@ -227,6 +275,12 @@ class PlayState extends FlxState
 		FlxG.collide(FtileMap, _player1);
 		FlxG.collide(FtileMap, _player2);
 		FlxG.collide(FtileMap, TMP);
+		
+		//collide with boxes
+		FlxG.collide(_LBoxes, _player1);
+		FlxG.collide(_LBoxes, _player2);
+		FlxG.collide(_Bboxes, _player1);
+		FlxG.collide(_Bboxes, _player2);
 		//Script for colliding the level with the player
 		// Collide with foreground tile layer
 		//_level.collideWithLevel(_player1);
@@ -248,6 +302,10 @@ class PlayState extends FlxState
 		_player1.kill();
 		_player2.kill();
 		FlxG.resetState();
+	}
+	public function lightCandle(candle:FlxObject, Player:FlxObject): Void
+	{
+		//light the candle
 	}
 	
 	public function ending(Exit:FlxObject, Player:FlxObject):Void
