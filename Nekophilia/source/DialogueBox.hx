@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.group.FlxSpriteGroup;
 import flixel.util.FlxSpriteUtil;
@@ -10,6 +11,9 @@ import flixel.util.FlxColor;
 class DialogueBox extends FlxSpriteGroup
 {
 	public static inline var ST_CHAR_DELAY = 0.03;
+	
+	public var _oVoice : FlxSound;
+	public var _aVoice: FlxSound;
 	
 	public var vPadding  : Int;
 	
@@ -29,12 +33,15 @@ class DialogueBox extends FlxSpriteGroup
 	public var onExit    :       Void -> Void;
 	public var callbacks : Array<Void -> Void>;
 	
-	override public function new(width=500, height=150, vPadding=20) 
+	override public function new(state:PlayState,width=500, height=150, vPadding=20) 
 	{
 		super();
 		this.width = width;
 		this.height = height;
 		this.vPadding = vPadding;
+		
+		_oVoice = state._oVoice;
+		_aVoice = state._aVoice;
 		
 		this.scrollFactor.set(0, 0);
 		

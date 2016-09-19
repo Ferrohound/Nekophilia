@@ -57,15 +57,15 @@ class PlayState extends FlxState
 	public var _stemF:FlxSound;
 	public var _stemG:FlxSound;
 	
-	var _aVoice:FlxSound;
-	var _oVoice:FlxSound;
+	public var _aVoice:FlxSound;
+	public var _oVoice:FlxSound;
 	
-	var _boxDrag:FlxSound;
+	public var _boxDrag:FlxSound;
 	
-	var _AleftFoot:FlxSound;
-	var _ArightFoot:FlxSound;
-	var _OleftFoot:FlxSound;
-	var _OrightFoot:FlxSound;
+	public var _AleftFoot:FlxSound;
+	public var _ArightFoot:FlxSound;
+	public var _OleftFoot:FlxSound;
+	public var _OrightFoot:FlxSound;
 	
 	
 	//private var _shakeTriggers:FlxTypedGroup<shakeTrigger>;
@@ -113,6 +113,9 @@ class PlayState extends FlxState
 		
 		add(_Bboxes);
 		add(_LBoxes);
+		
+		//add the deer to the game
+		
 		add(_dead);
 		//iterate over all the deer and create Deer objects
 		add(_deer);
@@ -125,9 +128,9 @@ class PlayState extends FlxState
 		_shadows = new ShadowSystem();
 		
 		//add the two players to the game
-		_player1 = new Player1(128, 180, _shadows);
+		_player1 = new Player1(128, 320, _shadows);
 		add(_player1);
-		_player2 = new Player2(128, 180);
+		_player2 = new Player2(182, 320);
 		add(_player2);
 		
 		//set midpoint game object
@@ -138,7 +141,7 @@ class PlayState extends FlxState
 		
 		add(_shadows);
 		
-		_dialogue = new DialogueBox();
+		_dialogue = new DialogueBox(this);
 		add(_dialogue);
 		
 		super.create();

@@ -46,7 +46,7 @@ package;
 		//move towards player1
 		if (getMidpoint().distanceTo(_player1.getMidpoint()) < _radius || getMidpoint().distanceTo(_player2.getMidpoint()) < _radius)
 		{
-			if ((_player1.getMidpoint().distanceTo(getMidpoint()) < (_player2.getMidpoint().distanceTo(getMidpoint())){
+			if ((_player1.getMidpoint().distanceTo(getMidpoint())) < (_player2.getMidpoint().distanceTo(getMidpoint()))){
 				if (_player1.x < x){
 					acceleration.x = -speed * factor;
 					if (velocity.x < -speed){
