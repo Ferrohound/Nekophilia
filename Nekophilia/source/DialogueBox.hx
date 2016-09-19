@@ -33,7 +33,7 @@ class DialogueBox extends FlxSpriteGroup
 	public var onExit    :       Void -> Void;
 	public var callbacks : Array<Void -> Void>;
 	
-	override public function new(voices:Map<String,FlxSound>, width=500, height=150, vPadding=20) 
+	override public function new(voices:Map<String,FlxSound>, width=250, height=75, vPadding=10) 
 	{
 		super();
 		this.width = width;
@@ -46,15 +46,15 @@ class DialogueBox extends FlxSpriteGroup
 		
 		_bgBox = new FlxSprite();
 		_bgBox.makeGraphic(width, height, 0xFFF9A060);
-		FlxSpriteUtil.drawRect(_bgBox, 5, 5, width - 10, height - 10, 0xFFFDD6B9);
+		FlxSpriteUtil.drawRect(_bgBox, 5, 5, width - 5, height - 5, 0xFFFDD6B9);
 		add(_bgBox);
 		
-		_nameBox = new FlxText(5, -40, 0, "", 30);
+		_nameBox = new FlxText(2.5, -20, 0, "", 15);
 		_nameBox.wordWrap = false;
-		_nameBox.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 3);
+		_nameBox.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2);
 		add(_nameBox);
 		
-		_textBox = new FlxText(10, 10, width - 20, "", 20);
+		_textBox = new FlxText(5, 5, width - 10, "", 10);
 		_textBox.wordWrap = false;
 		_textBox.color = FlxColor.BLACK;
 		add(_textBox);

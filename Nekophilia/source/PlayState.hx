@@ -99,7 +99,7 @@ class PlayState extends FlxState
 		FlxG.mouse.visible = false;
 		
 		loadAudio();
-		_stemA.play();
+		_stemB.play();
 		
 		BtileMap = new FlxTilemap();
         var mapData:String = Assets.getText("assets/data/Level_Background.csv");
@@ -324,12 +324,12 @@ class PlayState extends FlxState
 	{
 		#if flash
 		_stemA = FlxG.sound.load(AssetPaths.A_Base_Stem__mp3);
-		_stemA = FlxG.sound.load(AssetPaths.B_Melody_Stem__mp3);
-		_stemA = FlxG.sound.load(AssetPaths.C_MonsterApproach_Stem__mp3);
-		_stemA = FlxG.sound.load(AssetPaths.D_Piano_Stem__mp3);
-		_stemA = FlxG.sound.load(AssetPaths.E_Abrasive_Stem__mp3);
-		_stemA = FlxG.sound.load(AssetPaths.F_Monster_Creeping_Stem__mp3);
-		_stemA = FlxG.sound.load(AssetPaths.G_Soundscape_Stem__mp3);
+		_stemB = FlxG.sound.load(AssetPaths.B_Melody_Stem__mp3);
+		_stemC = FlxG.sound.load(AssetPaths.C_MonsterApproach_Stem__mp3);
+		_stemD = FlxG.sound.load(AssetPaths.D_Piano_Stem__mp3);
+		_stemE= FlxG.sound.load(AssetPaths.E_Abrasive_Stem__mp3);
+		_stemF = FlxG.sound.load(AssetPaths.F_Monster_Creeping_Stem__mp3);
+		_stemG = FlxG.sound.load(AssetPaths.G_Soundscape_Stem__mp3);
 		
 		_aVoice = FlxG.sound.load(AssetPaths.Aimee_Voice_Sample__mp3);
 		_oVoice =FlxG.sound.load(AssetPaths.Owen_Voice_Sample__mp3);
@@ -342,12 +342,12 @@ class PlayState extends FlxState
 		_OrightFoot = FlxG.sound.load(AssetPaths.Spooky_Owen_Footstep_2__mp3);
 		#else
 		_stemA = FlxG.sound.load(AssetPaths.A_Base_Stem__ogg);
-		_stemA = FlxG.sound.load(AssetPaths.B_Melody_Stem__ogg);
-		_stemA = FlxG.sound.load(AssetPaths.C_MonsterApproach_Stem__ogg);
-		_stemA = FlxG.sound.load(AssetPaths.D_Piano_Stem__ogg);
-		_stemA = FlxG.sound.load(AssetPaths.E_Abrasive_Stem__ogg);
-		_stemA = FlxG.sound.load(AssetPaths.F_Monster_Creeping_Stem__ogg);
-		_stemA = FlxG.sound.load(AssetPaths.G_Soundscape_Stem__ogg);
+		_stemB = FlxG.sound.load(AssetPaths.B_Melody_Stem__ogg);
+		_stemC = FlxG.sound.load(AssetPaths.C_MonsterApproach_Stem__ogg);
+		_stemD = FlxG.sound.load(AssetPaths.D_Piano_Stem__ogg);
+		_stemE = FlxG.sound.load(AssetPaths.E_Abrasive_Stem__ogg);
+		_stemF = FlxG.sound.load(AssetPaths.F_Monster_Creeping_Stem__ogg);
+		_stemG = FlxG.sound.load(AssetPaths.G_Soundscape_Stem__ogg);
 		
 		_aVoice = FlxG.sound.load(AssetPaths.Aimee_Voice_Sample__ogg);
 		_oVoice =FlxG.sound.load(AssetPaths.Owen_Voice_Sample__ogg);
