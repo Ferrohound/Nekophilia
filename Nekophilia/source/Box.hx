@@ -15,8 +15,9 @@
 	//play smoke animation while dragged
 	 public function new(?X:Float = 0, ?Y:Float = 0, index:Int){
 		 super(X, Y);
-		 //loadGraphic("assets/images/lock.png", true, 64, 64);
+		 loadGraphic("assets/images/lock.png", true, 64, 64);
 		 //animation.add("open", [0, 1, 2, 3, 4, 5, 6], 6, false);
 		 //animation.play("open");
+		 acceleration.y = 600;
 	 }
  }
