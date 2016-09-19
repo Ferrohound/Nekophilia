@@ -1,99 +1,127 @@
- package;
+package;
 
- import flixel.FlxG;
- import flixel.FlxSprite;
- import flixel.math.FlxPoint;
- import flixel.system.FlxAssets.FlxGraphicAsset;
- import flixel.util.FlxColor;
- import flixel.math.FlxPoint;
- import flixel.FlxObject;	
+import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.input.keyboard.FlxKey;
+import flixel.math.FlxPoint;
+import flixel.system.FlxAssets.FlxGraphicAsset;
+import flixel.util.FlxColor;
+import flixel.math.FlxPoint;
+import flixel.FlxObject;	
 
- class Player extends FlxSprite
- {
-	 var speed:Float = 200;
-	 
-	 //orientation/angle
-	 //used to set motion trajectory
-	 var _rot: Float = 0;
-	 
-	 //keys pressed
-	 var _up:Bool = false;
-	 var _down:Bool = false;
-	 var _left:Bool = false;
-	 var _right:Bool = false;
-	 
-	 //added third argument to the constructor, "W" for WASD, "A" for Arrows
-     public function new(?X:Float=0, ?Y:Float=0, ?controlScheme:String="W")
-     {
-         super(X, Y);
-		 //loadGraphic file, animated?, frame width, frame height
-		 //animation.add("name", array of frames, fps, loop)
-		 //animation.play
-		 //makeGraphic(32, 32, FlxColor.RED);
-		 loadGraphic("assets/images/duck.png", true, 100, 114);
-		 animation.add("walk", [0, 1, 0, 2], 5, true);
-		 
-		 //setFacingFlip(direction, flipx, flipy);
-		 //for flipping the sprite when the player is facing other directions
-		 setFacingFlip(FlxObject.LEFT, true, false);
-		 setFacingFlip(FlxObject.RIGHT, false, false);
-		 
-		 drag.x = drag.y = 1100;
-     }
-	 
-	 override public function update(elapsed:Float): Void
-	 {
-		 movement();
-		 super.update(elapsed);
-	 }
-	 function movement(): Void
-	 {
-		 _up = FlxG.keys.anyPressed([UP, W]);
-		 _down = FlxG.keys.anyPressed([DOWN, S]);
-		 _left = FlxG.keys.anyPressed([LEFT, A]);
-		 _right = FlxG.keys.anyPressed([RIGHT, D]);
-		 
-		 //cancel out opposing directions
-		 if (_up && _down){
-			 _up = false;
-			 _down = false;
-			 //_up = _down = false;
-		 }
-		 
-		 if (_left && _right)
+class Player extends FlxSprite
+{
+	public var acceptInput = true;
+	
+	public var speed    :Float = 200;
+	public var jumpSpeed:Float = 500;
+	
+	var _upKey   :FlxKey;
+	var _downKey :FlxKey;
+	var _leftKey :FlxKey;
+	var _rightKey:FlxKey;
+	
+	//keys pressed
+	var _up   :Bool = false;
+	var _down :Bool = false;
+	var _left :Bool = false;
+	var _right:Bool = false;
+	
+	//added third argument to the constructor, "W" for WASD, "A" for Arrows
+	public function new(?X:Float = 0, ?Y:Float = 0)
+	{
+		super(X, Y);
+		
+		collisonXDrag = true;
+		
+		//setFacingFlip(direction, flipx, flipy);
+		//for flipping the sprite when the player is facing other directions
+		setFacingFlip(FlxObject.LEFT, true, false);
+		setFacingFlip(FlxObject.RIGHT, false, false);
+		
+		drag.x = drag.y = 1100;
+	}
+	
+	public function setControls(up:FlxKey, down:FlxKey, left:FlxKey, right:FlxKey)
+	{
+		_upKey    = up;
+		_downKey  = down;
+		_leftKey  = left;
+		_rightKey = right;
+	}
+	
+	override public function update(elapsed:Float): Void
+	{
+		movement();
+		super.update(elapsed);
+	}
+	
+	function movement(): Void
+	{
+		acceleration.x = 0;
+		
+		_up = FlxG.keys.anyPressed([_upKey]);
+		_down = FlxG.keys.anyPressed([_downKey]);
+		_left = FlxG.keys.anyPressed([_leftKey]);
+		_right = FlxG.keys.anyPressed([_rightKey]);
+		
+		//cancel out opposing directions
+		if (_left && _right)
 			_left = _right = false;
 			
-		if (_up || _down || _left || _right) {
+		if (acceptInput && (_up || _down || _left || _right)) {
 			
-			if (_left){
-				_rot = 180;
+			var factor = 1;
+			if (isTouching(FlxObject.FLOOR)) {
+				if (_down) {
+					factor = 1;
+				} else {
+					factor = 4;
+				}
+			}
+			
+			if (_left) {
 				//set sprite facing direction
 				facing = FlxObject.LEFT;
-				if (_up) _rot += 45;
-				else if (_down) _rot -= 45;
-			}
-			else if (_right){
-				_rot = 0;
+				acceleration.x = -speed * factor;
+				
+				if (velocity.x < -speed) {
+					velocity.x = -speed;
+				}
+			} else if (_right) {
 				//get the sprite to face the right way
 				facing = FlxObject.RIGHT;
-				if (_up) _rot -= 45;
-				else if (_down) _rot += 45;
+				acceleration.x = speed * factor;
+				
+				if (velocity.x > speed){
+					velocity.x = speed;
+				}
 			}
-			else if (_down) _rot = 90;
-			else if (_up) _rot = 270;
-			
-			
-			velocity.set(speed);
-			velocity.rotate(new FlxPoint(0, 0), _rot);
-			
-			if (velocity.x != 0||velocity.y!=0){
-				animation.play("walk");
+			if (_up && isTouching(FlxObject.FLOOR)) {
+				velocity.y = -jumpSpeed;
 			}
-			else{
-				animation.stop();
-				//set the animation frame
-			}
+			
 		}
-	 }
-	 
- }
+		
+		if (acceleration.x != 0) {
+			animation.play("walk");
+		} else {
+			animation.reset();
+		}
+	}
+	
+	public function beforeCollideTerrain()
+	{
+		allowCollisions = FlxObject.ANY;
+	}
+	
+	public function beforeCollidePlayer()
+	{
+		if (_down && isTouching(FlxObject.FLOOR)) {
+			allowCollisions = FlxObject.UP | FlxObject.DOWN;
+		} else {
+			allowCollisions = FlxObject.DOWN;
+		}
+	}
+	
+}

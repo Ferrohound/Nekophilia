@@ -46,10 +46,10 @@ class DialogueBox extends FlxSpriteGroup
 		
 		_bgBox = new FlxSprite();
 		_bgBox.makeGraphic(width, height, 0xFFF9A060);
-		FlxSpriteUtil.drawRect(_bgBox, 5, 5, width - 5, height - 5, 0xFFFDD6B9);
+		FlxSpriteUtil.drawRect(_bgBox, 5, 5, width - 10, height - 10, 0xFFFDD6B9);
 		add(_bgBox);
 		
-		_nameBox = new FlxText(2.5, -20, 0, "", 15);
+		_nameBox = new FlxText(5, -17, 0, "", 15);
 		_nameBox.wordWrap = false;
 		_nameBox.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2);
 		add(_nameBox);

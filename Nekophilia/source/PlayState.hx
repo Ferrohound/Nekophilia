@@ -238,10 +238,6 @@ class PlayState extends FlxState
 		
 		super.update(elapsed);
 		
-		var _down = FlxG.keys.anyPressed([DOWN]);
-		if (_down)
-			FlxG.collide(_player1, _player2);
-		
 		/*
 		//for handling groups, collision and win condition
 		FlxG.collide(_doors, _player2);
@@ -273,6 +269,9 @@ class PlayState extends FlxState
 			_dialogue.showScript();
 		}
 		
+		_player1.beforeCollideTerrain();
+		_player2.beforeCollideTerrain();
+		
 		FlxG.collide(FtileMap, _player1);
 		FlxG.collide(FtileMap, _player2);
 		FlxG.collide(FtileMap, TMP);
@@ -286,6 +285,11 @@ class PlayState extends FlxState
 		// Collide with foreground tile layer
 		//_level.collideWithLevel(_player1);
 		//_level.collideWithLevel(_player2);
+		
+		_player1.beforeCollidePlayer();
+		_player2.beforeCollidePlayer();
+		
+		FlxG.collide(_player1, _player2);
 	}
 	
 	//method to call for simple camera shake
