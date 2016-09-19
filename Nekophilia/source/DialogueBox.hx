@@ -12,8 +12,8 @@ class DialogueBox extends FlxSpriteGroup
 {
 	public static inline var ST_CHAR_DELAY = 0.03;
 	
-	public var _oVoice : FlxSound;
-	public var _aVoice: FlxSound;
+	private var _voices    : Map<String, FlxSound>;
+	private var _currVoice : FlxSound;
 	
 	public var vPadding  : Int;
 	
@@ -33,15 +33,14 @@ class DialogueBox extends FlxSpriteGroup
 	public var onExit    :       Void -> Void;
 	public var callbacks : Array<Void -> Void>;
 	
-	override public function new(state:PlayState,width=500, height=150, vPadding=20) 
+	override public function new(voices:Map<String,FlxSound>, width=500, height=150, vPadding=20) 
 	{
 		super();
 		this.width = width;
 		this.height = height;
 		this.vPadding = vPadding;
 		
-		_oVoice = state._oVoice;
-		_aVoice = state._aVoice;
+		_voices = voices;
 		
 		this.scrollFactor.set(0, 0);
 		
@@ -80,10 +79,10 @@ class DialogueBox extends FlxSpriteGroup
 				
 				switch(next) {
 				case '\\':
-					_textBox.text += '\n';
+					typeString('\n');
 				case ':':
 					var eol = nextIndexOf(_script, '\n', _currChar);
-					_nameBox.text = _script.substring(_currChar, eol);
+					setName(_script.substring(_currChar, eol));
 					_currChar = eol + 1;
 					_delay = 0;
 				case '':
@@ -93,7 +92,7 @@ class DialogueBox extends FlxSpriteGroup
 				default:
 					var i = Std.parseInt(next);
 					if (i == null) {
-						_textBox.text += next;
+						typeString(next);
 					} else {
 						_delay = 0;
 						if (callbacks != null && i < callbacks.length) {
@@ -101,11 +100,14 @@ class DialogueBox extends FlxSpriteGroup
 						}
 					}
 				}
-			} else if (char == '\n' && (_currChar >= _script.length || _script.charAt(_currChar) == '\n')) {
+			} else if (char == '\n' && _script.charAt(_currChar) == '\n') {
 				typing = false;
 				++_currChar;
 			} else {
-				_textBox.text += char;
+				typeString(char);
+				if (_currChar >= _script.length) {
+					typing = false;
+				}
 			}
 		}
 		if (FlxG.keys.anyJustPressed([SPACE])) {
@@ -121,6 +123,26 @@ class DialogueBox extends FlxSpriteGroup
 				_delay = _timer = 0;
 			}
 		}
+	}
+	
+	public function typeString(char:String)
+	{
+		_textBox.text += char;
+		if (_currVoice != null) {
+			_currVoice.play();
+		}
+	}
+	
+	public function setName(name:String) : String
+	{
+		_nameBox.text = name;
+		_currVoice = _voices[name];
+		return name;
+	}
+	
+	public function getName() : String
+	{
+		return _nameBox.text;
 	}
 	
 	/**

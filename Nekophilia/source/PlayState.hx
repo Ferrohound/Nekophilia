@@ -166,7 +166,7 @@ class PlayState extends FlxState
 		add(Foreground);
 		add(_shadows);
 		
-		_dialogue = new DialogueBox(this);
+		_dialogue = new DialogueBox(["Owen"=>_oVoice, "Aimee"=>_aVoice]);
 		add(_dialogue);
 		
 		//TMP = new Deer(500, 320, this);
@@ -266,7 +266,7 @@ class PlayState extends FlxState
 		}
 		
 		if (FlxG.keys.anyJustPressed([ENTER])) {
-			_dialogue.showScript(Assets.getText("assets/text/1-arrive.txt"), null, [shake]);
+			_dialogue.showScript(Assets.getText("assets/text/main/arrive.txt"), null, [shake]);
 		}
 		if (FlxG.keys.anyJustPressed([ESCAPE])) {
 			_dialogue.showScript();

@@ -1,0 +1,71 @@
+@:
+[SPACE] to Advance Text
+
+@:Owen
+This is it. I'm sure of it.
+
+@:Aimee
+Really? I thought it was the OTHER
+creepy abandoned house in the
+middle of the woods.
+
+@:Owen
+This is exactly how I pictured it.
+Oscuro always loved Victorians.
+
+Though I had him pinned for a Dark
+Blue or Maroon exterior finish
+type of guy.
+
+@:Aimee
+-Sigh-@\                     
+Can we just get inside please?
+
+You get your dumb painting, I get
+my money, and I can go about my
+life not having to hear you swoon
+over this painter dude.
+
+@:Owen
+Painter dude? Javier Oscuro is a
+legend.@\
+Or was.
+No one really knows where he is now.
+
+Also, this 'dumb painting', as
+I've told you multiple times,
+would be the last one he worked on.
+It'd be worth @0millions.
+
+@:Aimee
+Whatever...
+You've got a light right?
+
+@:Owen
+Of course. My trusty lantern my
+grandfather gave to me. He said,
+'O, it's dangerous to go alone,
+take this!'
+
+@:Aimee
+...Yeah, whatever.
+One last thing... Was the dress
+REALLY necessary? I feel like a
+plastic doll in this. 
+
+@:Owen
+Absolutely. We need to sell the
+illusion. Or would you prefer to
+be wearing a ski mask and a
+black and white striped shirt?
+
+@:Aimee
+Illusion? For who, The trees??
+
+@:Owen
+... Let's get inside!
+
+@:
+[W][A][S][D] To Move
+[SPACE] to Jump
+[E] to Investigate
