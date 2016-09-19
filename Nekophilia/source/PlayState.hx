@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
 import flixel.FlxState;
@@ -31,11 +32,13 @@ class PlayState extends FlxState
 	var _dialogue:DialogueBox;
 	
 	//group of flxObject to trigger death; attained from the tiled map
-	public var _dead:FlxGroup;
 	
-	private var _level:TiledLevel;
+	
+	//tilemaps
 	var BtileMap:FlxTilemap;
 	var FtileMap:FlxTilemap;
+	var Foreground:FlxTilemap;
+	var Objects:FlxTilemap;
 	
 	//Flixel groups
 	//use collide to prevent them from walking into it
@@ -47,6 +50,7 @@ class PlayState extends FlxState
 	public var _LBoxes:FlxGroup;
 	public var _deer:FlxGroup;
 	public var _locks:FlxGroup;
+	public var _dead:FlxGroup;
 	//the exit door
 	public var _exit:FlxSprite;
 	
@@ -107,12 +111,32 @@ class PlayState extends FlxState
         FtileMap.loadMapFromCSV(mapData, mapTilePath, 64, 64);
         add(FtileMap);
 		
+		//load the required objects
+		Objects = new FlxTilemap();
+        mapData = Assets.getText("assets/data/Level_Object.csv");
+        mapTilePath = "assets/data/Misc.png";
+        Objects.loadMapFromCSV(mapData, mapTilePath, 64, 64);
+		var deathCoords:Array<FlxPoint> = Objects.getTileCoords(24, false);
+		
+		//add the death spots to the game
+		for (point in deathCoords){
+			var tmp = new FlxObject(point.x, point.y, 64, 64);
+			_dead.add(tmp);
+		}
+        add(Objects);
+		
+		//do nothing with the foreground :')
+		Foreground = new FlxTilemap();
+        mapData = Assets.getText("assets/data/Level_FORE.csv");
+        mapTilePath = "assets/data/Misc.png";
+        Foreground.loadMapFromCSV(mapData, mapTilePath, 64, 64);
+		
 		FlxG.camera.setScrollBoundsRect(0, 0, FtileMap.width, FtileMap.height, true);
 		
 		//loading the level in with the Tiled file as input
-		_level = new TiledLevel("assets/data/Level.tmx", this);
+		//_level = new TiledLevel("assets/data/Level.tmx", this);
 		//add(_level.backgroundLayer);
-		add(_level.objectsLayer);
+		//add(_level.objectsLayer);
 		//add(_level.foregroundTiles);
 		
 		add(_Bboxes);
@@ -143,6 +167,7 @@ class PlayState extends FlxState
 		//setting gravity
 		_player1.acceleration.y = _player2.acceleration.y = 600;
 		
+		add(Foreground);
 		add(_shadows);
 		
 		_dialogue = new DialogueBox(this);
@@ -222,6 +247,7 @@ class PlayState extends FlxState
 	{
 		_player1.kill();
 		_player2.kill();
+		FlxG.resetState();
 	}
 	
 	public function ending(Exit:FlxObject, Player:FlxObject):Void
