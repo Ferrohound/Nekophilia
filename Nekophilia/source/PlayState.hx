@@ -163,13 +163,14 @@ class PlayState extends FlxState
 		//setting gravity
 		_player1.acceleration.y = _player2.acceleration.y = 600;
 		
+		//TMP = new Deer(500, 320, this);
+		//add(TMP);
+		
 		add(Foreground);
 		add(_shadows);
 		
 		_dialogue = new DialogueBox(["Owen"=>_oVoice, "Aimee"=>_aVoice]);
 		add(_dialogue);
-		
-		//TMP = new Deer(500, 320, this);
 		
 		super.create();
 	}

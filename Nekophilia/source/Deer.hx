@@ -20,7 +20,7 @@ package;
 	 var _spookStem:FlxSound;
 	 var _defaultStem:FlxSound;
 	 
-	 var _radius = 100;
+	 var _radius = 200;
 	 
 	 var _player1:Player1;
 	 var _player2:Player2;
@@ -31,6 +31,8 @@ package;
 		 _spookStem = state._stemC;
 		 _spookStem.proximity(x, y, FlxG.camera.target, FlxG.width * 0.5);
 		 _defaultStem = state._stemB;
+		 
+		 _spookStem.play();
 		 
 		 _player1 = state._player1;
 		 _player2 = state._player2;
@@ -51,6 +53,7 @@ package;
 	 //also probably play some sort of particle system animation
 	 override public function update(elapsed:Float): Void
 	 {
+		 _defaultStem.volume = 1-_spookStem.getActualVolume();
 		//move towards player1
 		if (getMidpoint().distanceTo(_player1.getMidpoint()) < _radius || getMidpoint().distanceTo(_player2.getMidpoint()) < _radius)
 		{
@@ -75,7 +78,7 @@ package;
 		//move towards player2
 			else{
 				_spookStem.proximity(x, y, _player2, FlxG.width * 0.5);
-				if (_player1.x < x){
+				if (_player2.x < x){
 					facing = FlxObject.LEFT;
 					acceleration.x = -speed * factor;
 					if (velocity.x < -speed){
@@ -96,7 +99,5 @@ package;
 			_spookStem.proximity(x, y, FlxG.camera.target, FlxG.width * 0.5);
 			animation.reset();
 		}
-		//reduce Bstem audio
-		_defaultStem.volume = 1 - _spookStem.volume;
 	 }
  }
