@@ -101,7 +101,7 @@ class TiledLevel extends TiledMap
 			if (layer.type != TiledLayerType.OBJECT)
 				continue;
 			var objectLayer:TiledObjectLayer = cast layer;
-
+			/*
 			//collection of images layer
 			if (layer.name == "images")
 			{
@@ -110,7 +110,7 @@ class TiledLevel extends TiledMap
 					loadImageObject(o);
 				}
 			}
-			
+			*/
 			//objects layer
 			if (layer.name == "Objects")
 			{

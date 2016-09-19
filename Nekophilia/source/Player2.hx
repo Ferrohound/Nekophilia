@@ -10,7 +10,7 @@
 
  class Player2 extends FlxSprite
  {
-	 var speed:Float = 275;
+	 var speed:Float = 300;
 	 
 	 //orientation/angle
 	 //used to set motion trajectory
@@ -71,7 +71,7 @@
 				//get the sprite to face the right way
 				facing = FlxObject.RIGHT;
 				acceleration.x = speed * 4;
-				if (velocity.x < -speed){
+				if (velocity.x > speed){
 					velocity.x = speed;
 				}
 			}

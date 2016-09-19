@@ -80,9 +80,9 @@ class PlayState extends FlxState
 		FlxG.camera.setScrollBoundsRect(0, 0, FtileMap.width, FtileMap.height, true);
 		
 		//loading the level in with the Tiled file as input
-		//_level = new TiledLevel("assets/data/Level.tmx", this);
+		_level = new TiledLevel("assets/data/Level.tmx", this);
 		//add(_level.backgroundLayer);
-		//add(_level.objectsLayer);
+		add(_level.objectsLayer);
 		//add(_level.foregroundTiles);
 		
 		add(_Bboxes);
@@ -147,6 +147,8 @@ class PlayState extends FlxState
 		
 		//FlxG.overlap(_exit, _player1, ending);
 		//FlxG.overlap(_exit, _player2, ending);
+		FlxG.overlap(_dead, _player1, dead);
+		FlxG.overlap(_dead, _player2, dead);
 		
 		if (FlxG.keys.anyJustPressed([ENTER])) {
 			_dialogue.showScript(Assets.getText("assets/text/1-arrive.txt"), null, [shake]);
@@ -171,6 +173,12 @@ class PlayState extends FlxState
 		FlxG.camera.shake(0.01, duration);
 		//white flash
 		FlxG.camera.flash(0xFFFFFFFF, duration);
+	}
+	
+	public function dead(Dead:FlxObject, Player:FlxObject): Void
+	{
+		_player1.kill();
+		_player2.kill();
 	}
 	
 	public function ending(Exit:FlxObject, Player:FlxObject):Void
