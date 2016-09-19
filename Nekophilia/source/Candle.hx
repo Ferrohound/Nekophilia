@@ -36,5 +36,6 @@ class Candle extends FlxSprite
 		} else {
 			animation.reset();
 		}
+		return lit;
 	}
 }
