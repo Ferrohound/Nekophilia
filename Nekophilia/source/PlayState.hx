@@ -328,9 +328,9 @@ class PlayState extends FlxState
 		_player2.kill();
 		FlxG.resetState();
 	}
-	public function lightCandle(candle:FlxObject, Player:FlxObject): Void
+	public function lightCandle(candle:Candle, Player:FlxObject): Void
 	{
-		//light the candle
+		candle.set_lit(true);
 	}
 	
 	public function ending(Exit:FlxObject, Player:FlxObject):Void
