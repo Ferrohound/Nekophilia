@@ -15,7 +15,7 @@ class Player1 extends Player
 	public function new(?X:Float=0, ?Y:Float=0, shadows:ShadowSystem)
 	{
 		super(X, Y);
-		setControls(W, S, A, D);
+		setControls(UP, DOWN, LEFT, RIGHT);
 		
 		var speed    :Float = 200;
 		var jumpSpeed:Float = 500;

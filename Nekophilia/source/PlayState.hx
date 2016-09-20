@@ -350,8 +350,9 @@ class PlayState extends FlxState
 		_player2.kill();
 	}
 	
-	public function unlock(LOCK:FlxObject,Player:FlxObject):Void{
+	public function unlock(LOCK:Lock,Player:FlxObject):Void{
 		//do the unlocking minigame
+		LOCK.unlock();
 	}
 	
 	//self explanatory
