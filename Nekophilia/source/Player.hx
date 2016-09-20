@@ -131,6 +131,7 @@ class Player extends FlxSprite
 	override public function kill(): Void
 	{
 		acceptInput = false;
+		scale.y = -1;
 		PlayState._dialogue.showScript(
 			deathScript,
 			deathScriptTag,
