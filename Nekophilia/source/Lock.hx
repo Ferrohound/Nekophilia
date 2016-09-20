@@ -29,6 +29,7 @@
 	 {
 		 if(locked){
 			animation.play("open");
+			SoundStore.unlock.play();
 			locked = false;
 		 }
 	 }

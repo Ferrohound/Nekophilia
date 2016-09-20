@@ -147,7 +147,7 @@ class PlayState extends FlxState
 		add(_shadows);
 		add(_startTrigger);
 		
-		_dialogue = new DialogueBox(["Owen"=>SoundStore._oVoice, "Aimee"=>SoundStore._aVoice]);
+		_dialogue = new DialogueBox(["Owen"=>SoundStore.voiceOwen, "Aimee"=>SoundStore.voiceAimee]);
 		add(_dialogue);
 		
 		_dialogue.showScript(
