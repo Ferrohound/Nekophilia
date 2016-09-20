@@ -35,8 +35,8 @@ package;
 		 
 		 _spookStem.play();
 		 
-		 _player1 = state._player1;
-		 _player2 = state._player2;
+		 _player1 = PlayState._player1;
+		 _player2 = PlayState._player2;
 		 
 		 drag.x = drag.y = 1100;
 		 

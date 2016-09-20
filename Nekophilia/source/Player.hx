@@ -27,6 +27,9 @@ class Player extends FlxSprite
 	var _left :Bool = false;
 	var _right:Bool = false;
 	
+	var deathScript:String;
+	var deathScriptTag:String;
+	
 	//added third argument to the constructor, "W" for WASD, "A" for Arrows
 	public function new(?X:Float = 0, ?Y:Float = 0)
 	{
@@ -40,6 +43,7 @@ class Player extends FlxSprite
 		setFacingFlip(FlxObject.RIGHT, false, false);
 		
 		drag.x = drag.y = 1100;
+		acceleration.y = 600;
 	}
 	
 	public function setControls(up:FlxKey, down:FlxKey, left:FlxKey, right:FlxKey)
@@ -122,6 +126,24 @@ class Player extends FlxSprite
 		} else {
 			allowCollisions = FlxObject.DOWN;
 		}
+	}
+	
+	override public function kill(): Void
+	{
+		acceptInput = false;
+		PlayState._dialogue.showScript(
+			deathScript,
+			deathScriptTag,
+			function(f, o, d) : Bool
+			{
+				if (!f) return false;
+				FlxG.camera.fade(FlxColor.BLACK, 2, false, function ()
+				{
+					FlxG.resetState();
+				});
+				return false;
+			}
+		);
 	}
 	
 }

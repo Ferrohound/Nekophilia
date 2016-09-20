@@ -14,6 +14,10 @@ class Player2 extends Player
 	public function new(?X:Float=0, ?Y:Float=0)
 	{
 		super(X, Y);
+		
+		deathScript = Assets.getText("assets/text/deaths/aimee-death.txt");
+		deathScriptTag = "aimee-death";
+		
 		setControls(W, S, A, D);
 
 		speed = 300;

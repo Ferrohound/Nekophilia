@@ -6,22 +6,24 @@ import flixel.math.FlxPoint;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.util.FlxColor;
 import flixel.math.FlxPoint;
-import flixel.FlxObject;	
+import flixel.FlxObject;
+import openfl.Assets;
 
 class Player1 extends Player
 {
-	private var shadows : ShadowSystem;
 	public var lanternLit = true;
 	
-	public function new(?X:Float=0, ?Y:Float=0, shadows:ShadowSystem)
+	public function new(?X:Float=0, ?Y:Float=0)
 	{
 		super(X, Y);
+		
+		deathScript = Assets.getText("assets/text/deaths/owen-death.txt");
+		deathScriptTag = "owen-death";
+		
 		setControls(UP, DOWN, LEFT, RIGHT);
 		
 		var speed    :Float = 200;
 		var jumpSpeed:Float = 500;
-		
-		this.shadows = shadows;
 		
 		loadGraphic("assets/images/duck.png", true, 100, 114);
 		animation.add("walk", [0, 1, 0, 2], 5, true);
@@ -32,7 +34,8 @@ class Player1 extends Player
 		super.update(elapsed);
 		
 		if (lanternLit) {
-			shadows.addLightPoint(this.getMidpoint());
+			PlayState._shadows.addLightPoint(this.getMidpoint());
 		}
 	}
+	
 }

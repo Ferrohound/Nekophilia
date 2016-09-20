@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.FlxSubState;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
@@ -21,15 +22,13 @@ import openfl.Assets;
 class PlayState extends FlxState
 {
 	//two player objects, one controlled by WASD one by the arrow keys
-	//look into Haxe inheritance 
-	public var _player1:Player1;
-	public var _player2:Player2;
-	public var TMP:Deer;
+	public static var _player1(default, null):Player1;
+	public static var _player2(default, null):Player2;
 	//midpoint game object for camera
 	var _midPoint:FlxObject;
 	
-	var _shadows :ShadowSystem;
-	var _dialogue:DialogueBox;
+	public static var _shadows (default, null):ShadowSystem;
+	public static var _dialogue(default, null):DialogueBox;
 	
 	//group of flxObject to trigger death; attained from the tiled map
 	
@@ -80,9 +79,6 @@ class PlayState extends FlxState
 	public var _OrightFoot:FlxSound;
 	
 	
-	//private var _shakeTriggers:FlxTypedGroup<shakeTrigger>;
-	
-	
 	override public function create():Void
 	{
 		bgColor = 0xffaaaaaa;
@@ -107,7 +103,6 @@ class PlayState extends FlxState
 		FlxG.mouse.visible = false;
 		
 		loadAudio();
-		//_stemB.play();
 		
 		BtileMap = new FlxTilemap();
         var mapData:String = Assets.getText("assets/data/Level_Background.csv");
@@ -128,7 +123,7 @@ class PlayState extends FlxState
         Objects.loadMapFromCSV(mapData, mapTilePath, 64, 64);
 		
 		//have to create players first
-		_player1 = new Player1(128, 320, _shadows);
+		_player1 = new Player1(128, 320);
 		_player1.lanternLit = false;
 		_player1.acceptInput = false;
 		
@@ -146,12 +141,6 @@ class PlayState extends FlxState
 		
 		FlxG.camera.setScrollBoundsRect(0, 0, FtileMap.width, FtileMap.height, true);
 		
-		//loading the level in with the Tiled file as input
-		//_level = new TiledLevel("assets/data/Level.tmx", this);
-		//add(_level.backgroundLayer);
-		//add(_level.objectsLayer);
-		//add(_level.foregroundTiles);
-		
 		add(_Bboxes);
 		add(_LBoxes);
 		
@@ -163,11 +152,6 @@ class PlayState extends FlxState
 		add(_locks);
 		add(_candles);
 		
-		
-		//_level = new FlxTilemap();
-		//_level.loadMapFromCSV("assets/images/test.csv", FlxGraphic.fromClass(GraphicAuto), 0, 0);
-		//add(_level);
-		
 		//add the two players to the game
 		add(_player1);
 		add(_player2);
@@ -175,11 +159,8 @@ class PlayState extends FlxState
 		//set midpoint game object
 		_midPoint = new FlxObject((_player1.x + _player2.x)/2,(_player1.y + _player2.y)/2,_player1.width,_player1.height);
 		FlxG.camera.follow(_midPoint, PLATFORMER);
-		//setting gravity
-		_player1.acceleration.y = _player2.acceleration.y = 600;
 		
-		TMP = new Deer(500, 320, this);
-		add(TMP);
+		_deer.add(new Deer(500, 320, this));
 		
 		add(Foreground);
 		add(_shadows);
@@ -193,6 +174,7 @@ class PlayState extends FlxState
 			"arrive",
 			function(f, o, d) : Bool
 			{
+				//Fade in from black
 				FlxG.camera.flash(FlxColor.BLACK, 3);
 				_player1.lanternLit = true;
 				_player1.acceptInput = true;
@@ -302,8 +284,6 @@ class PlayState extends FlxState
 		FlxG.overlap(_exit, _player2, win);
 		 */
 		
-		//FlxG.overlap(_exit, _player1, ending);
-		//FlxG.overlap(_exit, _player2, ending);
 		FlxG.overlap(_dead, _player1, dead);
 		FlxG.overlap(_dead, _player2, dead);
 		FlxG.overlap(_startTrigger, _player1, StrtTrig);
@@ -332,8 +312,6 @@ class PlayState extends FlxState
 		FlxG.collide(FtileMap, _player2);
 		FlxG.collide(FtileMap, _Bboxes);
 		FlxG.collide(FtileMap, _LBoxes);
-		
-		FlxG.collide(FtileMap, TMP);
 		
 		//collide with boxes
 		FlxG.collide(_LBoxes, _player1);
@@ -367,11 +345,9 @@ class PlayState extends FlxState
 		FlxG.camera.flash(0xFFFFFFFF, duration);
 	}
 	
-	public function dead(Dead:FlxObject, Player:FlxObject): Void
+	public function dead(Dead:FlxObject, player:FlxObject): Void
 	{
-		_player1.kill();
-		_player2.kill();
-		FlxG.resetState();
+		player.kill();
 	}
 	public function lightCandle(candle:Candle, Player:FlxObject): Void
 	{
