@@ -22,5 +22,6 @@
 		 //animation.add("open", [0, 1, 2, 3, 4, 5, 6], 6, false);
 		 //animation.play("open");
 		 acceleration.y = 600;
+		 drag.x = drag.y = 1100;
 	 }
  }

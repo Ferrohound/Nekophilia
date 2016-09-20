@@ -127,6 +127,10 @@ class PlayState extends FlxState
         mapTilePath = "assets/data/Misc.png";
         Objects.loadMapFromCSV(mapData, mapTilePath, 64, 64);
 		
+		//have to create players first
+		_player1 = new Player1(128, 320, _shadows);
+		_player2 = new Player2(182, 320);
+		
 		loadObjects();
         add(Objects);
 		
@@ -161,9 +165,7 @@ class PlayState extends FlxState
 		//add(_level);
 		
 		//add the two players to the game
-		_player1 = new Player1(128, 320, _shadows);
 		add(_player1);
-		_player2 = new Player2(182, 320);
 		add(_player2);
 		
 		//set midpoint game object
@@ -172,8 +174,8 @@ class PlayState extends FlxState
 		//setting gravity
 		_player1.acceleration.y = _player2.acceleration.y = 600;
 		
-		//TMP = new Deer(500, 320, this);
-		//add(TMP);
+		TMP = new Deer(500, 320, this);
+		add(TMP);
 		
 		add(Foreground);
 		add(_shadows);
@@ -191,19 +193,17 @@ class PlayState extends FlxState
 		
 		//add the death spots to the game
 		for (point in deathCoords){
-			var tmp = new FlxObject(point.x, point.y, 64, 64);
-			_dead.add(tmp);
+			_dead.add(new FlxObject(point.x, point.y, 64, 64));
 		}
 		
 		//add the locks
 		var lockCoords:Array<FlxPoint> = Objects.getTileCoords(2, false);
 		for (point in lockCoords){
-			var tmp = new Lock(this, point.x, point.y);
-			_locks.add(tmp);
+			_locks.add(new Lock(this, point.x, point.y));
 		}
 		//remove the lock sprites
 		var lockSprites:Array<Int> = Objects.getTileInstances(2);
-		for (i in 0...8){
+		for (i in 0...lockSprites.length){
 			var lockSprite:Int = lockSprites[i];
 			Objects.setTileByIndex(lockSprite, -1, true);	
 		}
@@ -217,12 +217,11 @@ class PlayState extends FlxState
 		//add small boxes
 		var sBoxCoords:Array<FlxPoint> = Objects.getTileCoords(17, false);
 		for (point in sBoxCoords){
-			var tmp = new Box(point.x, point.y,17);
-			_LBoxes.add(tmp);
+			_LBoxes.add(new Box(point.x, point.y,17));
 		}
 		//remove the box sprites
 		var sBoxSprites:Array<Int> = Objects.getTileInstances(17);
-		for (i in 0...3){
+		for (i in 0...sBoxSprites.length){
 			var sBoxSprite:Int = sBoxSprites[i];
 			Objects.setTileByIndex(sBoxSprite, -1, true);	
 		}
@@ -230,12 +229,11 @@ class PlayState extends FlxState
 		//add big boxes
 		var bBoxCoords:Array<FlxPoint> = Objects.getTileCoords(12, false);
 		for (point in bBoxCoords){
-			var tmp = new Box(point.x, point.y,12);
-			_Bboxes.add(tmp);
+			_Bboxes.add(new Box(point.x, point.y,12));
 		}
 		//remove the box sprites
 		var boxSprites:Array<Int> = Objects.getTileInstances(12);
-		for (i in 0...2){
+		for (i in 0...boxSprites.length){
 			var boxSprite:Int = boxSprites[i];
 			Objects.setTileByIndex(boxSprite, -1, true);	
 		}
@@ -248,18 +246,26 @@ class PlayState extends FlxState
 		}
 		//remove candle sprites
 		var candleSprites:Array<Int> = Objects.getTileInstances(8);
-		for (i in 0...3){
+		for (i in 0...candleSprites.length){
 			var candleSprite:Int = candleSprites[i];
 			Objects.setTileByIndex(candleSprite, -1, true);	
 		}
 		
 		//load in start trigger
 		for (point in Objects.getTileCoords(11, false)){
-			var tmp = new FlxObject(point.x, point.y, 64, 64);
-			_startTrigger.add(tmp);
+			_startTrigger.add(new FlxObject(point.x, point.y, 64, 64));
 		}
 		
 		//add lynx
+		var lynxCoords:Array<FlxPoint> = Objects.getTileCoords(18, false);
+		for (point in lynxCoords){
+			_deer.add(new Deer(point.x, point.y, this));
+		}
+		var lynxSprites:Array<Int> = Objects.getTileInstances(18);
+		for (i in 0...lynxSprites.length){
+			var lynxSprite:Int = lynxSprites[i];
+			Objects.setTileByIndex(lynxSprite, -1, true);
+		}
 	}
 	
 	override public function update(elapsed:Float):Void
@@ -317,7 +323,7 @@ class PlayState extends FlxState
 		FlxG.collide(FtileMap, _Bboxes);
 		FlxG.collide(FtileMap, _LBoxes);
 		
-		//FlxG.collide(FtileMap, TMP);
+		FlxG.collide(FtileMap, TMP);
 		
 		//collide with boxes
 		FlxG.collide(_LBoxes, _player1);
