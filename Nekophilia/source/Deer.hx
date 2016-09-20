@@ -26,12 +26,12 @@ package;
 	 var _player1:Player1;
 	 var _player2:Player2;
 	 
-	 public function new(?X:Float=0, ?Y:Float=0,state:PlayState){
+	 public function new(?X:Float=0, ?Y:Float=0){
 		 super(X, Y);
 		 acceleration.y = 600;
-		 _spookStem = state._stemC;
+		 _spookStem = SoundStore._stemC;
 		 _spookStem.proximity(x, y, FlxG.camera.target, FlxG.width * 0.5);
-		 _defaultStem = state._stemB;
+		 _defaultStem = SoundStore._stemB;
 		 
 		 _spookStem.play();
 		 

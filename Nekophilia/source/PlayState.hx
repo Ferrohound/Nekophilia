@@ -59,25 +59,6 @@ class PlayState extends FlxState
 	public var _monsterChase:FlxObject;
 	public var _monsterEscape:FlxObject;
 	
-	//audio stems
-	public var _stemA:FlxSound;
-	public var _stemB:FlxSound;
-	public var _stemC:FlxSound;
-	public var _stemD:FlxSound;
-	public var _stemE:FlxSound;
-	public var _stemF:FlxSound;
-	public var _stemG:FlxSound;
-	
-	public var _aVoice:FlxSound;
-	public var _oVoice:FlxSound;
-	
-	public var _boxDrag:FlxSound;
-	
-	public var _AleftFoot:FlxSound;
-	public var _ArightFoot:FlxSound;
-	public var _OleftFoot:FlxSound;
-	public var _OrightFoot:FlxSound;
-	
 	
 	override public function create():Void
 	{
@@ -102,7 +83,7 @@ class PlayState extends FlxState
 		//make the mouse invisible
 		FlxG.mouse.visible = false;
 		
-		loadAudio();
+		SoundStore.loadAudio();
 		
 		BtileMap = new FlxTilemap();
         var mapData:String = Assets.getText("assets/data/Level_Background.csv");
@@ -160,13 +141,13 @@ class PlayState extends FlxState
 		_midPoint = new FlxObject((_player1.x + _player2.x)/2,(_player1.y + _player2.y)/2,_player1.width,_player1.height);
 		FlxG.camera.follow(_midPoint, PLATFORMER);
 		
-		_deer.add(new Deer(500, 320, this));
+		_deer.add(new Deer(500, 320));
 		
 		add(Foreground);
 		add(_shadows);
 		add(_startTrigger);
 		
-		_dialogue = new DialogueBox(["Owen"=>_oVoice, "Aimee"=>_aVoice]);
+		_dialogue = new DialogueBox(["Owen"=>SoundStore._oVoice, "Aimee"=>SoundStore._aVoice]);
 		add(_dialogue);
 		
 		_dialogue.showScript(
@@ -252,7 +233,7 @@ class PlayState extends FlxState
 		
 		//add lynx
 		for (point in Objects.getTileCoords(TILE_LYNX, false)){
-			_deer.add(new Deer(point.x, point.y, this));
+			_deer.add(new Deer(point.x, point.y));
 		}
 		for (i in Objects.getTileInstances(TILE_LYNX)){
 			Objects.setTileByIndex(i, -1, true);
@@ -319,10 +300,10 @@ class PlayState extends FlxState
 		FlxG.collide(_player1, _player2);
 	}
 	
-	function StrtTrig(Thing:FlxObject, Player:FlxObject):Void
+	function StrtTrig(thing:FlxObject, player:FlxObject):Void
 	{
-		if (!_stemB.playing) _stemB.fadeIn(3);
-		Thing.kill();
+		if (!SoundStore._stemB.playing) SoundStore._stemB.fadeIn(3);
+		thing.kill();
 	}
 	
 	//method to call for simple camera shake
@@ -335,7 +316,7 @@ class PlayState extends FlxState
 		FlxG.camera.flash(0xFFFFFFFF, duration);
 	}
 	
-	public function dead(Dead:FlxObject, player:FlxObject): Void
+	public function dead(dead:FlxObject, player:FlxObject): Void
 	{
 		player.kill();
 	}
@@ -345,47 +326,5 @@ class PlayState extends FlxState
 		//do final cutscene stuff
 		_player1.kill();
 		_player2.kill();
-	}
-	
-	//self explanatory
-	function loadAudio():Void
-	{
-		#if flash
-		_stemA = FlxG.sound.load(AssetPaths.A_Base_Stem__mp3);
-		_stemB = FlxG.sound.load(AssetPaths.B_Melody_Stem__mp3);
-		_stemC = FlxG.sound.load(AssetPaths.C_MonsterApproach_Stem__mp3);
-		_stemD = FlxG.sound.load(AssetPaths.D_Piano_Stem__mp3);
-		_stemE= FlxG.sound.load(AssetPaths.E_Abrasive_Stem__mp3);
-		_stemF = FlxG.sound.load(AssetPaths.F_Monster_Creeping_Stem__mp3);
-		_stemG = FlxG.sound.load(AssetPaths.G_Soundscape_Stem__mp3);
-		
-		_aVoice = FlxG.sound.load(AssetPaths.Aimee_Voice_Sample__mp3);
-		_oVoice =FlxG.sound.load(AssetPaths.Owen_Voice_Sample__mp3);
-		
-		_boxDrag =FlxG.sound.load(AssetPaths.Spooky_Box_Drag__mp3);
-		
-		_AleftFoot =FlxG.sound.load(AssetPaths.Spooky_Aimee_Footstep_1__mp3);
-		_ArightFoot =FlxG.sound.load(AssetPaths.Spooky_Aimee_Footstep_2__mp3);
-		_OleftFoot = FlxG.sound.load(AssetPaths.Spooky_Owen_Footstep_1__mp3);
-		_OrightFoot = FlxG.sound.load(AssetPaths.Spooky_Owen_Footstep_2__mp3);
-		#else
-		_stemA = FlxG.sound.load(AssetPaths.A_Base_Stem__ogg);
-		_stemB = FlxG.sound.load(AssetPaths.B_Melody_Stem__ogg);
-		_stemC = FlxG.sound.load(AssetPaths.C_MonsterApproach_Stem__ogg);
-		_stemD = FlxG.sound.load(AssetPaths.D_Piano_Stem__ogg);
-		_stemE = FlxG.sound.load(AssetPaths.E_Abrasive_Stem__ogg);
-		_stemF = FlxG.sound.load(AssetPaths.F_Monster_Creeping_Stem__ogg);
-		_stemG = FlxG.sound.load(AssetPaths.G_Soundscape_Stem__ogg);
-		
-		_aVoice = FlxG.sound.load(AssetPaths.Aimee_Voice_Sample__ogg);
-		_oVoice =FlxG.sound.load(AssetPaths.Owen_Voice_Sample__ogg);
-		
-		_boxDrag =FlxG.sound.load(AssetPaths.Spooky_Box_Drag__ogg);
-		
-		_AleftFoot =FlxG.sound.load(AssetPaths.Spooky_Aimee_Footstep_1__ogg);
-		_ArightFoot =FlxG.sound.load(AssetPaths.Spooky_Aimee_Footstep_2__ogg);
-		_OleftFoot = FlxG.sound.load(AssetPaths.Spooky_Owen_Footstep_1__ogg);
-		_OrightFoot = FlxG.sound.load(AssetPaths.Spooky_Owen_Footstep_2__ogg);
-		#end
 	}
 }
