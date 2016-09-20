@@ -6,7 +6,8 @@ import flixel.math.FlxPoint;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.util.FlxColor;
 import flixel.math.FlxPoint;
-import flixel.FlxObject;	
+import flixel.FlxObject;
+import openfl.Assets;
 
 class Player2 extends Player
 {
