@@ -21,16 +21,16 @@ class DialogueBox extends FlxSpriteGroup
 	private var _nameBox : FlxText;
 	private var _bgBox   : FlxSprite;
 	
-	private var _script   : String;
+	public var _script(default, null): String;
+	public var _tag   (default, null): String;
 	private var _currChar : Int;
-	private var _currLine : Int;
 	private var _timer    : Float;
 	private var _delay    : Float;
 	
 	public var typing(default, null) = false;
 	public var canSkip = true;
 	
-	public var onExit    :       Void -> Void;
+	public var onExit    : Bool->String->DialogueBox->Bool;
 	public var callbacks : Array<Void -> Void>;
 	
 	override public function new(voices:Map<String,FlxSound>, width=250, height=75, vPadding=10) 
@@ -88,9 +88,7 @@ class DialogueBox extends FlxSpriteGroup
 				case 'x':
 					_textBox.text = "";
 				case '':
-					this.kill();
-					typing = false;
-					if (onExit != null) onExit();
+					exitScript();
 				default:
 					var i = Std.parseInt(next);
 					if (i == null) {
@@ -116,9 +114,7 @@ class DialogueBox extends FlxSpriteGroup
 			if (typing) {
 				if (canSkip) _timer = Math.POSITIVE_INFINITY;
 			} else if (_currChar >= _script.length) {
-				this.kill();
-				typing = false;
-				if (onExit != null) onExit();
+				exitScript();
 			} else {
 				_textBox.text = "";
 				typing = true;
@@ -189,32 +185,72 @@ class DialogueBox extends FlxSpriteGroup
 	 * -	The @ is ignored, and the following character is displayed as
 	 * -	normal text.
 	 * -
+	 * @param	tag -
+	 * A string which identifies the currently running script.
 	 * @param	onExit -
-	 * A callback which will be executed when the script exits. It will not
-	 * be called if the script is cancelled by beginning another script.
+	 * A callback which will be executed when the script exits.
+	 * Arguments:
+	 * - finished:Bool
+	 * -	True if the script completed naturally, false if it was overriden by
+	 * -	another script.
+	 * - overrideTag:String
+	 * -	The tag of the overriding script, which will be null if the script
+	 * -	exited naturally, or no key was provided.
+	 * - dialogue:DialogueBox
+	 * -	This dialogue box.
+	 * Returns:Bool
+	 * -	Whether or not an overriding script should be allowed to override.
+	 * -	If true the override proceeds as normal, if false the override fails.
+	 * -	No effect if script finishes naturally.
 	 * @param	callbacks -
 	 * A list of functions which can be executed by the script at arbitrary
 	 * points using the format `@0` - `@9`. More than ten functions can
 	 * be provided, but there is currently no way for the script to access
 	 * them.
+	 * @return
+	 * Whether script was successfully begun. False if the script was prevented
+	 * from running by an already active script, true otherwise.
 	 */
-	public function showScript(script="@", ?onExit:Void->Void, ?callbacks:Array<Void->Void>)
+	public function showScript(
+		script = "@",
+		?tag : String,
+		?onExit : Bool->String->DialogueBox->Bool,
+		?callbacks : Array<Void->Void>
+	) : Bool
 	{
-		_script = script.split('\r\n').join('\n');
-		_textBox.text = _nameBox.text = "";
-		_timer = _delay = _currChar = 0;
-		
-		this.onExit = onExit;
-		this.callbacks = callbacks;
-		
-		typing = true;
-		this.revive();
+		if (this.onExit == null || this.onExit(false, tag, this)) {
+			_script = script.split('\r\n').join('\n');
+			_tag = tag;
+			_textBox.text = _nameBox.text = "";
+			_timer = _delay = _currChar = 0;
+			_currVoice = null;
+			
+			this.onExit = onExit;
+			this.callbacks = callbacks;
+			
+			typing = true;
+			this.revive();
+			
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public inline function updatePosition(?x:Float, ?y:Float) : Void
 	{
 		this.x = (x != null) ? x : FlxG.width  / 2 - this.width / 2;
 		this.y = (y != null) ? y : FlxG.height - this.height - vPadding;
+	}
+	
+	private inline function exitScript() : Void
+	{
+		this.kill();
+		typing = false;
+		if (onExit != null) onExit(true, null, this);
+		_script = _tag = null;
+		_currVoice = null;
+		onExit = null;
 	}
 	
 	public static function nextIndexOf(str:String, char:String, start=0) : Int
