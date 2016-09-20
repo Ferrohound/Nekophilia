@@ -9,10 +9,10 @@ import openfl.display.BlendMode;
 
 class ShadowSystem extends FlxSprite
 {
-	
+	public static inline var DEF_SHADOW_COLOR = 0xFF101020;
 	public var shadowColor : FlxColor;
 
-	public function new(shadowColor:FlxColor=0xFF101020) 
+	public function new(shadowColor:FlxColor=DEF_SHADOW_COLOR)
 	{
 		super(0, 0);
 		this.shadowColor = shadowColor;
