@@ -11,6 +11,7 @@ import flixel.FlxObject;
 class Player1 extends Player
 {
 	private var shadows : ShadowSystem;
+	public var lanternLit = true;
 	
 	public function new(?X:Float=0, ?Y:Float=0, shadows:ShadowSystem)
 	{
@@ -30,6 +31,8 @@ class Player1 extends Player
 	{
 		super.update(elapsed);
 		
-		shadows.addLightPoint(this.getMidpoint());
+		if (lanternLit) {
+			shadows.addLightPoint(this.getMidpoint());
+		}
 	}
 }
