@@ -36,6 +36,13 @@ class Player1 extends Player
 		if (lanternLit) {
 			PlayState._shadows.addLightPoint(this.getMidpoint());
 		}
+		
+		if (acceptInput && FlxG.keys.anyJustPressed([CONTROL])){
+			FlxG.overlap(PlayState._candles, this, function(candle:Candle, Player:FlxObject)
+			{
+				candle.set_lit(true);
+			});
+		}
 	}
 	
 }

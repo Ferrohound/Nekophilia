@@ -45,14 +45,14 @@ class PlayState extends FlxState
 	
 	//group for the little doors
 	//group for the big doors
-	public var _Bboxes:FlxGroup;
-	public var _LBoxes:FlxGroup;
-	public var _deer:FlxGroup;
-	public var _locks:FlxGroup;
-	public var _dead:FlxGroup;
-	public var _candles:FlxGroup;
+	public static var _Bboxes:FlxGroup;
+	public static var _LBoxes:FlxGroup;
+	public static var _deer:FlxGroup;
+	public static var _locks:FlxGroup;
+	public static var _dead:FlxGroup;
+	public static var _candles:FlxGroup;
 	//the exit door
-	public var _exit:FlxSprite;
+	public static var _exit:FlxSprite;
 	
 	//triggers
 	public var _startTrigger:FlxGroup;
@@ -289,20 +289,8 @@ class PlayState extends FlxState
 		FlxG.overlap(_startTrigger, _player1, StrtTrig);
 		FlxG.overlap(_startTrigger, _player2, StrtTrig);
 		
-		//start unlock sequence
-		if(FlxG.keys.anyJustPressed([E])){
-			FlxG.overlap(_locks, _player2, unlock);
-		}
-		if (FlxG.keys.anyJustPressed([CONTROL])){
-			FlxG.overlap(_candles, _player1, lightCandle);
-		}
-		
-		if (FlxG.keys.anyJustPressed([ENTER])) {
-			_dialogue.showScript(Assets.getText("assets/text/main/arrive.txt"), null, [shake]);
-		}
-		
 		if (FlxG.keys.anyJustPressed([ESCAPE])) {
-			_dialogue.showScript();
+			if (_dialogue.alive) _dialogue.showScript();
 		}
 		
 		_player1.beforeCollideTerrain();
@@ -351,21 +339,12 @@ class PlayState extends FlxState
 	{
 		player.kill();
 	}
-	public function lightCandle(candle:Candle, Player:FlxObject): Void
-	{
-		candle.set_lit(true);
-	}
 	
 	public function ending(Exit:FlxObject, Player:FlxObject):Void
 	{
 		//do final cutscene stuff
 		_player1.kill();
 		_player2.kill();
-	}
-	
-	public function unlock(LOCK:Lock,Player:FlxObject):Void{
-		//do the unlocking minigame
-		LOCK.unlock();
 	}
 	
 	//self explanatory

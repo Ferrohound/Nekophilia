@@ -27,4 +27,16 @@ class Player2 extends Player
 		loadGraphic("assets/images/duck.png", true, 100, 114);
 		animation.add("walk", [0, 1, 0, 2], 5, true);
 	}
+	
+	override public function update(elapsed:Float)
+	{
+		super.update(elapsed);
+		
+		if(FlxG.keys.anyJustPressed([E])){
+			FlxG.overlap(PlayState._locks, this, function(lock:Lock, player:FlxObject)
+			{
+				lock.unlock();
+			});
+		}
+	}
 }
