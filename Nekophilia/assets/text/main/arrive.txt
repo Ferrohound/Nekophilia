@@ -28,7 +28,7 @@ over this painter dude.
 
 @:Owen
 Painter dude? Javier Oscuro is a
-legend.@\
+legend.
 Or was.
 No one really knows where he is now.
 
@@ -66,6 +66,6 @@ Illusion? For who, The trees??
 ... Let's get inside!
 
 @:
-[W][A][S][D] To Move
-[SPACE] to Jump
+[W][A][S][D] to Move Aimee
+[ARROW KEYS] to Move Owen
 [E] to Investigate

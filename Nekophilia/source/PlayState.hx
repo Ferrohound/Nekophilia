@@ -95,7 +95,7 @@ class PlayState extends FlxState
 		_candles = new FlxGroup();
 		_startTrigger = new FlxGroup();
 		
-		_shadows = new ShadowSystem();
+		_shadows = new ShadowSystem(FlxColor.BLACK);
 		
 		bgColor = FlxColor.RED;
 		
@@ -162,8 +162,12 @@ class PlayState extends FlxState
 		
 		//add the two players to the game
 		_player1 = new Player1(128, 320, _shadows);
+		_player1.lanternLit = false;
+		_player1.acceptInput = false;
 		add(_player1);
+		
 		_player2 = new Player2(182, 320);
+		_player2.acceptInput = false;
 		add(_player2);
 		
 		//set midpoint game object
@@ -181,6 +185,20 @@ class PlayState extends FlxState
 		
 		_dialogue = new DialogueBox(["Owen"=>_oVoice, "Aimee"=>_aVoice]);
 		add(_dialogue);
+		
+		_dialogue.showScript(
+			Assets.getText("assets/text/main/arrive.txt"),
+			"arrive",
+			function(f, o, d) : Bool
+			{
+				FlxG.camera.flash(FlxColor.BLACK, 3);
+				_player1.lanternLit = true;
+				_player1.acceptInput = true;
+				_player2.acceptInput = true;
+				_shadows.shadowColor = ShadowSystem.DEF_SHADOW_COLOR;
+				return true;
+			}
+		);
 		
 		super.create();
 	}
@@ -305,6 +323,7 @@ class PlayState extends FlxState
 		if (FlxG.keys.anyJustPressed([ENTER])) {
 			_dialogue.showScript(Assets.getText("assets/text/main/arrive.txt"), null, [shake]);
 		}
+		
 		if (FlxG.keys.anyJustPressed([ESCAPE])) {
 			_dialogue.showScript();
 		}
@@ -337,7 +356,7 @@ class PlayState extends FlxState
 	
 	function StrtTrig(Thing:FlxObject, Player:FlxObject):Void
 	{
-		_stemB.fadeIn(3);
+		if (!_stemB.playing) _stemB.fadeIn(3);
 		Thing.kill();
 	}
 	
