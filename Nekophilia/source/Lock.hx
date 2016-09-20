@@ -21,4 +21,8 @@
 		 animation.add("open", [0, 1, 2, 3, 4, 5, 6], 6, false);
 		 //animation.play("open");
 	 }
+	 override public function update(elapsed:Float):Void
+	 {
+		 super.update(elapsed);
+	 }
  }

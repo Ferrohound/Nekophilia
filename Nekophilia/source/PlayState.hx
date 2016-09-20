@@ -95,6 +95,8 @@ class PlayState extends FlxState
 		_candles = new FlxGroup();
 		_startTrigger = new FlxGroup();
 		
+		_shadows = new ShadowSystem();
+		
 		bgColor = FlxColor.RED;
 		
 		//extend camera size so when the screen shakes
@@ -124,6 +126,7 @@ class PlayState extends FlxState
         mapData = Assets.getText("assets/data/Level_Object.csv");
         mapTilePath = "assets/data/Misc.png";
         Objects.loadMapFromCSV(mapData, mapTilePath, 64, 64);
+		
 		loadObjects();
         add(Objects);
 		
@@ -149,13 +152,13 @@ class PlayState extends FlxState
 		add(_dead);
 		//iterate over all the deer and create Deer objects
 		add(_deer);
+		add(_locks);
+		add(_candles);
 		
 		
 		//_level = new FlxTilemap();
 		//_level.loadMapFromCSV("assets/images/test.csv", FlxGraphic.fromClass(GraphicAuto), 0, 0);
 		//add(_level);
-		
-		_shadows = new ShadowSystem();
 		
 		//add the two players to the game
 		_player1 = new Player1(128, 320, _shadows);
@@ -201,8 +204,8 @@ class PlayState extends FlxState
 		//remove the lock sprites
 		var lockSprites:Array<Int> = Objects.getTileInstances(2);
 		for (i in 0...8){
-			//var lockSprite:Int = lockSprites[i];
-			//Objects.setTileByIndex(lockSprite, -1, true);	
+			var lockSprite:Int = lockSprites[i];
+			Objects.setTileByIndex(lockSprite, -1, true);	
 		}
 		
 		//add the doors
@@ -228,6 +231,12 @@ class PlayState extends FlxState
 		var candleCoords:Array<FlxPoint> = Objects.getTileCoords(8, false);
 		for (point in candleCoords){
 			_candles.add(new Candle(_shadows, point.x, point.y));
+		}
+		//remove candle sprites
+		var candleSprites:Array<Int> = Objects.getTileInstances(8);
+		for (i in 0...3){
+			var lockSprite:Int = lockSprites[i];
+			Objects.setTileByIndex(lockSprite, -1, true);	
 		}
 		
 		//load in start trigger
@@ -309,7 +318,8 @@ class PlayState extends FlxState
 	
 	function StrtTrig(Thing:FlxObject, Player:FlxObject):Void
 	{
-		_stemB.fadeIn();
+		_stemB.fadeIn(3);
+		Thing.kill();
 	}
 	
 	//method to call for simple camera shake
