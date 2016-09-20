@@ -310,18 +310,20 @@ class PlayState extends FlxState
 		
 		FlxG.collide(FtileMap, _player1);
 		FlxG.collide(FtileMap, _player2);
-		FlxG.collide(FtileMap, _Bboxes);
-		FlxG.collide(FtileMap, _LBoxes);
 		
 		//collide with boxes
 		FlxG.collide(_LBoxes, _player1);
 		FlxG.collide(_LBoxes, _player2);
 		FlxG.collide(_Bboxes, _player1);
 		FlxG.collide(_Bboxes, _player2);
-		//Script for colliding the level with the player
-		// Collide with foreground tile layer
-		//_level.collideWithLevel(_player1);
-		//_level.collideWithLevel(_player2);
+		
+		
+		FlxG.collide(FtileMap, _Bboxes);
+		FlxG.collide(FtileMap, _LBoxes);
+		FlxG.collide(_LBoxes, _player1);
+		FlxG.collide(_LBoxes, _player2);
+		FlxG.collide(_Bboxes, _player1);
+		FlxG.collide(_Bboxes, _player2);
 		
 		_player1.beforeCollidePlayer();
 		_player2.beforeCollidePlayer();
