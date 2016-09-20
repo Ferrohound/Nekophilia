@@ -21,5 +21,6 @@ class Box extends FlxSprite
 			loadGraphic("assets/images/Box.png", false, 64, 64);
 		}
 		acceleration.y = 600;
+		drag.x = drag.y = 900;
 	}
 }
