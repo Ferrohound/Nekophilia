@@ -205,11 +205,13 @@ class PlayState extends FlxState
 		super.create();
 	}
 	
-	public static inline var TILE_DEATH  = 24;
-	public static inline var TILE_LOCK   =  2;
-	public static inline var TILE_BOX_SM = 17;
-	public static inline var TILE_BOX_LG = 12;
-	public static inline var TILE_CANDLE =  8;
+	public static inline var TILE_DEATH     = 24;
+	public static inline var TILE_LOCK      =  2;
+	public static inline var TILE_BOX_SM    = 17;
+	public static inline var TILE_BOX_LG    = 12;
+	public static inline var TILE_CANDLE    =  8;
+	public static inline var TILE_START_TRG = 11;
+	public static inline var TILE_LYNX      = 18;
 	
 	function loadObjects():Void
 	{
@@ -262,19 +264,16 @@ class PlayState extends FlxState
 		}
 		
 		//load in start trigger
-		for (point in Objects.getTileCoords(11, false)){
+		for (point in Objects.getTileCoords(TILE_START_TRG, false)){
 			_startTrigger.add(new FlxObject(point.x, point.y, 64, 64));
 		}
 		
 		//add lynx
-		var lynxCoords:Array<FlxPoint> = Objects.getTileCoords(18, false);
-		for (point in lynxCoords){
+		for (point in Objects.getTileCoords(TILE_LYNX, false)){
 			_deer.add(new Deer(point.x, point.y, this));
 		}
-		var lynxSprites:Array<Int> = Objects.getTileInstances(18);
-		for (i in 0...lynxSprites.length){
-			var lynxSprite:Int = lynxSprites[i];
-			Objects.setTileByIndex(lynxSprite, -1, true);
+		for (i in Objects.getTileInstances(TILE_LYNX)){
+			Objects.setTileByIndex(i, -1, true);
 		}
 	}
 	
