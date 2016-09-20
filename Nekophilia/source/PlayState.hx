@@ -209,7 +209,11 @@ class PlayState extends FlxState
 		}
 		
 		//add the doors
-		
+		/*
+		 * 
+		 * 
+		 * 
+		 */
 		//add small boxes
 		var sBoxCoords:Array<FlxPoint> = Objects.getTileCoords(17, false);
 		for (point in sBoxCoords){
@@ -217,6 +221,11 @@ class PlayState extends FlxState
 			_LBoxes.add(tmp);
 		}
 		//remove the box sprites
+		var sBoxSprites:Array<Int> = Objects.getTileInstances(17);
+		for (i in 0...3){
+			var sBoxSprite:Int = sBoxSprites[i];
+			Objects.setTileByIndex(sBoxSprite, -1, true);	
+		}
 		
 		//add big boxes
 		var bBoxCoords:Array<FlxPoint> = Objects.getTileCoords(12, false);
@@ -225,6 +234,11 @@ class PlayState extends FlxState
 			_Bboxes.add(tmp);
 		}
 		//remove the box sprites
+		var boxSprites:Array<Int> = Objects.getTileInstances(12);
+		for (i in 0...2){
+			var boxSprite:Int = boxSprites[i];
+			Objects.setTileByIndex(boxSprite, -1, true);	
+		}
 		
 		
 		//add the candles
@@ -235,8 +249,8 @@ class PlayState extends FlxState
 		//remove candle sprites
 		var candleSprites:Array<Int> = Objects.getTileInstances(8);
 		for (i in 0...3){
-			var lockSprite:Int = lockSprites[i];
-			Objects.setTileByIndex(lockSprite, -1, true);	
+			var candleSprite:Int = candleSprites[i];
+			Objects.setTileByIndex(candleSprite, -1, true);	
 		}
 		
 		//load in start trigger
@@ -244,6 +258,8 @@ class PlayState extends FlxState
 			var tmp = new FlxObject(point.x, point.y, 64, 64);
 			_startTrigger.add(tmp);
 		}
+		
+		//add lynx
 	}
 	
 	override public function update(elapsed:Float):Void
@@ -298,7 +314,10 @@ class PlayState extends FlxState
 		
 		FlxG.collide(FtileMap, _player1);
 		FlxG.collide(FtileMap, _player2);
-		FlxG.collide(FtileMap, TMP);
+		FlxG.collide(FtileMap, _Bboxes);
+		FlxG.collide(FtileMap, _LBoxes);
+		
+		//FlxG.collide(FtileMap, TMP);
 		
 		//collide with boxes
 		FlxG.collide(_LBoxes, _player1);
