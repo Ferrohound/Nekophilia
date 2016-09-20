@@ -21,6 +21,7 @@ package;
 	 var _defaultStem:FlxSound;
 	 
 	 var _radius = 200;
+	 var _moveRadius = 50;
 	 
 	 var _player1:Player1;
 	 var _player2:Player2;
@@ -39,8 +40,8 @@ package;
 		 
 		 drag.x = drag.y = 1100;
 		 
-		 loadGraphic("assets/images/lynx.png", true, 64, 64);
-		 animation.add("move", [1, 2, 3, 4], 6, false);
+		 loadGraphic("assets/images/lynx.png", true, 128, 128);
+		 animation.add("move", [1, 2, 3, 4], 12, false);
 		 
 		 //for flipping the sprite when the player is facing other directions
 		 setFacingFlip(FlxObject.LEFT, true, false);
@@ -57,19 +58,20 @@ package;
 		//move towards player1
 		if (getMidpoint().distanceTo(_player1.getMidpoint()) < _radius || getMidpoint().distanceTo(_player2.getMidpoint()) < _radius)
 		{
+			animation.play("move");
 			if ((_player1.getMidpoint().distanceTo(getMidpoint())) < (_player2.getMidpoint().distanceTo(getMidpoint())))
 			{
-				_spookStem.proximity(x, y, _player1, FlxG.width * 0.5);
+				_spookStem.proximity(x, y, _player1, FlxG.width * 0.7);
 				if (_player1.x < x){
 					facing = FlxObject.LEFT;
-					acceleration.x = -speed * factor;
+					acceleration.x = -speed;
 					if (velocity.x < -speed){
 						velocity.x = -speed;
 					}
 				}
 				else{
 					facing = FlxObject.RIGHT;
-					acceleration.x = speed * factor;
+					acceleration.x = speed;
 					if (velocity.x > speed){
 						velocity.x = speed;
 					}
@@ -77,7 +79,7 @@ package;
 			}
 		//move towards player2
 			else{
-				_spookStem.proximity(x, y, _player2, FlxG.width * 0.5);
+				_spookStem.proximity(x, y, _player2, FlxG.width * 0.7);
 				if (_player2.x < x){
 					facing = FlxObject.LEFT;
 					acceleration.x = -speed * factor;
@@ -93,11 +95,13 @@ package;
 					}
 				}
 			}
-			animation.play("move");
 		}
 		else{
-			_spookStem.proximity(x, y, FlxG.camera.target, FlxG.width * 0.5);
+			_spookStem.proximity(x, y, FlxG.camera.target, FlxG.width * 0.7);
 			animation.reset();
+			acceleration.x = 0;
+			velocity.x = 0;
 		}
+		super.update(elapsed);
 	 }
  }

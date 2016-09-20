@@ -127,6 +127,14 @@ class PlayState extends FlxState
         mapTilePath = "assets/data/Misc.png";
         Objects.loadMapFromCSV(mapData, mapTilePath, 64, 64);
 		
+		//have to create players first
+		_player1 = new Player1(128, 320, _shadows);
+		_player1.lanternLit = false;
+		_player1.acceptInput = false;
+		
+		_player2 = new Player2(182, 320);
+		_player2.acceptInput = false;
+		
 		loadObjects();
         add(Objects);
 		
@@ -161,13 +169,7 @@ class PlayState extends FlxState
 		//add(_level);
 		
 		//add the two players to the game
-		_player1 = new Player1(128, 320, _shadows);
-		_player1.lanternLit = false;
-		_player1.acceptInput = false;
 		add(_player1);
-		
-		_player2 = new Player2(182, 320);
-		_player2.acceptInput = false;
 		add(_player2);
 		
 		//set midpoint game object
@@ -176,8 +178,8 @@ class PlayState extends FlxState
 		//setting gravity
 		_player1.acceleration.y = _player2.acceleration.y = 600;
 		
-		//TMP = new Deer(500, 320, this);
-		//add(TMP);
+		TMP = new Deer(500, 320, this);
+		add(TMP);
 		
 		add(Foreground);
 		add(_shadows);
@@ -246,7 +248,7 @@ class PlayState extends FlxState
 		}
 		//remove the box sprites
 		for (i in Objects.getTileInstances(TILE_BOX_LG)){
-			Objects.setTileByIndex(i, -1, true);	
+			Objects.setTileByIndex(i, -1, true);
 		}
 		
 		
@@ -256,16 +258,24 @@ class PlayState extends FlxState
 		}
 		//remove candle sprites
 		for (i in Objects.getTileInstances(TILE_CANDLE)){
-			Objects.setTileByIndex(i, -1, true);	
+			Objects.setTileByIndex(i, -1, true);
 		}
 		
 		//load in start trigger
 		for (point in Objects.getTileCoords(11, false)){
-			var tmp = new FlxObject(point.x, point.y, 64, 64);
-			_startTrigger.add(tmp);
+			_startTrigger.add(new FlxObject(point.x, point.y, 64, 64));
 		}
 		
 		//add lynx
+		var lynxCoords:Array<FlxPoint> = Objects.getTileCoords(18, false);
+		for (point in lynxCoords){
+			_deer.add(new Deer(point.x, point.y, this));
+		}
+		var lynxSprites:Array<Int> = Objects.getTileInstances(18);
+		for (i in 0...lynxSprites.length){
+			var lynxSprite:Int = lynxSprites[i];
+			Objects.setTileByIndex(lynxSprite, -1, true);
+		}
 	}
 	
 	override public function update(elapsed:Float):Void
@@ -324,7 +334,7 @@ class PlayState extends FlxState
 		FlxG.collide(FtileMap, _Bboxes);
 		FlxG.collide(FtileMap, _LBoxes);
 		
-		//FlxG.collide(FtileMap, TMP);
+		FlxG.collide(FtileMap, TMP);
 		
 		//collide with boxes
 		FlxG.collide(_LBoxes, _player1);
