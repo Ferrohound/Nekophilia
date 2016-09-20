@@ -203,27 +203,26 @@ class PlayState extends FlxState
 		super.create();
 	}
 	
+	public static inline var TILE_DEATH  = 24;
+	public static inline var TILE_LOCK   =  2;
+	public static inline var TILE_BOX_SM = 17;
+	public static inline var TILE_BOX_LG = 12;
+	public static inline var TILE_CANDLE =  8;
+	
 	function loadObjects():Void
 	{
-		var deathCoords:Array<FlxPoint> = Objects.getTileCoords(24, false);
-		
 		//add the death spots to the game
-		for (point in deathCoords){
-			var tmp = new FlxObject(point.x, point.y, 64, 64);
-			_dead.add(tmp);
+		for (point in Objects.getTileCoords(TILE_DEATH, false)){
+			_dead.add(new FlxObject(point.x, point.y, 64, 64));
 		}
 		
 		//add the locks
-		var lockCoords:Array<FlxPoint> = Objects.getTileCoords(2, false);
-		for (point in lockCoords){
-			var tmp = new Lock(this, point.x, point.y);
-			_locks.add(tmp);
+		for (point in Objects.getTileCoords(TILE_LOCK, false)){
+			_locks.add(new Lock(this, point.x, point.y));
 		}
 		//remove the lock sprites
-		var lockSprites:Array<Int> = Objects.getTileInstances(2);
-		for (i in 0...8){
-			var lockSprite:Int = lockSprites[i];
-			Objects.setTileByIndex(lockSprite, -1, true);	
+		for (i in Objects.getTileInstances(TILE_LOCK)){
+			Objects.setTileByIndex(i, -1, true);
 		}
 		
 		//add the doors
@@ -233,42 +232,31 @@ class PlayState extends FlxState
 		 * 
 		 */
 		//add small boxes
-		var sBoxCoords:Array<FlxPoint> = Objects.getTileCoords(17, false);
-		for (point in sBoxCoords){
-			var tmp = new Box(point.x, point.y,17);
-			_LBoxes.add(tmp);
+		for (point in Objects.getTileCoords(TILE_BOX_SM, false)){
+			_LBoxes.add(new Box(point.x, point.y, false));
 		}
 		//remove the box sprites
-		var sBoxSprites:Array<Int> = Objects.getTileInstances(17);
-		for (i in 0...3){
-			var sBoxSprite:Int = sBoxSprites[i];
-			Objects.setTileByIndex(sBoxSprite, -1, true);	
+		for (i in Objects.getTileInstances(TILE_BOX_SM)){
+			Objects.setTileByIndex(i, -1, true);
 		}
 		
 		//add big boxes
-		var bBoxCoords:Array<FlxPoint> = Objects.getTileCoords(12, false);
-		for (point in bBoxCoords){
-			var tmp = new Box(point.x, point.y,12);
-			_Bboxes.add(tmp);
+		for (point in Objects.getTileCoords(TILE_BOX_LG, false)){
+			_Bboxes.add(new Box(point.x, point.y, true));
 		}
 		//remove the box sprites
-		var boxSprites:Array<Int> = Objects.getTileInstances(12);
-		for (i in 0...2){
-			var boxSprite:Int = boxSprites[i];
-			Objects.setTileByIndex(boxSprite, -1, true);	
+		for (i in Objects.getTileInstances(TILE_BOX_LG)){
+			Objects.setTileByIndex(i, -1, true);	
 		}
 		
 		
 		//add the candles
-		var candleCoords:Array<FlxPoint> = Objects.getTileCoords(8, false);
-		for (point in candleCoords){
+		for (point in Objects.getTileCoords(TILE_CANDLE, false)){
 			_candles.add(new Candle(_shadows, point.x, point.y));
 		}
 		//remove candle sprites
-		var candleSprites:Array<Int> = Objects.getTileInstances(8);
-		for (i in 0...3){
-			var candleSprite:Int = candleSprites[i];
-			Objects.setTileByIndex(candleSprite, -1, true);	
+		for (i in Objects.getTileInstances(TILE_CANDLE)){
+			Objects.setTileByIndex(i, -1, true);	
 		}
 		
 		//load in start trigger
