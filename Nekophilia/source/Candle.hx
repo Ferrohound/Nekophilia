@@ -28,7 +28,7 @@ class Candle extends FlxSprite
 			_shadows.addLightPoint(this.getMidpoint());
 	}
 	
-	public function set_lit(lit:Bool)
+	public function set_lit(lit:Bool):Bool
 	{
 		this.lit = lit;
 		if (lit) {
@@ -36,5 +36,6 @@ class Candle extends FlxSprite
 		} else {
 			animation.reset();
 		}
+		return lit;
 	}
 }

@@ -93,6 +93,7 @@ class PlayState extends FlxState
 		_deer = new FlxGroup();
 		_locks = new FlxGroup();
 		_candles = new FlxGroup();
+		_startTrigger = new FlxGroup();
 		
 		bgColor = FlxColor.RED;
 		
@@ -230,8 +231,7 @@ class PlayState extends FlxState
 		}
 		
 		//load in start trigger
-		var triggerCoords:Array<FlxPoint> = Objects.getTileCoords(11, false);
-		for (point in triggerCoords){
+		for (point in Objects.getTileCoords(11, false)){
 			var tmp = new FlxObject(point.x, point.y, 64, 64);
 			_startTrigger.add(tmp);
 		}
