@@ -14,8 +14,12 @@ class MenuState extends FlxState
 	{
 		var bg = new FlxSprite();
 		bg.loadGraphic("assets/images/Main_Menu.png");
+		var wider = FlxG.width / 3.0 > FlxG.height / 2.0;
+		bg.setGraphicSize(wider ? 0 : FlxG.width, wider ? FlxG.height : 0);
+		bg.screenCenter();
 		add(bg);
-		_playButton = new FlxButton(FlxG.width, 400, "PLAY", clickPlay);
+		_playButton = new FlxButton(FlxG.width / 2, 7 * FlxG.height / 8, "PLAY", clickPlay);
+		_playButton.x -= _playButton.width / 2;
 		add(_playButton);
 		super.create();
 	}
