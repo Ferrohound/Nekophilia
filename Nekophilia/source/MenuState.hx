@@ -12,10 +12,10 @@ class MenuState extends FlxState
 	var _playButton:FlxButton;
 	override public function create():Void
 	{
-		//creating a button?
-		add(new FlxText(10, 10, 200, "Testing, testing, 1,2,3"));
-		_playButton = new FlxButton(100, 100, "LET'S GO", clickPlay);
-		_playButton.screenCenter();
+		var bg = new FlxSprite();
+		bg.loadGraphic("assets/images/Main_Menu.png");
+		add(bg);
+		_playButton = new FlxButton(FlxG.width, 400, "PLAY", clickPlay);
 		add(_playButton);
 		super.create();
 	}
@@ -23,6 +23,9 @@ class MenuState extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+		if (FlxG.keys.anyJustPressed([ENTER, SPACE])) {
+			clickPlay();
+		}
 	}
 	
 	function clickPlay(): Void
