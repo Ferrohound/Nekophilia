@@ -17,7 +17,7 @@ class Candle extends FlxSprite
 	public function new(shadows:ShadowSystem,?X:Float = 0, ?Y:Float = 0){
 		super(X, Y);
 		_shadows = shadows;
-		loadGraphic("assets/images/Candle.png", true, 64, 64);
+		loadGraphic("assets/images/candle.png", true, 64, 64);
 		animation.add("flame", [1, 2, 3], 6, true);
 	}
 	
