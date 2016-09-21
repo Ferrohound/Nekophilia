@@ -44,6 +44,10 @@ class PlayState extends FlxState
 	var Lock7:FlxTilemap;
 	var Lock8:FlxTilemap;
 	
+	//Lynxes
+	var ILynx:IntroLynx;
+	var CLynx:ChaseLynx;
+	
 	//Flixel groups
 	//use collide to prevent them from walking into it
 	//then overlap + function to call
@@ -101,6 +105,29 @@ class PlayState extends FlxState
         var mapData:String = Assets.getText("assets/data/Level_Background.csv");
         var mapTilePath:String = "assets/data/Wood.png";
         BtileMap.loadMapFromCSV(mapData, mapTilePath, 64, 64);
+		
+		var i = 48;
+		while (true){
+			for (point in Objects.getTileCoors(i, false)){
+				if (i < 58){
+					//inscription 3
+				}
+				else if (i < 70){
+					//inscription 1
+				}
+				else{
+					//inscription 2
+				}
+			}
+			
+			i++;
+			if (i==51||i==57||i == 63 || i == 69 || i == 75){
+				i += 3;
+			}
+			if (i == 81)
+				break;
+		}
+		
         add(BtileMap);
 		
 		FtileMap = new FlxTilemap();
@@ -129,9 +156,8 @@ class PlayState extends FlxState
 		
 		loadObjects();
         add(Objects);
-		
-		
-		//load all the key-door layers
+		add(ILynx);
+		add(CLynx);
 		
 		//do nothing with the foreground :')
 		Foreground = new FlxTilemap();
@@ -399,6 +425,22 @@ class PlayState extends FlxState
 			_deer.add(new Deer(point.x, point.y));
 		}
 		for (i in Objects.getTileInstances(TILE_LYNX)){
+			Objects.setTileByIndex(i, -1, true);
+		}
+		
+		//add introLynx
+		for (point in Objects.getTileCoords(19, false)){
+			ILynx = new IntroLynx(point.x, point.y);
+		}
+		for (i in Objects.getTileInstances(19)){
+			Objects.setTileByIndex(i, -1, true);
+		}
+		
+		//add ChaseLynx
+		for (point in Objects.getTileCoords(21, false)){
+			CLynx = new ChaseLynx(point.x, point.y)
+		}
+		for (i in Objects.getTileInstances(21)){
 			Objects.setTileByIndex(i, -1, true);
 		}
 	}
