@@ -24,8 +24,8 @@ package;
 	  override public function update(elapsed:Float): Void
 	 {
 		 
-		if (getMidpoint().distanceTo(_player1.getMidpoint()) > _radius && getMidpoint().distanceTo(_player2.getMidpoint()) > _radius){
-			if (_player1.x > x && _player2.x > x){
+		if (getMidpoint().distanceTo(_player1.getMidpoint()) < _radius && getMidpoint().distanceTo(_player2.getMidpoint()) < _radius){
+			if (_player1.x > (x+64) && _player2.x > (x+64)){
 				_active = true;
 				_activated = true;
 			}
@@ -36,7 +36,7 @@ package;
 		
 		if (_active){
 			super.update(elapsed);
-			if (getMidpoint().distanceTo(_player2.getMidpoint()) < (_radius / 2)){
+			if (getMidpoint().distanceTo(_player2.getMidpoint()) < (_radius / 3)){
 				if(!PlayState._shadows.hasLightPoint(_player2.getMidpoint())){
 					_player2.kill();
 				}
