@@ -14,6 +14,9 @@ class Player2 extends Player
 
 	public var isCrouched(default, null) = false;
 	
+	public static inline var DARK_DEATH_TIME:Float = 5;
+	var darkTimer:Float = 0;
+	
 	public function new(?X:Float=0, ?Y:Float=0)
 	{
 		super(X, Y);
@@ -39,6 +42,8 @@ class Player2 extends Player
 	
 	override public function update(elapsed:Float)
 	{
+		if (!alive) return;
+		
 		if (FlxG.keys.anyPressed([SHIFT])){
 			if (!isCrouched) {
 				isCrouched = true;
@@ -59,9 +64,20 @@ class Player2 extends Player
 		
 		super.update(elapsed);
 		
+		if (!PlayState._shadows.hasLightPoint(getMidpoint())) {
+			if (acceptInput) darkTimer += elapsed;
+			FlxG.camera.shake(0.05 * darkTimer / DARK_DEATH_TIME, 0.1);
+			if (darkTimer >= DARK_DEATH_TIME) {
+				kill();
+			}
+		} else {
+			darkTimer = 0;
+		}
+		
 		if (FlxG.keys.anyJustPressed([E])){
 			FlxG.overlap(PlayState._locks, this, function(lock:Lock, player:FlxObject)
 			{
+				animation.play("pick");
 				lock.unlock();
 			});
 		}

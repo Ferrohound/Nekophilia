@@ -1,21 +1,10 @@
-@:Aimee
-What the-?
-
 @:Owen
-Problem?
+A lock. This is where you earn your
+money.
 
 @:Aimee
-This... it needs a code!
-
-@:Owen
-Oscuro wasn't going to make it that
-easy for us, I guess.
-
-@:Aimee
-See if something your boyfriend wrote
-on the walls can help us.
+I earned my money when I put this damn
+dress on. 
 
 @:
-Once the CODE is found, enter the
-corresponding KEY with AIMEE to
-open the door.
+[E] as Aimee to Unlock

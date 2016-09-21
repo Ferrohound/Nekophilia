@@ -44,4 +44,15 @@ class ShadowSystem extends FlxSprite
 		//draws those coordonates relative to itself and not the game world
 		FlxSpriteUtil.drawCircle(this, px - FlxG.camera.scroll.x, py - FlxG.camera.scroll.y, radius, color);
 	}
+	
+	public function hasLightPoint(p:FlxPoint) : Bool
+	{
+		return hasLight(p.x, p.y);
+	}
+	
+	public function hasLight(px:Float, py:Float, threshhold = 0x202020) : Bool
+	{
+		var pointColor = get_pixels().getPixel(Std.int(px - FlxG.camera.scroll.x), Std.int(py - FlxG.camera.scroll.y));
+		return pointColor > threshhold;
+	}
 }
