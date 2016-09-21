@@ -18,17 +18,20 @@ package;
 	 //public var _player2:Player2;
 	 public function new(?X:Float=0, ?Y:Float=0){
 		 super(X, Y);
-		 //_player1 = PlayState._player1;
-		 //_player2 = PlayState._player2;
 	 }
 	 
 	  override public function update(elapsed:Float): Void
 	 {
-		 /*
-		if (true)
-			_active = true;
+		 
+		if (getMidpoint().distanceTo(_player1.getMidpoint()) < _radius && getMidpoint().distanceTo(_player2.getMidpoint()) < _radius){
+			if (_player1.x > x && _player2.x > x)
+				_active = true;
+			else{
+				_active = false;
+			}
+		}
 		if (_active)
-			//do the do
-			*/
+			super.update(elapsed);
+			
 	 }
  }

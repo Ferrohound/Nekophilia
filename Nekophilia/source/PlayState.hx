@@ -161,7 +161,6 @@ class PlayState extends FlxState
 		loadSwitch();
 		
 		loadObjects();
-        add(Objects);
 		add(ILynx);
 		add(CLynx);
 		
@@ -181,6 +180,7 @@ class PlayState extends FlxState
 		//iterate over all the deer and create Deer objects
 		add(_deer);
 		add(_locks);
+		add(Objects);
 		add(_candles);
 		add(_doors);
 		
@@ -492,6 +492,8 @@ class PlayState extends FlxState
 		FlxG.collide(_boxes, _boxes);
 		
 		FlxG.collide(FtileMap, _boxes);
+		FlxG.collide(FtileMap, CLynx);
+		FlxG.collide(FtileMap, ILynx);
 		
 		//colide with doors
 		FlxG.collide(FtileMap, _doors);
