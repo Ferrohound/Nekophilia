@@ -438,6 +438,8 @@ class PlayState extends FlxState
 		FlxG.collide(_boxes, _deer);
 		FlxG.collide(FtileMap, _deer);
 		
+		FlxG.collide(_boxes, _boxes);
+		
 		FlxG.collide(FtileMap, _boxes);
 		
 		//colide with doors
