@@ -352,15 +352,6 @@ class PlayState extends FlxState
 			_dead.add(new FlxObject(point.x, point.y, 64, 64));
 		}
 		
-		//add the locks
-		for (point in Objects.getTileCoords(TILE_LOCK, false)){
-			_locks.add(new Lock(this, point.x, point.y));
-		}
-		//remove the lock sprites
-		for (i in Objects.getTileInstances(TILE_LOCK)){
-			Objects.setTileByIndex(i, -1, true);
-		}
-		
 		//add the doors
 		/*
 		 * 
