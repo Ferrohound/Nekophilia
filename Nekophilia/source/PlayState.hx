@@ -3,24 +3,18 @@ package;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
-import flixel.FlxSubState;
-import flixel.math.FlxPoint;
-import flixel.util.FlxColor;
-import flixel.util.FlxSpriteUtil;
 import flixel.FlxState;
-import flixel.text.FlxText;
-import flixel.ui.FlxButton;
-import flixel.math.FlxMath;
-import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxGroup;
-import flixel.system.FlxSound;
-
-import flixel.graphics.FlxGraphic;
+import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.tile.FlxTilemap;
+import flixel.util.FlxColor;
 import openfl.Assets;
+
 
 class PlayState extends FlxState
 {
+	public static var inst(default, null):PlayState;
+	
 	//two player objects, one controlled by WASD one by the arrow keys
 	public static var _player1(default, null):Player1;
 	public static var _player2(default, null):Player2;
@@ -45,31 +39,33 @@ class PlayState extends FlxState
 	
 	//group for the little doors
 	//group for the big doors
-	public static var _Bboxes:FlxGroup;
-	public static var _LBoxes:FlxGroup;
-	public static var _deer:FlxGroup;
-	public static var _locks:FlxGroup;
+	public static var _boxes:FlxTypedGroup<Box>;
+	public static var _smoke:FlxTypedGroup<SmokeParticle>;
+	public static var _deer:FlxTypedGroup<Deer>;
+	public static var _locks:FlxTypedGroup<Lock>;
+	public static var _candles:FlxTypedGroup<Candle>;
 	public static var _dead:FlxGroup;
-	public static var _candles:FlxGroup;
 	//the exit door
 	public static var _exit:FlxSprite;
 	
 	//triggers
-	public var _startTrigger:FlxGroup;
-	public var _monsterChase:FlxObject;
-	public var _monsterEscape:FlxObject;
+	public static var _startTrigger:FlxGroup;
+	public static var _monsterChase:FlxObject;
+	public static var _monsterEscape:FlxObject;
 	
 	
 	override public function create():Void
 	{
+		inst = this;
+		
 		bgColor = 0xffaaaaaa;
 		
-		_Bboxes = new FlxGroup();
-		_LBoxes = new FlxGroup();
+		_boxes   = new FlxTypedGroup<Box>();
+		_smoke   = new FlxTypedGroup<SmokeParticle>();
+		_deer    = new FlxTypedGroup<Deer>();
+		_locks   = new FlxTypedGroup<Lock>();
+		_candles = new FlxTypedGroup<Candle>();
 		_dead = new FlxGroup();
-		_deer = new FlxGroup();
-		_locks = new FlxGroup();
-		_candles = new FlxGroup();
 		_startTrigger = new FlxGroup();
 		
 		_shadows = new ShadowSystem(FlxColor.BLACK);
@@ -122,8 +118,7 @@ class PlayState extends FlxState
 		
 		FlxG.camera.setScrollBoundsRect(0, 0, FtileMap.width, FtileMap.height, true);
 		
-		add(_Bboxes);
-		add(_LBoxes);
+		add(_boxes);
 		
 		//add the deer to the game
 		
@@ -136,6 +131,8 @@ class PlayState extends FlxState
 		//add the two players to the game
 		add(_player1);
 		add(_player2);
+		
+		add(_smoke);
 		
 		//set midpoint game object
 		_midPoint = new FlxObject((_player1.x + _player2.x)/2,(_player1.y + _player2.y)/2,_player1.width,_player1.height);
@@ -200,7 +197,7 @@ class PlayState extends FlxState
 		 */
 		//add small boxes
 		for (point in Objects.getTileCoords(TILE_BOX_SM, false)){
-			_LBoxes.add(new Box(point.x, point.y, false));
+			_boxes.add(new Box(point.x, point.y, false));
 		}
 		//remove the box sprites
 		for (i in Objects.getTileInstances(TILE_BOX_SM)){
@@ -209,7 +206,7 @@ class PlayState extends FlxState
 		
 		//add big boxes
 		for (point in Objects.getTileCoords(TILE_BOX_LG, false)){
-			_Bboxes.add(new Box(point.x, point.y, true));
+			_boxes.add(new Box(point.x, point.y, true));
 		}
 		//remove the box sprites
 		for (i in Objects.getTileInstances(TILE_BOX_LG)){
@@ -277,22 +274,18 @@ class PlayState extends FlxState
 		_player1.beforeCollideTerrain();
 		_player2.beforeCollideTerrain();
 		
+		//collide with boxes
+		FlxG.collide(FtileMap, _boxes);
+		FlxG.collide(_boxes, _player1);
+		FlxG.collide(_boxes, _player2);
+		
 		FlxG.collide(FtileMap, _player1);
 		FlxG.collide(FtileMap, _player2);
 		
-		//collide with boxes
-		FlxG.collide(_LBoxes, _player1);
-		FlxG.collide(_LBoxes, _player2);
-		FlxG.collide(_Bboxes, _player1);
-		FlxG.collide(_Bboxes, _player2);
+		FlxG.collide(_boxes, _deer);
+		FlxG.collide(FtileMap, _deer);
 		
-		
-		FlxG.collide(FtileMap, _Bboxes);
-		FlxG.collide(FtileMap, _LBoxes);
-		FlxG.collide(_LBoxes, _player1);
-		FlxG.collide(_LBoxes, _player2);
-		FlxG.collide(_Bboxes, _player1);
-		FlxG.collide(_Bboxes, _player2);
+		FlxG.collide(FtileMap, _boxes);
 		
 		_player1.beforeCollidePlayer();
 		_player2.beforeCollidePlayer();

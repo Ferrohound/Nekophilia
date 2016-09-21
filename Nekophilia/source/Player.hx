@@ -5,6 +5,7 @@ import flixel.FlxSprite;
 import flixel.input.keyboard.FlxKey;
 import flixel.math.FlxPoint;
 import flixel.system.FlxAssets.FlxGraphicAsset;
+import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 import flixel.math.FlxPoint;
 import flixel.FlxObject;	
@@ -12,6 +13,8 @@ import flixel.FlxObject;
 class Player extends FlxSprite
 {
 	public var acceptInput = true;
+	var wasOnFloor = true;
+	var oldYVel:Float = 0;
 	
 	public var speed    :Float = 200;
 	public var jumpSpeed:Float = 500;
@@ -26,6 +29,9 @@ class Player extends FlxSprite
 	var _down :Bool = false;
 	var _left :Bool = false;
 	var _right:Bool = false;
+	
+	var  leftFootstep:FlxSound;
+	var rightFootstep:FlxSound;
 	
 	var deathScript:String;
 	var deathScriptTag:String;
@@ -57,7 +63,19 @@ class Player extends FlxSprite
 	override public function update(elapsed:Float): Void
 	{
 		movement();
+		var isOnFloor = isTouching(FlxObject.FLOOR);
+		if (!wasOnFloor && isOnFloor && oldYVel > 200) {
+			SmokeParticle.spawn(x + SmokeParticle.SPRITE_SIZE / 4, y + height / 2,
+				facing == FlxObject.RIGHT, 20, oldYVel < 600);
+			if (oldYVel > 600) {
+				leftFootstep.play(true);
+				rightFootstep.play(true);
+			}
+		}
+		wasOnFloor = isOnFloor;
 		super.update(elapsed);
+		
+		oldYVel = velocity.y;
 	}
 	
 	function movement(): Void

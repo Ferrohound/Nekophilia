@@ -27,6 +27,9 @@ class Player1 extends Player
 		
 		loadGraphic("assets/images/duck.png", true, 100, 114);
 		animation.add("walk", [0, 1, 0, 2], 5, true);
+		
+		leftFootstep  = SoundStore._OleftFoot;
+		rightFootstep = SoundStore._OrightFoot;
 	}
 	
 	override public function update(elapsed:Float): Void
