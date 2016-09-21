@@ -59,7 +59,7 @@ package;
 		if (getMidpoint().distanceTo(_player1.getMidpoint()) < _radius || getMidpoint().distanceTo(_player2.getMidpoint()) < _radius)
 		{
 			animation.play("move");
-			if(!PlayState._shadows.hasLightPoint(getMidpoint())){
+			if(!PlayState._shadows.hasLightPoint(_player1.getMidpoint())){
 			if ((_player1.getMidpoint().distanceTo(_player1.getMidpoint())) < (_player2.getMidpoint().distanceTo(getMidpoint())))
 			{
 				_spookStem.proximity(x, y, _player1, FlxG.width * 0.7);
@@ -106,6 +106,11 @@ package;
 			acceleration.x = 0;
 			velocity.x = 0;
 		}
+		if (getMidpoint().distanceTo(_player2.getMidpoint()) < (_radius / 3)){
+			if(!PlayState._shadows.hasLightPoint(_player2.getMidpoint())){
+				_player2.kill();
+				}
+			}
 		super.update(elapsed);
 	 }
  }
