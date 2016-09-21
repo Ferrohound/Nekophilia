@@ -106,6 +106,11 @@ package;
 			acceleration.x = 0;
 			velocity.x = 0;
 		}
+		if (getMidpoint().distanceTo(_player2.getMidpoint()) < (_radius / 3)){
+			if(!PlayState._shadows.hasLightPoint(_player2.getMidpoint())){
+				_player2.kill();
+				}
+			}
 		super.update(elapsed);
 	 }
  }

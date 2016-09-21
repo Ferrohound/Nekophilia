@@ -38,7 +38,8 @@ package;
 			super.update(elapsed);
 			if (getMidpoint().distanceTo(_player2.getMidpoint()) < (_radius / 3)){
 				if(!PlayState._shadows.hasLightPoint(_player2.getMidpoint())){
-					_player2.kill();
+					//_player2.kill();
+					x = x;
 				}
 			}
 		}
