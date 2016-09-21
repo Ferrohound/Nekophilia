@@ -24,11 +24,11 @@ package;
 		for (i in _doors){
 			i._open = !i._open;
 			if (i._open == true){
-				_doors.remove(i);
+				PlayState._doors.remove(i);
 				i.loadGraphic("assets/images/alpha.png", false, 64, 64);
 			}
 			else{
-				_doors.add(i);
+				PlayState._doors.add(i);
 				i.loadGraphic(i._graphic, true, 64, 64);
 			}
 		}

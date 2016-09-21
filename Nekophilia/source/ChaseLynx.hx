@@ -21,6 +21,7 @@ package;
 		 super(X, Y);
 		 _spookStem = SoundStore._stemE;
 		 _defaultStem = SoundStore._stemF;
+		 speed = 150;
 	 }
 	 
 	  override public function update(elapsed:Float): Void
