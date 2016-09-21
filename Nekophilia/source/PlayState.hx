@@ -60,6 +60,8 @@ class PlayState extends FlxState
 	//the exit door
 	public static var _exit:FlxSprite;
 	
+	public static var _locksDone:Int = 0;
+	
 	//triggers
 	public static var _startTrigger:FlxGroup;
 	public static var _monsterChase:FlxObject;
@@ -352,12 +354,13 @@ class PlayState extends FlxState
 			_dead.add(new FlxObject(point.x, point.y, 64, 64));
 		}
 		
-		//add the doors
-		/*
-		 * 
-		 * 
-		 * 
-		 */
+		//add the crouch dialogue trigger
+		for (point in Objects.getTileCoors(26, false)){
+			//
+			//INSERT CODE HERE
+			//
+		}
+		
 		//add small boxes
 		for (point in Objects.getTileCoords(TILE_BOX_SM, false)){
 			_boxes.add(new Box(point.x, point.y, false));
