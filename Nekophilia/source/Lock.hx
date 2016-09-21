@@ -30,8 +30,8 @@
 	 {
 		 if(locked){
 			animation.play("open");
-			state._locksDone+= 1;
-			if (state._locksDone == 1){
+			PlayState._locksDone+= 1;
+			if (PlayState._locksDone == 1){
 				SoundStore._stemA.fadeIn(3);
 			}
 			SoundStore.unlock.play();

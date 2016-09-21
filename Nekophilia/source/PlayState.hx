@@ -108,9 +108,9 @@ class PlayState extends FlxState
         var mapTilePath:String = "assets/data/Wood.png";
         BtileMap.loadMapFromCSV(mapData, mapTilePath, 64, 64);
 		
-		var i = 48;
+		var i:Int = 48;
 		while (true){
-			for (point in BtileMap.getTileCoors(i, false)){
+			for (point in BtileMap.getTileCoords(i, false)){
 				if (i < 58){
 					//inscription 3
 				}
@@ -130,7 +130,7 @@ class PlayState extends FlxState
 				break;
 		}
 		
-		for (point in BtileMap.getTileCoors(2, false)){
+		for (point in BtileMap.getTileCoords(2, false)){
 			//spot right before the first lock
 		}
 		
@@ -444,7 +444,7 @@ class PlayState extends FlxState
 		
 		//add ChaseLynx
 		for (point in Objects.getTileCoords(21, false)){
-			CLynx = new ChaseLynx(point.x, point.y)
+			CLynx = new ChaseLynx(point.x, point.y);
 		}
 		for (i in Objects.getTileInstances(21)){
 			Objects.setTileByIndex(i, -1, true);
