@@ -12,6 +12,8 @@ import openfl.Assets;
 class Player2 extends Player
 {
 
+	public var isCrouched(default, null) = false;
+	
 	public function new(?X:Float=0, ?Y:Float=0)
 	{
 		super(X, Y);
@@ -24,8 +26,12 @@ class Player2 extends Player
 		speed = 300;
 		jumpSpeed = 300;
 
-		loadGraphic("assets/images/duck.png", true, 100, 114);
-		animation.add("walk", [0, 1, 0, 2], 5, true);
+		loadGraphic("assets/images/Aimee.png", true, 64, 96);
+		animation.add("stand", [ 0,  1,  2,  3], 5, true);
+		animation.add("walk",  [ 4,  5,  6,  7], 5, true);
+		animation.add("pick",  [ 8,  9, 10, 11], 5, false);
+		animation.add("crawl", [12, 13, 14, 15], 5, true);
+		animation.add("crouch", [12, 14], 1, true);
 		
 		leftFootstep  = SoundStore._AleftFoot;
 		rightFootstep = SoundStore._ArightFoot;
@@ -33,9 +39,27 @@ class Player2 extends Player
 	
 	override public function update(elapsed:Float)
 	{
+		if (FlxG.keys.anyPressed([SHIFT])){
+			if (!isCrouched) {
+				isCrouched = true;
+				height = frameHeight / 2;
+				offset.y = frameHeight / 2;
+				y += frameHeight / 2;
+				standAnim = "crouch";
+				walkAnim  = "crawl";
+			}
+		} else if (isCrouched) {
+			isCrouched = false;
+			height = frameHeight;
+			offset.y = 0;
+			y -= frameHeight / 2;
+			standAnim = "stand";
+			walkAnim  = "walk";
+		}
+		
 		super.update(elapsed);
 		
-		if(FlxG.keys.anyJustPressed([E])){
+		if (FlxG.keys.anyJustPressed([E])){
 			FlxG.overlap(PlayState._locks, this, function(lock:Lock, player:FlxObject)
 			{
 				lock.unlock();

@@ -36,6 +36,9 @@ class Player extends FlxSprite
 	var deathScript:String;
 	var deathScriptTag:String;
 	
+	var standAnim = "stand";
+	var walkAnim  = "walk";
+	
 	//added third argument to the constructor, "W" for WASD, "A" for Arrows
 	public function new(?X:Float = 0, ?Y:Float = 0)
 	{
@@ -45,8 +48,8 @@ class Player extends FlxSprite
 		
 		//setFacingFlip(direction, flipx, flipy);
 		//for flipping the sprite when the player is facing other directions
-		setFacingFlip(FlxObject.LEFT, true, false);
-		setFacingFlip(FlxObject.RIGHT, false, false);
+		setFacingFlip(FlxObject.RIGHT, true, false);
+		setFacingFlip(FlxObject.LEFT, false, false);
 		
 		drag.x = drag.y = 1100;
 		acceleration.y = 600;
@@ -126,9 +129,9 @@ class Player extends FlxSprite
 		}
 		
 		if (acceleration.x != 0) {
-			animation.play("walk");
+			animation.play(walkAnim);
 		} else {
-			animation.reset();
+			animation.play(standAnim);
 		}
 	}
 	

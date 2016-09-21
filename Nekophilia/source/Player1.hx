@@ -25,8 +25,10 @@ class Player1 extends Player
 		var speed    :Float = 200;
 		var jumpSpeed:Float = 500;
 		
-		loadGraphic("assets/images/duck.png", true, 100, 114);
-		animation.add("walk", [0, 1, 0, 2], 5, true);
+		loadGraphic("assets/images/Owen.png", true, 64, 96);
+		animation.add("stand", [0, 1,  2,  3], 5, true);
+		animation.add("walk",  [4, 5,  6,  7], 5, true);
+		animation.add("wave",  [8, 9, 10, 11], 5, true);
 		
 		leftFootstep  = SoundStore._OleftFoot;
 		rightFootstep = SoundStore._OrightFoot;

@@ -418,21 +418,8 @@ class PlayState extends FlxState
 		var tmp = _midPoint.getMidpoint();
 		
 		_shadows.beginLights(tmp);
-		//_shadows.addLight(700, 1600, 1000);
-		//_shadows.addLight(1200, 200, 130);
 		
 		super.update(elapsed);
-		
-		/*
-		//for handling groups, collision and win condition
-		FlxG.collide(_doors, _player2);
-		//or do lockpicking from p2's code, isTouching()
-		FlxG.overlap(_doors, _player2, lockpick);
-		FlxG.overlap(_clues, _player1, displayClue);
-		
-		FlxG.overlap(_exit, _player1, win);
-		FlxG.overlap(_exit, _player2, win);
-		 */
 		
 		FlxG.overlap(_dead, _player1, dead);
 		FlxG.overlap(_dead, _player2, dead);
