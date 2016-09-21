@@ -110,7 +110,7 @@ class PlayState extends FlxState
 		
 		var i = 48;
 		while (true){
-			for (point in Objects.getTileCoors(i, false)){
+			for (point in BtileMap.getTileCoors(i, false)){
 				if (i < 58){
 					//inscription 3
 				}
@@ -128,6 +128,10 @@ class PlayState extends FlxState
 			}
 			if (i == 81)
 				break;
+		}
+		
+		for (point in BtileMap.getTileCoors(2, false)){
+			//spot right before the first lock
 		}
 		
         add(BtileMap);
