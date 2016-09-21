@@ -30,6 +30,10 @@
 	 {
 		 if(locked){
 			animation.play("open");
+			PlayState._locksDone+= 1;
+			if (PlayState._locksDone == 1){
+				SoundStore._stemA.fadeIn(3);
+			}
 			SoundStore.unlock.play();
 			locked = false;
 			for (i in _doors){
