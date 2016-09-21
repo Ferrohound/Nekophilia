@@ -68,4 +68,4 @@ Illusion? For who, The trees??
 @:
 [W][A][S][D] to Move Aimee
 [ARROW KEYS] to Move Owen
-[E] to Investigate
+[CTRL] to Light Candles as Owen
