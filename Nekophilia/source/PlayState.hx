@@ -78,6 +78,7 @@ class PlayState extends FlxState
 	
 	override public function create():Void
 	{
+		SoundStore.loadAudio();
 		inst = this;
 		
 		bgColor = 0xffaaaaaa;
@@ -104,8 +105,6 @@ class PlayState extends FlxState
         FlxG.camera.setSize(FlxG.width + ext, FlxG.height + ext);
 		//make the mouse invisible
 		FlxG.mouse.visible = false;
-		
-		SoundStore.loadAudio();
 		
 		BtileMap = new FlxTilemap();
         var mapData:String = Assets.getText("assets/data/Level_Background.csv");
