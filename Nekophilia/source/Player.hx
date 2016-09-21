@@ -151,6 +151,7 @@ class Player extends FlxSprite
 	
 	override public function kill(): Void
 	{
+		if (!alive) return;
 		alive = false;
 		
 		acceptInput = false;

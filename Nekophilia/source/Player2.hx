@@ -41,32 +41,32 @@ class Player2 extends Player
 	}
 	
 	override public function update(elapsed:Float)
-	{
-		if (!alive) return;
-		
-		if (FlxG.keys.anyPressed([SHIFT])){
-			if (!isCrouched) {
-				isCrouched = true;
-				height = frameHeight / 2;
-				offset.y = frameHeight / 2;
-				y += frameHeight / 2;
-				standAnim = "crouch";
-				walkAnim  = "crawl";
+	{	
+		if (acceptInput) {
+			if (FlxG.keys.anyPressed([SHIFT])){
+				if (!isCrouched) {
+					isCrouched = true;
+					height = frameHeight / 2;
+					offset.y = frameHeight / 2;
+					y += frameHeight / 2;
+					standAnim = "crouch";
+					walkAnim  = "crawl";
+				}
+			} else if (isCrouched) {
+				isCrouched = false;
+				height = frameHeight;
+				offset.y = 0;
+				y -= frameHeight / 2;
+				standAnim = "stand";
+				walkAnim  = "walk";
 			}
-		} else if (isCrouched) {
-			isCrouched = false;
-			height = frameHeight;
-			offset.y = 0;
-			y -= frameHeight / 2;
-			standAnim = "stand";
-			walkAnim  = "walk";
 		}
 		
 		super.update(elapsed);
 		
 		if (!PlayState._shadows.hasLightPoint(getMidpoint())) {
 			if (acceptInput) darkTimer += elapsed;
-			FlxG.camera.shake(0.05 * darkTimer / DARK_DEATH_TIME, 0.1);
+			if (alive) FlxG.camera.shake(0.05 * darkTimer / DARK_DEATH_TIME, 0.1);
 			if (darkTimer >= DARK_DEATH_TIME) {
 				kill();
 			}
@@ -74,7 +74,7 @@ class Player2 extends Player
 			darkTimer = 0;
 		}
 		
-		if (FlxG.keys.anyJustPressed([E])){
+		if (acceptInput && FlxG.keys.anyJustPressed([E])){
 			FlxG.overlap(PlayState._locks, this, function(lock:Lock, player:FlxObject)
 			{
 				animation.play("pick");
