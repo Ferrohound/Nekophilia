@@ -13,13 +13,14 @@
  {
 	 //should have an array of doors it controls
 	 //flips their _open state
-	 public var _doors:FlxGroup;
+	 public var _doors:FlxTypedGroup<Door>;
 	 var locked:Bool = true;
 	 
 	 public function new(state:PlayState,?X:Float = 0, ?Y:Float = 0){
 		 super(X, Y);
 		 loadGraphic("assets/images/lock.png", true, 64, 64);
 		 animation.add("open", [0, 1, 2, 3, 4, 5, 6], 12, false);
+		 _doors = new FlxTypedGroup<Door>();
 	 }
 	 override public function update(elapsed:Float):Void
 	 {
@@ -31,6 +32,9 @@
 			animation.play("open");
 			SoundStore.unlock.play();
 			locked = false;
+			for (i in _doors){
+				i.kill();
+			}
 		 }
 	 }
  }

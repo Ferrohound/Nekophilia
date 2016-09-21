@@ -33,6 +33,17 @@ class PlayState extends FlxState
 	var Foreground:FlxTilemap;
 	var Objects:FlxTilemap;
 	
+	//maps for the keys/switches and their corresponding doors
+	var SwitchMap:FlxTilemap;
+	var Lock1:FlxTilemap;
+	var Lock2:FlxTilemap;
+	var Lock3:FlxTilemap;
+	var Lock4:FlxTilemap;
+	var Lock5:FlxTilemap;
+	var Lock6:FlxTilemap;
+	var Lock7:FlxTilemap;
+	var Lock8:FlxTilemap;
+	
 	//Flixel groups
 	//use collide to prevent them from walking into it
 	//then overlap + function to call
@@ -45,6 +56,7 @@ class PlayState extends FlxState
 	public static var _locks:FlxTypedGroup<Lock>;
 	public static var _candles:FlxTypedGroup<Candle>;
 	public static var _dead:FlxGroup;
+	public static var _doors:FlxTypedGroup<Door>;
 	//the exit door
 	public static var _exit:FlxSprite;
 	
@@ -65,6 +77,8 @@ class PlayState extends FlxState
 		_deer    = new FlxTypedGroup<Deer>();
 		_locks   = new FlxTypedGroup<Lock>();
 		_candles = new FlxTypedGroup<Candle>();
+		_doors   = new FlxTypedGroup<Door>();
+		
 		_dead = new FlxGroup();
 		_startTrigger = new FlxGroup();
 		
@@ -110,6 +124,10 @@ class PlayState extends FlxState
 		loadObjects();
         add(Objects);
 		
+		loadLocks();
+		
+		//load all the key-door layers
+		
 		//do nothing with the foreground :')
 		Foreground = new FlxTilemap();
         mapData = Assets.getText("assets/data/Level_FORE.csv");
@@ -127,6 +145,7 @@ class PlayState extends FlxState
 		add(_deer);
 		add(_locks);
 		add(_candles);
+		add(_doors);
 		
 		//add the two players to the game
 		add(_player1);
@@ -172,6 +191,108 @@ class PlayState extends FlxState
 	public static inline var TILE_CANDLE    =  8;
 	public static inline var TILE_START_TRG = 11;
 	public static inline var TILE_LYNX      = 18;
+	
+	//loading all of the Key-door maps
+	function loadLocks():Void
+	{
+		Lock1 = new FlxTilemap();
+        var mapData:String = Assets.getText("assets/data/Level_Lock1.csv");
+        var mapTilePath:String = "assets/data/Misc.png";
+        Lock1.loadMapFromCSV(mapData, mapTilePath, 64, 64);
+		createLocks(Lock1, 1);
+		Lock1 = null;
+		
+		Lock2 = new FlxTilemap();
+        mapData = Assets.getText("assets/data/Level_Lock2.csv");
+        mapTilePath = "assets/data/Misc.png";
+        Lock2.loadMapFromCSV(mapData, mapTilePath, 64, 64);
+		createLocks(Lock2, 2);
+		Lock2 = null;
+		
+		Lock3 = new FlxTilemap();
+        mapData = Assets.getText("assets/data/Level_Lock3.csv");
+        mapTilePath = "assets/data/Misc.png";
+        Lock3.loadMapFromCSV(mapData, mapTilePath, 64, 64);
+		createLocks(Lock3, 3);
+		Lock3 = null;
+		
+		Lock4 = new FlxTilemap();
+        mapData = Assets.getText("assets/data/Level_Lock4.csv");
+        mapTilePath = "assets/data/Misc.png";
+        Lock4.loadMapFromCSV(mapData, mapTilePath, 64, 64);
+		createLocks(Lock4, 4);
+		Lock4 = null;
+		
+		Lock5 = new FlxTilemap();
+        mapData = Assets.getText("assets/data/Level_Lock5.csv");
+        mapTilePath = "assets/data/Misc.png";
+        Lock5.loadMapFromCSV(mapData, mapTilePath, 64, 64);
+		createLocks(Lock5, 5);
+		Lock5 = null;
+		
+		Lock6 = new FlxTilemap();
+        mapData = Assets.getText("assets/data/Level_Lock6.csv");
+        mapTilePath = "assets/data/Misc.png";
+        Lock6.loadMapFromCSV(mapData, mapTilePath, 64, 64);
+		createLocks(Lock6, 6);
+		Lock6 = null;
+		
+		Lock7 = new FlxTilemap();
+        mapData = Assets.getText("assets/data/Level_Lock7.csv");
+        mapTilePath = "assets/data/Misc.png";
+        Lock7.loadMapFromCSV(mapData, mapTilePath, 64, 64);
+		createLocks(Lock7, 7);
+		Lock7 = null;
+		
+		Lock8 = new FlxTilemap();
+        mapData = Assets.getText("assets/data/Level_Lock8.csv");
+        mapTilePath = "assets/data/Misc.png";
+        Lock8.loadMapFromCSV(mapData, mapTilePath, 64, 64);
+		createLocks(Lock8, 8);
+		Lock8 = null;
+	}
+	
+	//create the key-door game objects
+	function createLocks(lockMap:FlxTilemap, i:Int):Void
+	{
+		//add the locks
+		for (point in lockMap.getTileCoords(TILE_LOCK, false)){
+			var lock = new Lock(this, point.x, point.y);
+			_locks.add(lock);
+			
+			//load the door(s)
+			if (i > 2){
+				for (point in lockMap.getTileCoords(27, false)){
+				var door = new Door(point.x, point.y, false, 27);
+				lock._doors.add(door);
+				_doors.add(door);
+				}
+				for (i in lockMap.getTileInstances(27)){
+				lockMap.setTileByIndex(i, -1, true);
+				}
+			}
+			if (i<3){
+				for (point in lockMap.getTileCoords(28, false)){
+				var door = new Door(point.x, point.y, false,28);
+				lock._doors.add(door);
+				_doors.add(door);
+				}
+				//push the door onto the locks _doors
+				for (i in lockMap.getTileInstances(28)){
+					lockMap.setTileByIndex(i, -1, true);
+				}
+			}
+		}
+		//remove the lock sprites
+		for (i in lockMap.getTileInstances(TILE_LOCK)){
+			lockMap.setTileByIndex(i, -1, true);
+		}
+	}
+	
+	function loadSwitch():Void
+	{
+		
+	}
 	
 	function loadObjects():Void
 	{
@@ -286,6 +407,13 @@ class PlayState extends FlxState
 		FlxG.collide(FtileMap, _deer);
 		
 		FlxG.collide(FtileMap, _boxes);
+		
+		//colide with doors
+		FlxG.collide(FtileMap, _doors);
+		FlxG.collide(_doors, _boxes);
+		FlxG.collide(_doors, _player1);
+		FlxG.collide(_doors, _player2);
+		FlxG.collide(_doors, _deer);
 		
 		_player1.beforeCollidePlayer();
 		_player2.beforeCollidePlayer();
