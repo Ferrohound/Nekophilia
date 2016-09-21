@@ -68,6 +68,7 @@ class PlayState extends FlxState
 	
 	//triggers
 	public static var _startTrigger:FlxGroup;
+	public static var _crouchDialogueTrigger:FlxGroup;
 	public static var _monsterChase:FlxObject;
 	public static var _monsterEscape:FlxObject;
 	
@@ -87,6 +88,7 @@ class PlayState extends FlxState
 		
 		_dead = new FlxGroup();
 		_startTrigger = new FlxGroup();
+		_crouchDialogueTrigger = new FlxGroup();
 		
 		_shadows = new ShadowSystem(FlxColor.BLACK);
 		
@@ -193,6 +195,7 @@ class PlayState extends FlxState
 		add(Foreground);
 		add(_shadows);
 		add(_startTrigger);
+		add(_crouchDialogueTrigger);
 		
 		_dialogue = new DialogueBox(["Owen"=>SoundStore.voiceOwen, "Aimee"=>SoundStore.voiceAimee]);
 		add(_dialogue);
@@ -222,6 +225,7 @@ class PlayState extends FlxState
 	public static inline var TILE_CANDLE    =  8;
 	public static inline var TILE_START_TRG = 11;
 	public static inline var TILE_LYNX      = 18;
+	public static inline var TILE_CRCH_TRG  = 26;
 	
 	//loading all of the Key-door maps
 	function loadLocks():Void
@@ -381,10 +385,8 @@ class PlayState extends FlxState
 		}
 		
 		//add the crouch dialogue trigger
-		for (point in Objects.getTileCoors(26, false)){
-			//
-			//INSERT CODE HERE
-			//
+		for (point in Objects.getTileCoords(TILE_CRCH_TRG, false)){
+			_crouchDialogueTrigger.add(new FlxObject(point.x, point.y, 64, 64));
 		}
 		
 		//add small boxes
@@ -462,6 +464,9 @@ class PlayState extends FlxState
 		FlxG.overlap(_startTrigger, _player1, StrtTrig);
 		FlxG.overlap(_startTrigger, _player2, StrtTrig);
 		
+		FlxG.overlap(_crouchDialogueTrigger, _player1, crouchTrig);
+		FlxG.overlap(_crouchDialogueTrigger, _player2, crouchTrig);
+		
 		if (FlxG.keys.anyJustPressed([ESCAPE])) {
 			if (_dialogue.alive) _dialogue.showScript();
 		}
@@ -479,6 +484,8 @@ class PlayState extends FlxState
 		
 		FlxG.collide(_boxes, _deer);
 		FlxG.collide(FtileMap, _deer);
+		
+		FlxG.collide(_boxes, _boxes);
 		
 		FlxG.collide(FtileMap, _boxes);
 		
@@ -498,7 +505,13 @@ class PlayState extends FlxState
 	function StrtTrig(thing:FlxObject, player:FlxObject):Void
 	{
 		if (!SoundStore._stemB.playing) SoundStore._stemB.fadeIn(3);
-		thing.kill();
+		_startTrigger.kill();
+	}
+	
+	function crouchTrig(thing:FlxObject, player:FlxObject):Void
+	{
+		_dialogue.showScript(Assets.getText("assets/text/mechanics/crouching.txt"), "crouching");
+		_crouchDialogueTrigger.kill();
 	}
 	
 	//method to call for simple camera shake
