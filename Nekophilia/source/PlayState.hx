@@ -69,6 +69,7 @@ class PlayState extends FlxState
 	//triggers
 	public static var _startTrigger:FlxGroup;
 	public static var _crouchDialogueTrigger:FlxGroup;
+	public static var _lockDialogueTrigger:FlxGroup;
 	public static var _monsterChase:FlxObject;
 	public static var _monsterEscape:FlxObject;
 	
@@ -89,6 +90,7 @@ class PlayState extends FlxState
 		_dead = new FlxGroup();
 		_startTrigger = new FlxGroup();
 		_crouchDialogueTrigger = new FlxGroup();
+		_lockDialogueTrigger   = new FlxGroup();
 		
 		_shadows = new ShadowSystem(FlxColor.BLACK);
 		
@@ -132,6 +134,7 @@ class PlayState extends FlxState
 		
 		for (point in BtileMap.getTileCoords(2, false)){
 			//spot right before the first lock
+			_lockDialogueTrigger.add(new FlxObject(point.x, point.y, 64, 64)); 
 		}
 		
         add(BtileMap);
@@ -200,6 +203,7 @@ class PlayState extends FlxState
 		add(_shadows);
 		add(_startTrigger);
 		add(_crouchDialogueTrigger);
+		add(_lockDialogueTrigger);
 		
 		_dialogue = new DialogueBox(["Owen"=>SoundStore.voiceOwen, "Aimee"=>SoundStore.voiceAimee]);
 		add(_dialogue);
@@ -471,6 +475,9 @@ class PlayState extends FlxState
 		FlxG.overlap(_crouchDialogueTrigger, _player1, crouchTrig);
 		FlxG.overlap(_crouchDialogueTrigger, _player2, crouchTrig);
 		
+		FlxG.overlap(_lockDialogueTrigger, _player1, lockTrig);
+		FlxG.overlap(_lockDialogueTrigger, _player2, lockTrig);
+		
 		if (FlxG.keys.anyJustPressed([ESCAPE])) {
 			if (_dialogue.alive) _dialogue.showScript();
 		}
@@ -518,6 +525,12 @@ class PlayState extends FlxState
 	{
 		_dialogue.showScript(Assets.getText("assets/text/mechanics/crouching.txt"), "crouching");
 		_crouchDialogueTrigger.kill();
+	}
+	
+	function lockTrig(thing:FlxObject, player:FlxObject):Void
+	{
+		_dialogue.showScript(Assets.getText("assets/text/mechanics/door.txt"), "door");
+		_lockDialogueTrigger.kill();
 	}
 	
 	//method to call for simple camera shake
