@@ -87,6 +87,13 @@ class DialogueBox extends FlxSpriteGroup
 					_delay = 0;
 				case 'x':
 					_textBox.text = "";
+					_delay = 0;
+				case '>':
+					_timer = Math.POSITIVE_INFINITY;
+					_delay = 0;
+				case '<':
+					_timer = 0;
+					_delay = 0;
 				case '':
 					exitScript();
 				default:
@@ -175,6 +182,11 @@ class DialogueBox extends FlxSpriteGroup
 	 * - `@x` :
 	 * -	Clears the screen. Useful for having one line go straight into
 	 * -	another.
+	 * - `@>` :
+	 * -	Immediately prints all dialogue left in paragraph, as if skip
+	 * -	had been pressed.
+	 * - `@<` :
+	 * -	Stops skip here, leaving text to continue as normal.
 	 * - `@0` - `@9` :
 	 * -	Executes the corresponding callback. See `callbacks`. If no such
 	 * -	callback exists, the characters are ignored completely.
