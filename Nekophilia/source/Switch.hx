@@ -11,17 +11,27 @@ package;
  
  class Switch extends Lock
  {
-	 var _label:String;
-	 public function new(state:PlayState, ?X:Float = 0, ?Y:Float = 0, Label:String = "A"){
+	 public function new(state:PlayState, ?X:Float = 0, ?Y:Float = 0){
 		 super(state, X, Y);
 		 loadGraphic("assets/images/switch.png", false, 64, 64);
-		 _label = Label;
 	 }
 	 
-	 //flip the opened value for each door
+	 //toggle the opened value for each door
+	 //remove and add from_doors to disable collision
 	 override public function unlock():Void
 	 {
-		 
+		SoundStore.unlock.play();
+		for (i in _doors){
+			i._open = !i._open;
+			if (i._open == true){
+				_doors.remove(i);
+				i.loadGraphic("assets/images/alpha.png", false, 64, 64);
+			}
+			else{
+				_doors.add(i);
+				i.loadGraphic(i._graphic, true, 64, 64);
+			}
+		}
 	 }
 	 
  }

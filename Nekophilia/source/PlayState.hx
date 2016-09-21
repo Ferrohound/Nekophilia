@@ -34,7 +34,7 @@ class PlayState extends FlxState
 	var Objects:FlxTilemap;
 	
 	//maps for the keys/switches and their corresponding doors
-	var SwitchMap:FlxTilemap;
+	var switchMap:FlxTilemap;
 	var Lock1:FlxTilemap;
 	var Lock2:FlxTilemap;
 	var Lock3:FlxTilemap;
@@ -121,10 +121,13 @@ class PlayState extends FlxState
 		_player2 = new Player2(182, 320);
 		_player2.acceptInput = false;
 		
+		
+		loadLocks();
+		loadSwitch();
+		
 		loadObjects();
         add(Objects);
 		
-		loadLocks();
 		
 		//load all the key-door layers
 		
@@ -291,7 +294,55 @@ class PlayState extends FlxState
 	
 	function loadSwitch():Void
 	{
+		switchMap = new FlxTilemap();
+        var mapData:String = Assets.getText("assets/data/Level_Switch.csv");
+        var mapTilePath:String = "assets/data/Misc.png";
+        switchMap.loadMapFromCSV(mapData, mapTilePath, 64, 64);
 		
+		//add the switch
+		for (point in switchMap.getTileCoords(29, false)){
+			var swtch = new Switch(this, point.x, point.y);
+			_locks.add(swtch);
+			
+			//load the door(s)
+			
+			for (point in switchMap.getTileCoords(27, false)){
+				var door = new Door(point.x, point.y, false, 27);
+				swtch._doors.add(door);
+				_doors.add(door);
+			}
+			for (i in switchMap.getTileInstances(27)){
+				switchMap.setTileByIndex(i, -1, true);
+			}
+			
+			for (point in switchMap.getTileCoords(28, false)){
+				var door = new Door(point.x, point.y, false,28);
+				swtch._doors.add(door);
+				_doors.add(door);
+			}
+			//push the door onto the locks _doors
+			for (i in switchMap.getTileInstances(28)){
+				switchMap.setTileByIndex(i, -1, true);
+			}
+			
+			for (point in switchMap.getTileCoords(5, false)){
+				var door = new Door(point.x, point.y, true,5);
+				swtch._doors.add(door);
+				_doors.add(door);
+			}
+			//push the door onto the locks _doors
+			for (i in switchMap.getTileInstances(5)){
+				switchMap.setTileByIndex(i, -1, true);
+			}
+			//add weighted switch that opens all doors?
+			
+		}
+		//remove the lock sprites
+		for (i in switchMap.getTileInstances(29)){
+			switchMap.setTileByIndex(i, -1, true);
+		}
+		
+		switchMap = null;
 	}
 	
 	function loadObjects():Void
