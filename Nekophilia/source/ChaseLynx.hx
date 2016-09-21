@@ -21,12 +21,12 @@ package;
 		 super(X, Y);
 		 _spookStem = SoundStore._stemE;
 		 _defaultStem = SoundStore._stemF;
-		 speed = 150;
+		 speed = 250;
 	 }
 	 
 	  override public function update(elapsed:Float): Void
 	 {
-		if (getMidpoint().distanceTo(_player1.getMidpoint()) < _radius && getMidpoint().distanceTo(_player2.getMidpoint()) < _radius){
+		if (getMidpoint().distanceTo(_player1.getMidpoint()) > _radius && getMidpoint().distanceTo(_player2.getMidpoint()) > _radius){
 			if (_player1.x > x && _player2.x > x){
 				_active = true;
 				_activated = true;

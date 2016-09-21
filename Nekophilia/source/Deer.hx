@@ -13,7 +13,7 @@ package;
  //movement towards the player, and cross fade the music
  class Deer extends FlxSprite
  {
-	 var speed:Float = 50;
+	 var speed:Float = 150;
 	 var factor:Float = 4;
 	 
 	 var _source:FlxObject;
@@ -59,7 +59,8 @@ package;
 		if (getMidpoint().distanceTo(_player1.getMidpoint()) < _radius || getMidpoint().distanceTo(_player2.getMidpoint()) < _radius)
 		{
 			animation.play("move");
-			if ((_player1.getMidpoint().distanceTo(getMidpoint())) < (_player2.getMidpoint().distanceTo(getMidpoint())))
+			if(!PlayState._shadows.hasLightPoint(getMidpoint())){
+			if ((_player1.getMidpoint().distanceTo(_player1.getMidpoint())) < (_player2.getMidpoint().distanceTo(getMidpoint())))
 			{
 				_spookStem.proximity(x, y, _player1, FlxG.width * 0.7);
 				if (_player1.x < x){
@@ -77,21 +78,24 @@ package;
 					}
 				}
 			}
+			}
 		//move towards player2
 			else{
-				_spookStem.proximity(x, y, _player2, FlxG.width * 0.7);
-				if (_player2.x < x){
-					facing = FlxObject.LEFT;
-					acceleration.x = -speed * factor;
-					if (velocity.x < -speed){
-						velocity.x = -speed;
+				if(!PlayState._shadows.hasLightPoint(_player2.getMidpoint())){
+					_spookStem.proximity(x, y, _player2, FlxG.width * 0.7);
+					if (_player2.x < x){
+						facing = FlxObject.LEFT;
+						acceleration.x = -speed * factor;
+						if (velocity.x < -speed){
+							velocity.x = -speed;
+						}
 					}
-				}
-				else{
-					facing = FlxObject.RIGHT;
-					acceleration.x = speed * factor;
-					if (velocity.x > speed){
-						velocity.x = speed;
+					else{
+						facing = FlxObject.RIGHT;
+						acceleration.x = speed * factor;
+						if (velocity.x > speed){
+							velocity.x = speed;
+						}
 					}
 				}
 			}

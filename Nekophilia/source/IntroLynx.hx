@@ -14,6 +14,7 @@ package;
  class IntroLynx extends Deer
  {
 	 public var _active:Bool = false;
+	 public var _activated:Bool = false;
 	 //public var _player1:Player1;
 	 //public var _player2:Player2;
 	 public function new(?X:Float=0, ?Y:Float=0){
@@ -23,15 +24,25 @@ package;
 	  override public function update(elapsed:Float): Void
 	 {
 		 
-		if (getMidpoint().distanceTo(_player1.getMidpoint()) < _radius && getMidpoint().distanceTo(_player2.getMidpoint()) < _radius){
-			if (_player1.x > x && _player2.x > x)
+		if (getMidpoint().distanceTo(_player1.getMidpoint()) > _radius && getMidpoint().distanceTo(_player2.getMidpoint()) > _radius){
+			if (_player1.x > x && _player2.x > x){
 				_active = true;
-			else{
-				_active = false;
+				_activated = true;
 			}
 		}
-		if (_active)
+		else{
+			_active = false;
+		}
+		
+		if (_active){
 			super.update(elapsed);
+			if (getMidpoint().distanceTo(_player2.getMidpoint()) < (_radius / 2))
+				_player2.kill();
+		}
+		if (!_active && _activated){
+			SoundStore._stemB.fadeIn(3);
+			SoundStore._stemC.fadeOut(3);
 			
+		}
 	 }
  }
