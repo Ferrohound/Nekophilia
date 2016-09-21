@@ -34,4 +34,14 @@ package;
 		}
 	 }
 	 
+	 public function unlockAll():Void
+	 {
+		 SoundStore.unlock.play();
+		for (i in _doors){
+			i._open = true;
+			PlayState._doors.remove(i);
+			i.loadGraphic("assets/images/alpha.png", false, 64, 64);
+		}
+	 }
+	 
  }

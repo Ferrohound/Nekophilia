@@ -25,7 +25,9 @@ class PlayState extends FlxState
 	public static var _dialogue(default, null):DialogueBox;
 	
 	//group of flxObject to trigger death; attained from the tiled map
-	
+	//omni-switch
+	var _omni:FlxObject;
+	var _switch:Switch;
 	
 	//tilemaps
 	var BtileMap:FlxTilemap;
@@ -182,6 +184,7 @@ class PlayState extends FlxState
 		add(_dead);
 		//iterate over all the deer and create Deer objects
 		add(_deer);
+		add(_omni);
 		add(_locks);
 		add(Objects);
 		add(_candles);
@@ -197,7 +200,7 @@ class PlayState extends FlxState
 		_midPoint = new FlxObject((_player1.x + _player2.x)/2,(_player1.y + _player2.y)/2,_player1.width,_player1.height);
 		FlxG.camera.follow(_midPoint, PLATFORMER);
 		
-		_deer.add(new Deer(500, 320));
+		//_deer.add(new Deer(500, 320));
 		
 		add(Foreground);
 		add(_shadows);
@@ -341,14 +344,14 @@ class PlayState extends FlxState
 		
 		//add the switch
 		for (point in switchMap.getTileCoords(29, false)){
-			var swtch = new Switch(this, point.x, point.y);
-			_locks.add(swtch);
+			_switch = new Switch(this, point.x, point.y);
+			_locks.add(_switch);
 			
 			//load the door(s)
 			
 			for (point in switchMap.getTileCoords(27, false)){
 				var door = new Door(point.x, point.y, false, 27);
-				swtch._doors.add(door);
+				_switch._doors.add(door);
 				_doors.add(door);
 			}
 			for (i in switchMap.getTileInstances(27)){
@@ -357,7 +360,7 @@ class PlayState extends FlxState
 			
 			for (point in switchMap.getTileCoords(28, false)){
 				var door = new Door(point.x, point.y, false,28);
-				swtch._doors.add(door);
+				_switch._doors.add(door);
 				_doors.add(door);
 			}
 			//push the door onto the locks _doors
@@ -367,15 +370,18 @@ class PlayState extends FlxState
 			
 			for (point in switchMap.getTileCoords(5, false)){
 				var door = new Door(point.x, point.y, true,5);
-				swtch._doors.add(door);
+				_switch._doors.add(door);
 				_doors.add(door);
 			}
 			//push the door onto the locks _doors
 			for (i in switchMap.getTileInstances(5)){
 				switchMap.setTileByIndex(i, -1, true);
 			}
-			//add weighted switch that opens all doors?
 			
+			//add weighted switch that opens all doors
+			for (point in switchMap.getTileCoords(17, false)){
+				_omni = new FlxObject(point.x, point.y-10,64,64);
+			}	
 		}
 		//remove the lock sprites
 		for (i in switchMap.getTileInstances(29)){
@@ -509,10 +515,18 @@ class PlayState extends FlxState
 		FlxG.collide(_doors, _player2);
 		FlxG.collide(_doors, _deer);
 		
+		FlxG.overlap(_omni, _player1, openSwitchAll);
+		
 		_player1.beforeCollidePlayer();
 		_player2.beforeCollidePlayer();
 		
 		FlxG.collide(_player1, _player2);
+	}
+	
+	//trigger pressure plate to open up all sealed doors
+	function openSwitchAll(thing:FlxObject, player:FlxObject):Void
+	{
+		_switch.unlockAll();
 	}
 	
 	function StrtTrig(thing:FlxObject, player:FlxObject):Void
