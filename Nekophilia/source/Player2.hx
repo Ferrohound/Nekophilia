@@ -65,12 +65,16 @@ class Player2 extends Player
 		super.update(elapsed);
 		
 		if (!PlayState._shadows.hasLightPoint(getMidpoint())) {
+			FlxG.overlap(PlayState._deer, this, function(object:FlxObject, player:FlxObject){
+				kill();
+			});
 			if (acceptInput) darkTimer += elapsed;
 			if (alive) FlxG.camera.shake(0.05 * darkTimer / DARK_DEATH_TIME, 0.1);
 			if (darkTimer >= DARK_DEATH_TIME) {
 				kill();
 			}
-		} else {
+			}
+			else {
 			darkTimer = 0;
 		}
 		

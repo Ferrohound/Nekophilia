@@ -199,10 +199,9 @@ class PlayState extends FlxState
 		_midPoint = new FlxObject((_player1.x + _player2.x)/2,(_player1.y + _player2.y)/2,_player1.width,_player1.height);
 		FlxG.camera.follow(_midPoint, PLATFORMER);
 		
-		//_deer.add(new Deer(500, 320));
-		
 		add(Foreground);
 		add(_shadows);
+		_deer.add(new Deer(500, 320));
 		add(_startTrigger);
 		add(_crouchDialogueTrigger);
 		add(_lockDialogueTrigger);

@@ -60,24 +60,24 @@ package;
 		{
 			animation.play("move");
 			if(!PlayState._shadows.hasLightPoint(_player1.getMidpoint())){
-			if ((_player1.getMidpoint().distanceTo(_player1.getMidpoint())) < (_player2.getMidpoint().distanceTo(getMidpoint())))
-			{
-				_spookStem.proximity(x, y, _player1, FlxG.width * 0.7);
-				if (_player1.x < x){
-					facing = FlxObject.LEFT;
-					acceleration.x = -speed;
-					if (velocity.x < -speed){
-						velocity.x = -speed;
+				if ((_player1.getMidpoint().distanceTo(_player1.getMidpoint())) < (_player2.getMidpoint().distanceTo(getMidpoint())))
+				{
+					_spookStem.proximity(x, y, _player1, FlxG.width * 0.7);
+					if (_player1.x < x){
+						facing = FlxObject.LEFT;
+						acceleration.x = -speed;
+						if (velocity.x < -speed){
+							velocity.x = -speed;
+						}
+					}
+					else{
+						facing = FlxObject.RIGHT;
+						acceleration.x = speed;
+						if (velocity.x > speed){
+							velocity.x = speed;
+						}
 					}
 				}
-				else{
-					facing = FlxObject.RIGHT;
-					acceleration.x = speed;
-					if (velocity.x > speed){
-						velocity.x = speed;
-					}
-				}
-			}
 			}
 		//move towards player2
 			else{
@@ -107,10 +107,10 @@ package;
 			velocity.x = 0;
 		}
 		if (getMidpoint().distanceTo(_player2.getMidpoint()) < (_radius / 3)){
-			if(!PlayState._shadows.hasLightPoint(_player2.getMidpoint())){
-				_player2.kill();
-				}
+			if(!PlayState._shadows.hasLightPoint(getMidpoint())){
+				//_player2.kill();
 			}
+		}
 		super.update(elapsed);
 	 }
  }
